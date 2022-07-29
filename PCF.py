@@ -1,6 +1,7 @@
 import mysql.connector
 import pandas as pd
 
+
 dbkey = mysql.connector.connect(
     user="root",
     password="TheDoctor3005",
@@ -10,7 +11,12 @@ dbkey = mysql.connector.connect(
 
 mycursor = dbkey.cursor()
 
-mycursor.execute("DROP TABLE IF EXISTS PATIENT")
+def drop_table(table):
+    mycursor.execute("DROP TABLE IF EXISTS {}".format(table))
+
+drop_table('ERITROPATHOLOGY')
+drop_table('PATIENT')
+
 
 mycursor.execute("CREATE TABLE PATIENT(\n"
     "ID INT PRIMARY KEY,\n"
@@ -23,8 +29,6 @@ mycursor.execute("CREATE TABLE PATIENT(\n"
 
 mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
 
-
-mycursor.execute("DROP TABLE IF EXISTS ERITROPATHOLOGY")
    
 mycursor.execute("CREATE TABLE ERITROPATHOLOGY(\n"
     "Test_ID INT PRIMARY KEY,\n"
