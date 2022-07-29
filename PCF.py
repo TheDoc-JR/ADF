@@ -14,11 +14,8 @@ mycursor = dbkey.cursor()
 def drop_table(table):
     mycursor.execute("DROP TABLE IF EXISTS {}".format(table))
 
-drop_table('ERITROPATHOLOGY')
-drop_table('PATIENT')
-
-
-mycursor.execute("CREATE TABLE PATIENT(\n"
+def create_patient():
+    mycursor.execute("CREATE TABLE PATIENT(\n"
     "ID INT PRIMARY KEY,\n"
     "Name VARCHAR(20),\n"
     "Last_name VARCHAR(20),\n"
@@ -27,10 +24,8 @@ mycursor.execute("CREATE TABLE PATIENT(\n"
     "Sex CHAR(1)\n"
 ")")
 
-mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
-
-   
-mycursor.execute("CREATE TABLE ERITROPATHOLOGY(\n"
+def create_data(test):
+    mycursor.execute("CREATE TABLE {}(\n"
     "Test_ID INT PRIMARY KEY,\n"
     "Test_name VARCHAR(80),\n"
     "Result FLOAT,\n"
@@ -39,6 +34,19 @@ mycursor.execute("CREATE TABLE ERITROPATHOLOGY(\n"
     "Test_date DATE,\n"
     "Patient_ID INT,\n"
     "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE \n"
-")")
+")".format(test))
+
+drop_table('ERITROPATHOLOGY')
+drop_table('PATIENT')
+
+
+create_patient()
+
+create_data('ERITROPATHOLOGY')
+
+mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
+
+   
+
 
 print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
