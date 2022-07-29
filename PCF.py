@@ -23,4 +23,18 @@ mycursor.execute("CREATE TABLE PATIENT(\n"
 
 mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
 
+
+mycursor.execute("DROP TABLE IF EXISTS ERITROPATHOLOGY")
+   
+mycursor.execute("CREATE TABLE ERITROPATHOLOGY(\n"
+    "Test_ID INT PRIMARY KEY,\n"
+    "Test_name VARCHAR(80),\n"
+    "Result FLOAT,\n"
+    "Units VARCHAR(80),\n"
+    "Reference_values CHAR(200),\n"
+    "Test_date DATE,\n"
+    "Patient_ID INT,\n"
+    "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE \n"
+")")
+
 print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
