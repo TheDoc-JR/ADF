@@ -27,7 +27,7 @@ def create_patient():
 
 def create_data(test):
     mycursor.execute("CREATE TABLE {}(\n"
-    "Test_ID INT PRIMARY KEY,\n" # default data
+    "Test_ID INT PRIMARY KEY AUTO_INCREMENT,\n" # default data
     "Test_name VARCHAR(80),\n" # default data
     "Result FLOAT,\n" # input data
     "Units VARCHAR(80),\n" # default data
@@ -63,8 +63,8 @@ def wrong_subselect(item):
 def insert_result(test):
     result = float(input('Insert the result: '))
     try:
-        mycursor.execute("INSERT INTO {}\n"
-        "VALUES (1,'Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',6602947)".format(test,result))
+        mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+        "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',6602947)".format(test,result))
         print("Data successfully added.")
     except:
         print("Process failed.")
@@ -73,7 +73,7 @@ def selectionA(option):
     if option in ("a","A"):
         print('Please insert your ID:')
         ID = input()
-        print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+        print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
         option = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
         if option in ("a","A"):
             menu()
@@ -119,7 +119,7 @@ def menu():
         if optionsA in ("a","A"):
             print('Please insert your ID:')
             ID = input()
-            print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
             wrong_subselect(optionsA2)
             if optionsA2 in ("a","A"):
@@ -141,7 +141,7 @@ def menu():
         print('Please insert your ID:')
         ID = input()
         try:
-            print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
         except:
             print('Wrong ID or no patient data available.')
         optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
