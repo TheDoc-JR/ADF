@@ -2,6 +2,7 @@ import mysql.connector
 import pandas as pd
 
 
+
 dbkey = mysql.connector.connect(
     user="root",
     password="TheDoctor3005",
@@ -26,14 +27,14 @@ def create_patient():
 
 def create_data(test):
     mycursor.execute("CREATE TABLE {}(\n"
-    "Test_ID INT PRIMARY KEY,\n"
-    "Test_name VARCHAR(80),\n"
-    "Result FLOAT,\n"
-    "Units VARCHAR(80),\n"
-    "Reference_values CHAR(200),\n"
-    "Test_date DATE,\n"
-    "Patient_ID INT,\n"
-    "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n"
+    "Test_ID INT PRIMARY KEY,\n" # default data
+    "Test_name VARCHAR(80),\n" # default data
+    "Result FLOAT,\n" # input data
+    "Units VARCHAR(80),\n" # default data
+    "Reference_values CHAR(200),\n" # default data
+    "Test_date DATE,\n" # default data
+    "Patient_ID INT,\n" # default data
+    "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" # default data
 ")".format(test))
 
 def add_patient_data():
@@ -56,6 +57,28 @@ mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT\n"
 "VALUES (1,'Red blood cells (RBC)',5.00,'10^6/µl','(4.3-5.6)','2022-03-10',6602947)")
 
 
-print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+# Create menu
 
-print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
+def menu():
+    print('Welcome to the Clinic Data Finder.\n\nPlease select an option below:')
+    select = input('How can we help you?:\na) Insert clinic data\
+        b) Show clinic data    c) Exit\n')
+    options = ""
+    while select not in ("a","A","b","B","c","C"):
+        print('{} is not a valid option'.format(select))
+        select = input('How can we help you?:\na) Insert clinic data\
+        b) Show clinic data    c) Exit\n')
+    if select in ("a","A"):
+        print('option A selected')
+    elif select in ("b","B"):
+        print('option B selected')
+    elif select in ("c","C"): 
+        print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+        
+    
+
+menu()
+
+#print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+
+#print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
