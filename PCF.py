@@ -33,23 +33,29 @@ def create_data(test):
     "Reference_values CHAR(200),\n"
     "Test_date DATE,\n"
     "Patient_ID INT,\n"
-    "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE \n"
+    "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n"
 ")".format(test))
 
 def add_patient_data():
     mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
 
+drop_table('COMPLETE_BLOOD_COUNT')
 drop_table('ERITROPATHOLOGY')
 drop_table('PATIENT')
 
 
 create_patient()
-create_data('ERITROPATHOLOGY')
+create_data('COMPLETE_BLOOD_COUNT')
 
 
 add_patient_data()
 
-   
+# ADD TESTS MADE ON 2022-03-10
+
+mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT\n"
+"VALUES (1,'Red blood cells (RBC)',5.00,'10^6/µl','(4.3-5.6)','2022-03-10',6602947)")
 
 
 print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+
+print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
