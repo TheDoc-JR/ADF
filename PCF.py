@@ -37,9 +37,9 @@ def create_data(test):
     "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" # default data
 ")".format(test))
 
-def add_patient_data():
+def add_patient_data(id,name,surname,bd,age,sex):
     try:
-        mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
+        mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", (id,name,surname,bd,age,sex))
         print("Patient successfully added")
     except:
         print('It has been an error adding this patient')
@@ -101,17 +101,17 @@ def menu():
     wrong_mainselect(select)
 
     if select in ("a","A"):
-        print('Please insert your name:')
-        name = input()
-        print('Please insert your ID:')
-        ID = input()
-        print('Please insert your birthdate in format "YYYY-MM-DD":')
-        bd = input()
+        name = input('Please insert your name: ')
+        surname = input("Please enter your last name: ")
+        ID = int(input('Please insert your ID: '))
+        bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
+        age = input("Please enter your current age: ")
+        sex = input("Please enter your gender male(M) or female(F): ")
         drop_table('COMPLETE_BLOOD_COUNT')
         drop_table('ERITROPATHOLOGY')
         drop_table('PATIENT')
         create_patient()
-        add_patient_data()
+        add_patient_data(ID,name,surname,bd,age,sex)
         
         optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
         wrong_optionA(optionsA)
@@ -153,9 +153,8 @@ def menu():
     if select in ("c","C"): 
         print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
         
-    
+ 
 
 menu()
-
 
 
