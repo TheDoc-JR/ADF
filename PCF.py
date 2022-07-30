@@ -49,6 +49,21 @@ drop_table('COMPLETE_BLOOD_COUNT')
 drop_table('ERITROPATHOLOGY')
 drop_table('PATIENT')
 
+def wrong_mainselect(item):
+    while item not in ("a","A","b","B","c","C"):
+        print('{} is not a valid option'.format(item))
+        item = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
+
+def wrong_optionA(item):
+    while item not in ("a","A","b","B","c","C"):
+        print('{} is not a valid option'.format(item))
+        item = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Exit\n')
+
+def wrong_subselect(item):
+    while item not in ("a","A","b","B"):
+        print('{} is not a valid option'.format(item))
+        item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+
 
 
 
@@ -67,12 +82,10 @@ drop_table('PATIENT')
 
 def menu():
     print('Welcome to the Clinic Data Finder.\n\nPlease select an option below:')
+    
     select = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
-    
-    while select not in ("a","A","b","B","c","C"):
-        print('{} is not a valid option'.format(select))
-        select = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
-    
+    wrong_mainselect(select)
+
     if select in ("a","A"):
         print('Please insert your name:')
         name = input()
@@ -82,18 +95,16 @@ def menu():
         bd = input()
         create_patient()
         add_patient_data()
+        
         optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Exit\n')
-        while optionsA not in ("a","A","b","B","c","C"):
-            print('{} is not a valid option'.format(optionsA))
-            optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Exit\n')
+        wrong_optionA(optionsA)
+        
         if optionsA in ("a","A"):
             print('Please insert your ID:')
             ID = input()
             print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
-            while optionsA2 not in ("a","A","b","B"):
-                print('{} is not a valid option'.format(optionsA2))
-                optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+            wrong_subselect(optionsA2)
             if optionsA2 in ("a","A"):
                 menu()
             if optionsA2 in ("b","B"): 
@@ -111,9 +122,7 @@ def menu():
         except:
             print('Wrong ID or no patient data available.')
         optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
-        while optionsB not in ("a","A","b","B"):
-            print('{} is not a valid option'.format(optionsB))
-            optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        wrong_subselect(optionsB)
         if optionsB in ("a","A"):
             menu()
         if optionsB in ("b","B"): 
