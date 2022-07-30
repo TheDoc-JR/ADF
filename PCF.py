@@ -44,20 +44,15 @@ def add_patient_data():
     except:
         print('It has been an error adding this patient')
 
-
-drop_table('COMPLETE_BLOOD_COUNT')
-drop_table('ERITROPATHOLOGY')
-drop_table('PATIENT')
-
 def wrong_mainselect(item):
     while item not in ("a","A","b","B","c","C"):
         print('{} is not a valid option'.format(item))
         item = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
 
 def wrong_optionA(item):
-    while item not in ("a","A","b","B","c","C"):
+    while item not in ("a","A","b","B","c","C","d","D"):
         print('{} is not a valid option'.format(item))
-        item = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Exit\n')
+        item = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
 
 def wrong_subselect(item):
     while item not in ("a","A","b","B"):
@@ -65,17 +60,36 @@ def wrong_subselect(item):
         item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
 
 
+def insert_result(test):
+    result = float(input('Insert the result: '))
+    try:
+        mycursor.execute("INSERT INTO {}\n"
+        "VALUES (1,'Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',6602947)".format(test,result))
+        print("Data successfully added.")
+    except:
+        print("Process failed.")
+
+def selectionA(option):
+    if option in ("a","A"):
+        print('Please insert your ID:')
+        ID = input()
+        print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+        option = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        if option in ("a","A"):
+            menu()
+        if option in ("b","B"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
+    if option in ("b","B"):
+        menu()
+    if option in ("c","C"):
+        insert_result('COMPLETE_BLOOD_COUNT') 
+    if option in ("d","d"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
 
 
-#create_data('COMPLETE_BLOOD_COUNT')
 
 
 
-
-# ADD TESTS MADE ON 2022-03-10
-
-#mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT\n"
-#"VALUES (1,'Red blood cells (RBC)',5.00,'10^6/µl','(4.3-5.6)','2022-03-10',6602947)")
 
 
 # Create menu
@@ -93,10 +107,13 @@ def menu():
         ID = input()
         print('Please insert your birthdate in format "YYYY-MM-DD":')
         bd = input()
+        drop_table('COMPLETE_BLOOD_COUNT')
+        drop_table('ERITROPATHOLOGY')
+        drop_table('PATIENT')
         create_patient()
         add_patient_data()
         
-        optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Exit\n')
+        optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
         wrong_optionA(optionsA)
         
         if optionsA in ("a","A"):
@@ -111,7 +128,13 @@ def menu():
                 print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
         if optionsA in ("b","B"):
             menu()
-        if optionsA in ("c","C"): 
+        if optionsA in ("c","C"):
+            create_data('COMPLETE_BLOOD_COUNT')
+            insert_result('COMPLETE_BLOOD_COUNT')
+            optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
+            wrong_optionA(optionsA)
+            selectionA(optionsA)
+        if optionsA in ("d","d"): 
             print('Thanks for using our Clinic Data Finder.\nHope we have helped!')    
 
     if select in ("b","B"):
@@ -136,4 +159,3 @@ menu()
 
 
 
-#print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
