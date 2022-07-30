@@ -38,23 +38,29 @@ def create_data(test):
 ")".format(test))
 
 def add_patient_data():
-    mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
+    try:
+        mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
+        print("Patient successfully added")
+    except:
+        print('It has been an error adding this patient')
+
 
 drop_table('COMPLETE_BLOOD_COUNT')
 drop_table('ERITROPATHOLOGY')
 drop_table('PATIENT')
 
 
-create_patient()
-create_data('COMPLETE_BLOOD_COUNT')
 
 
-add_patient_data()
+#create_data('COMPLETE_BLOOD_COUNT')
+
+
+
 
 # ADD TESTS MADE ON 2022-03-10
 
-mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT\n"
-"VALUES (1,'Red blood cells (RBC)',5.00,'10^6/µl','(4.3-5.6)','2022-03-10',6602947)")
+#mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT\n"
+#"VALUES (1,'Red blood cells (RBC)',5.00,'10^6/µl','(4.3-5.6)','2022-03-10',6602947)")
 
 
 # Create menu
@@ -63,22 +69,58 @@ def menu():
     print('Welcome to the Clinic Data Finder.\n\nPlease select an option below:')
     select = input('How can we help you?:\na) Insert clinic data\
         b) Show clinic data    c) Exit\n')
-    options = ""
+    
     while select not in ("a","A","b","B","c","C"):
         print('{} is not a valid option'.format(select))
         select = input('How can we help you?:\na) Insert clinic data\
         b) Show clinic data    c) Exit\n')
+    
     if select in ("a","A"):
-        print('option A selected')
-    elif select in ("b","B"):
-        print('option B selected')
-    elif select in ("c","C"): 
+        print('Please insert your name:')
+        name = input()
+        print('Please insert your ID:')
+        ID = input()
+        print('Please insert your birthdate in format "YYYY-MM-DD":')
+        bd = input()
+        create_patient()
+        add_patient_data()
+        optionsA = input('What would you like to do now?:\na) Show clinic data\
+        b) Go to main menu    c) Exit\n')
+        while optionsA not in ("a","A","b","B","c","C"):
+            print('{} is not a valid option'.format(optionsA))
+            optionsA = input('What would you like to do now?:\na) Show clinic data\
+            b) Go to main menu    c) Exit\n')
+        if optionsA in ("a","A"):
+            print('Please insert your ID:')
+            ID = input()
+            print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+            optionsA2 = input('What would you like to do now?:\na) Go to main menu\
+            b)Exit\n')
+            while optionsA2 not in ("a","A","b","B"):
+                print('{} is not a valid option'.format(optionsA2))
+                optionsA2 = input('What would you like to do now?:\na) Go to main menu\
+                b)Exit\n')
+            if optionsA2 in ("a","A"):
+                menu()
+            if optionsA2 in ("b","B"): 
+                print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
+        if optionsA in ("b","B"):
+            menu()
+        if optionsA in ("c","C"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')    
+
+    if select in ("b","B"):
+        print('Please insert your ID:')
+        ID = input()
+        print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+    
+    if select in ("c","C"): 
         print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
         
     
 
 menu()
 
-#print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+
 
 #print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
