@@ -36,8 +36,8 @@ def create_data(test):
     "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE \n"
 ")".format(test))
 
-def add_data(tab):
-    mycursor.execute("INSERT INTO {} VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')".format(tab))
+def add_patient_data():
+    mycursor.execute("INSERT INTO PATIENT VALUES(6602947,'CARLOS','VERGEL','1991-01-08',31,'M')")
 
 drop_table('ERITROPATHOLOGY')
 drop_table('PATIENT')
@@ -47,7 +47,7 @@ create_patient()
 create_data('ERITROPATHOLOGY')
 
 
-add_data('PATIENT')
+add_patient_data()
 
    
 
