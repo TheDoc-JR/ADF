@@ -40,7 +40,9 @@ def create_data(test):
 def add_patient_data():
     global id,name,surname,bd,age,sex
     name = input('Please insert your name: ')
+    name = name.upper()
     surname = input("Please enter your last name: ")
+    surname = surname.upper()
     id = int(input('Please insert your ID: '))
     bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
     age = int(input("Please enter your current age: "))
@@ -70,13 +72,16 @@ def wrong_subselect(item):
 
 
 def insert_result(test):
-    result = float(input('Insert the result of the test: '))
-    try:
-        mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-        "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',{})".format(test,result,id))
-        print("Data successfully added.")
-    except:
-        print("Process failed.")
+    ID_insert = int(input('Please insert your ID: '))
+    if ID_insert in id_box:
+        result = float(input('Insert the result of the test: '))
+        try:
+            mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+            "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',{})".format(test,result,ID_insert))
+            print("Data successfully added.")
+        except:
+            print("Process failed.")
+    else: print("No patient with this ID number.")
 
 def selectionA(option):
     if option in ("a","A"):
@@ -110,6 +115,7 @@ drop_table('ERITROPATHOLOGY')
 drop_table('PATIENT')
 
 create_patient()
+create_data('COMPLETE_BLOOD_COUNT')
 
 id_box = []
 id_box.append(id)
@@ -139,7 +145,6 @@ def menu():
         if optionsA in ("b","B"):
             menu()
         if optionsA in ("c","C"):
-            create_data('COMPLETE_BLOOD_COUNT')
             insert_result('COMPLETE_BLOOD_COUNT')
             optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
             wrong_optionA(optionsA)
