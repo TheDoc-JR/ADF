@@ -37,7 +37,14 @@ def create_data(test):
     "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" # default data
 ")".format(test))
 
-def add_patient_data(id,name,surname,bd,age,sex):
+def add_patient_data():
+    global id,name,surname,bd,age,sex
+    name = input('Please insert your name: ')
+    surname = input("Please enter your last name: ")
+    id = int(input('Please insert your ID: '))
+    bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
+    age = input("Please enter your current age: ")
+    sex = input("Please enter your gender male(M) or female(F): ")
     try:
         mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", (id,name,surname,bd,age,sex))
         print("Patient successfully added")
@@ -61,13 +68,14 @@ def wrong_subselect(item):
 
 
 def insert_result(test):
-    result = float(input('Insert the result: '))
-    try:
-        mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-        "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',6602947)".format(test,result))
-        print("Data successfully added.")
-    except:
-        print("Process failed.")
+    result = float(input('Insert the result of the test: '))
+    #test_date = input('Please insert the test date in format "YYYY-MM-DD": ')
+    #try:
+    mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+    "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-05-23',{})".format(test,result,id))
+    print("Data successfully added.")
+    #except:
+        #print("Process failed.")
 
 def selectionA(option):
     if option in ("a","A"):
@@ -84,7 +92,7 @@ def selectionA(option):
     if option in ("c","C"):
         insert_result('COMPLETE_BLOOD_COUNT') 
     if option in ("d","d"): 
-            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+            pass
 
 
 
@@ -101,17 +109,11 @@ def menu():
     wrong_mainselect(select)
 
     if select in ("a","A"):
-        name = input('Please insert your name: ')
-        surname = input("Please enter your last name: ")
-        ID = int(input('Please insert your ID: '))
-        bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
-        age = input("Please enter your current age: ")
-        sex = input("Please enter your gender male(M) or female(F): ")
         drop_table('COMPLETE_BLOOD_COUNT')
         drop_table('ERITROPATHOLOGY')
         drop_table('PATIENT')
         create_patient()
-        add_patient_data(ID,name,surname,bd,age,sex)
+        add_patient_data()
         
         optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
         wrong_optionA(optionsA)
@@ -158,3 +160,4 @@ def menu():
 menu()
 
 
+print(pd.read_sql("SELECT * FROM PATIENT",dbkey))
