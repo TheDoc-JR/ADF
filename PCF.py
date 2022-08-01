@@ -44,7 +44,7 @@ def add_patient_data():
     surname = input("Please enter your last name: ")
     surname = surname.upper()
     id = int(input('Please insert your ID: '))
-    bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
+    bd = input('Please insert your date of birth in format "YYYY-MM-DD": ')
     age = int(input("Please enter your current age: "))
     sex = input("Please enter your gender male(M) or female(F): ")
     sex = sex.upper()
@@ -91,12 +91,13 @@ def insert_result(test):
         for data in tests:    
             #try:
             result = float(input('Insert the result of the {}: '.format(data[0])))
+            td = input('Please insert your test date in format "YYYY-MM-DD": ')
             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],'2022-03-10',ID_insert))
+            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
             print("Data successfully added.")
             #except:
                 #print("Process failed.")
-        else: print("No patient with this ID number.")
+    else: print("No patient with this ID number.")
 
 def option_2(option):
     if option in ("a","A"):
