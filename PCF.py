@@ -58,17 +58,29 @@ def add_patient_data():
 def wrong_mainselect(item):
     while item not in ("a","A","b","B","c","C"):
         print('{} is not a valid option'.format(item))
-        item = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Exit\n')
-
+        item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        if item in ("a","A"):
+            menu()
+        if item in ("b","B"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+        
 def wrong_optionA(item):
     while item not in ("a","A","b","B","c","C","d","D"):
         print('{} is not a valid option'.format(item))
-        item = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
+        item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        if item in ("a","A"):
+            menu()
+        if item in ("b","B"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
 
 def wrong_subselect(item):
     while item not in ("a","A","b","B"):
         print('{} is not a valid option'.format(item))
         item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        if item in ("a","A"):
+            menu()
+        if item in ("b","B"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
 
 
 def insert_result(test):
@@ -83,27 +95,27 @@ def insert_result(test):
             print("Process failed.")
     else: print("No patient with this ID number.")
 
-def selectionA(option):
+def option_2(option):
     if option in ("a","A"):
-        show_data()
-        option = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
-        if option in ("a","A"):
-            menu()
-        if option in ("b","B"): 
-            print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
-    if option in ("b","B"):
         menu()
-    if option in ("c","C"):
-        insert_result('COMPLETE_BLOOD_COUNT') 
-    if option in ("d","d"): 
-            pass
+    if option in ("b","B"): 
+        print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
 
 
-def show_data():
+def show_patient_data():
     ID_show = int(input('Please insert your ID: '))
     if ID_show in id_box:
         try:
             print(pd.read_sql("SELECT * FROM PATIENT WHERE PATIENT.ID = {}".format(ID_show), dbkey))
+        except:
+            print('Wrong ID or no patient data available.')
+    else: print('Wrong ID or no patient data available.')
+
+def show_data(test):
+    ID_show_clinic = int(input('Please insert your ID: '))
+    if ID_show_clinic in id_box:
+        try:
+            print(pd.read_sql("SELECT * FROM {} WHERE Patient_ID = {}".format(test,ID_show_clinic), dbkey))
         except:
             print('Wrong ID or no patient data available.')
     else: print('Wrong ID or no patient data available.')
@@ -125,42 +137,50 @@ id_box.append(id)
 def menu():
     print('Welcome to the Clinic Data Finder.\n\nPlease select an option below.')
     
-    select = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Exit\n')
+    select = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Show test data   d) Exit\n')
     wrong_mainselect(select)
 
     if select in ("a","A"):
         add_patient_data()
         
-        optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
+        optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Show test data   e) Exit\n')
         wrong_optionA(optionsA)
         
         if optionsA in ("a","A"):
-            show_data()
+            show_patient_data()
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
             wrong_subselect(optionsA2)
-            if optionsA2 in ("a","A"):
-                menu()
-            if optionsA2 in ("b","B"): 
-                print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
+            option_2(optionsA2)
         if optionsA in ("b","B"):
             menu()
         if optionsA in ("c","C"):
             insert_result('COMPLETE_BLOOD_COUNT')
-            optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
-            wrong_optionA(optionsA)
-            selectionA(optionsA)
-        if optionsA in ("d","d"): 
+            optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+            wrong_subselect(optionsA2)
+            option_2(optionsA2)
+        if optionsA in ("d", "D"):
+            show_data('COMPLETE_BLOOD_COUNT')
+            optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+            wrong_subselect(optionsA2)
+            option_2(optionsA2)
+        if optionsA in ("e","E"): 
             print('Thanks for using our Clinic Data Finder.\nHope we have helped!')    
 
     if select in ("b","B"):
-        show_data()
+        show_patient_data()
         optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
         wrong_subselect(optionsB)
+        option_2(optionsB)
         if optionsB in ("a","A"):
             menu()
         if optionsB in ("b","B"): 
-            print('Thanks for using our Clinic Data Finder.\nHope we have helped!') 
-    if select in ("c","C"): 
+            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+    if select in ("c","C"):
+        show_data('COMPLETE_BLOOD_COUNT')
+        optionsC = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        wrong_subselect(optionsC)
+        option_2(optionsC)
+    if select in ("d","D"): 
         print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
         
  
