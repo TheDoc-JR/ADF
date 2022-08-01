@@ -69,19 +69,16 @@ def wrong_subselect(item):
 
 def insert_result(test):
     result = float(input('Insert the result of the test: '))
-    #test_date = input('Please insert the test date in format "YYYY-MM-DD": ')
-    #try:
-    mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-    "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-05-23',{})".format(test,result,id))
-    print("Data successfully added.")
-    #except:
-        #print("Process failed.")
+    try:
+        mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+        "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',{})".format(test,result,id))
+        print("Data successfully added.")
+    except:
+        print("Process failed.")
 
 def selectionA(option):
     if option in ("a","A"):
-        print('Please insert your ID:')
-        ID = input()
-        print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
+        show_data()
         option = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
         if option in ("a","A"):
             menu()
@@ -95,7 +92,14 @@ def selectionA(option):
             pass
 
 
-
+def show_data():
+    ID_show = int(input('Please insert your ID: '))
+    if ID_show == id:
+        try:
+            print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+        except:
+            print('Wrong ID or no patient data available.')
+    else: print('Wrong ID or no patient data available.')
 
 
 
@@ -119,9 +123,7 @@ def menu():
         wrong_optionA(optionsA)
         
         if optionsA in ("a","A"):
-            print('Please insert your ID:')
-            ID = input()
-            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
+            show_data()
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
             wrong_subselect(optionsA2)
             if optionsA2 in ("a","A"):
@@ -140,12 +142,7 @@ def menu():
             print('Thanks for using our Clinic Data Finder.\nHope we have helped!')    
 
     if select in ("b","B"):
-        print('Please insert your ID:')
-        ID = input()
-        try:
-            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", dbkey))
-        except:
-            print('Wrong ID or no patient data available.')
+        show_data()
         optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
         wrong_subselect(optionsB)
         if optionsB in ("a","A"):
@@ -160,4 +157,4 @@ def menu():
 menu()
 
 
-print(pd.read_sql("SELECT * FROM PATIENT",dbkey))
+
