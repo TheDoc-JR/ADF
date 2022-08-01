@@ -43,23 +43,25 @@ def add_patient_data():
     surname = input("Please enter your last name: ")
     id = int(input('Please insert your ID: '))
     bd = input('Please insert your birthdate in format "YYYY-MM-DD": ')
-    age = input("Please enter your current age: ")
+    age = int(input("Please enter your current age: "))
     sex = input("Please enter your gender male(M) or female(F): ")
+    sex = sex.upper()
     try:
         mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", (id,name,surname,bd,age,sex))
         print("Patient successfully added")
+        id_box.append(id)
     except:
         print('It has been an error adding this patient')
 
 def wrong_mainselect(item):
     while item not in ("a","A","b","B","c","C"):
         print('{} is not a valid option'.format(item))
-        item = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
+        item = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Exit\n')
 
 def wrong_optionA(item):
     while item not in ("a","A","b","B","c","C","d","D"):
         print('{} is not a valid option'.format(item))
-        item = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
+        item = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
 
 def wrong_subselect(item):
     while item not in ("a","A","b","B"):
@@ -94,32 +96,36 @@ def selectionA(option):
 
 def show_data():
     ID_show = int(input('Please insert your ID: '))
-    if ID_show == id:
+    if ID_show in id_box:
         try:
-            print(pd.read_sql("SELECT * FROM PATIENT", dbkey))
+            print(pd.read_sql("SELECT * FROM PATIENT WHERE PATIENT.ID = {}".format(ID_show), dbkey))
         except:
             print('Wrong ID or no patient data available.')
     else: print('Wrong ID or no patient data available.')
 
 
 
+drop_table('COMPLETE_BLOOD_COUNT')
+drop_table('ERITROPATHOLOGY')
+drop_table('PATIENT')
+
+create_patient()
+
+id_box = []
+id_box.append(id)
 
 # Create menu
 
 def menu():
-    print('Welcome to the Clinic Data Finder.\n\nPlease select an option below:')
+    print('Welcome to the Clinic Data Finder.\n\nPlease select an option below.')
     
-    select = input('How can we help you?:\na) Insert clinic data   b) Show clinic data   c) Exit\n')
+    select = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Exit\n')
     wrong_mainselect(select)
 
     if select in ("a","A"):
-        drop_table('COMPLETE_BLOOD_COUNT')
-        drop_table('ERITROPATHOLOGY')
-        drop_table('PATIENT')
-        create_patient()
         add_patient_data()
         
-        optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
+        optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
         wrong_optionA(optionsA)
         
         if optionsA in ("a","A"):
@@ -135,7 +141,7 @@ def menu():
         if optionsA in ("c","C"):
             create_data('COMPLETE_BLOOD_COUNT')
             insert_result('COMPLETE_BLOOD_COUNT')
-            optionsA = input('What would you like to do now?:\na) Show clinic data   b) Go to main menu   c) Add test data   d) Exit\n')
+            optionsA = input('What would you like to do now?:\na) Show patient data   b) Go to main menu   c) Add test data   d) Exit\n')
             wrong_optionA(optionsA)
             selectionA(optionsA)
         if optionsA in ("d","d"): 
@@ -155,6 +161,4 @@ def menu():
  
 
 menu()
-
-
 
