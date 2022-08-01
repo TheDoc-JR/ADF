@@ -86,14 +86,17 @@ def wrong_subselect(item):
 def insert_result(test):
     ID_insert = int(input('Please insert your ID: '))
     if ID_insert in id_box:
-        result = float(input('Insert the result of the test: '))
-        try:
-            mycursor.execute("INSERT INTO {}(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-            "VALUES ('Red blood cells (RBC)',{},'10^6/µl','(4.3-5.6)','2022-03-10',{})".format(test,result,ID_insert))
+        tests = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
+        ['Hemoglobin (Hb)','g/dL','(13.7-16.5)']]
+        for data in tests:    
+            #try:
+            result = float(input('Insert the result of the {}: '.format(data[0])))
+            mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],'2022-03-10',ID_insert))
             print("Data successfully added.")
-        except:
-            print("Process failed.")
-    else: print("No patient with this ID number.")
+            #except:
+                #print("Process failed.")
+        else: print("No patient with this ID number.")
 
 def option_2(option):
     if option in ("a","A"):
