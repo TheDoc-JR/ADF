@@ -39,15 +39,12 @@ def create_data(test):
 
 def add_patient_data():
     global id,name,surname,bd,age,sex
-    name = input('Please insert your name: ')
-    name = name.upper()
-    surname = input("Please enter your last name: ")
-    surname = surname.upper()
+    name = input('Please insert your name: ').upper()
+    surname = input("Please enter your last name: ").upper()
     id = int(input('Please insert your ID: '))
     bd = input('Please insert your date of birth in format "YYYY-MM-DD": ')
     age = int(input("Please enter your current age: "))
-    sex = input("Please enter your gender male(M) or female(F): ")
-    sex = sex.upper()
+    sex = input("Please enter your gender male(M) or female(F): ").upper()
     try:
         mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", (id,name,surname,bd,age,sex))
         print("Patient successfully added")
@@ -56,13 +53,10 @@ def add_patient_data():
         print('It has been an error adding this patient')
 
 def wrong_mainselect(item):
-    while item not in ("a","A","b","B","c","C"):
+    while item not in ("a","A","b","B","c","C","d","D","e","E"):
         print('{} is not a valid option'.format(item))
         item = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
-        if item in ("a","A"):
-            menu()
-        if item in ("b","B"): 
-            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+        option_2(item)
         
 def wrong_optionA(item):
     while item not in ("a","A","b","B","c","C","d","D"):
@@ -83,20 +77,36 @@ def wrong_subselect(item):
             print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
 
 
-def insert_result(test):
+def insert_cbc():
     ID_insert = int(input('Please insert your ID: '))
     if ID_insert in id_box:
         tests = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
         ['Hemoglobin (Hb)','g/dL','(13.7-16.5)']]
         for data in tests:    
-            #try:
-            result = float(input('Insert the result of the {}: '.format(data[0])))
-            td = input('Please insert your test date in format "YYYY-MM-DD": ')
-            mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
-            print("Data successfully added.")
-            #except:
-                #print("Process failed.")
+            try:
+                result = float(input('Insert the result of the {}: '.format(data[0])))
+                td = input('Please insert your test date in format "YYYY-MM-DD": ')
+                mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
+                print("Data successfully added.")
+            except:
+                print("Process failed.")
+    else: print("No patient with this ID number.")
+
+def insert_bio():
+    ID_insert = int(input('Please insert your ID: '))
+    if ID_insert in id_box:
+        tests = [['Glucose','mg/dL','(74-109)'],
+        ['Creatinine','mg/dL','(0.7-1.2)']]
+        for data in tests:    
+            try:
+                result = float(input('Insert the result of the {}: '.format(data[0])))
+                td = input('Please insert your test date in format "YYYY-MM-DD": ')
+                mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
+                print("Data successfully added.")
+            except:
+                print("Process failed.")
     else: print("No patient with this ID number.")
 
 def option_2(option):
@@ -127,11 +137,12 @@ def show_data(test):
 
 
 drop_table('COMPLETE_BLOOD_COUNT')
-drop_table('ERITROPATHOLOGY')
+drop_table('BIOCHEMISTRY')
 drop_table('PATIENT')
 
 create_patient()
 create_data('COMPLETE_BLOOD_COUNT')
+create_data('BIOCHEMISTRY')
 
 id_box = []
 id_box.append(id)
@@ -141,7 +152,7 @@ id_box.append(id)
 def menu():
     print('Welcome to the Clinic Data Finder.\n\nPlease select an option below.')
     
-    select = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Show test data   d) Exit\n')
+    select = input('How can we help you?:\na) Insert patient data   b) Show patient data   c) Add test data   d) Show test data   e) Exit\n')
     wrong_mainselect(select)
 
     if select in ("a","A"):
@@ -158,12 +169,16 @@ def menu():
         if optionsA in ("b","B"):
             menu()
         if optionsA in ("c","C"):
-            insert_result('COMPLETE_BLOOD_COUNT')
+            data = input('Select the test you want to add clinic data in:\n1) COMPLETE BLOOD COUNT   2) BIOCHEMISTRY\n')
+            if data == '1': insert_cbc() 
+            elif data == '2': insert_bio()
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
             wrong_subselect(optionsA2)
             option_2(optionsA2)
         if optionsA in ("d", "D"):
-            show_data('COMPLETE_BLOOD_COUNT')
+            show = input('Select the test you want to show data from:\n1) COMPLETE BLOOD COUNT   2) BIOCHEMISTRY\n')
+            if show == '1': show_data('COMPLETE_BLOOD_COUNT')
+            elif show == '2': show_data('BIOCHEMISTRY')
             optionsA2 = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
             wrong_subselect(optionsA2)
             option_2(optionsA2)
@@ -175,16 +190,24 @@ def menu():
         optionsB = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
         wrong_subselect(optionsB)
         option_2(optionsB)
-        if optionsB in ("a","A"):
-            menu()
-        if optionsB in ("b","B"): 
-            print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
+        
     if select in ("c","C"):
-        show_data('COMPLETE_BLOOD_COUNT')
-        optionsC = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
-        wrong_subselect(optionsC)
-        option_2(optionsC)
-    if select in ("d","D"): 
+            data = input('Select the test you want to add clinic data in:\n1) COMPLETE BLOOD COUNT   2) BIOCHEMISTRY\n')
+            if data == '1': insert_cbc() 
+            elif data == '2': insert_bio()
+            optionsC = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+            wrong_subselect(optionsC)
+            option_2(optionsC)
+
+    if select in ("d","D"):
+        show = input('Select the test you want to show data from:\n1) COMPLETE BLOOD COUNT   2) BIOCHEMISTRY\n')
+        if show == '1': show_data('COMPLETE_BLOOD_COUNT')
+        elif show == '2': show_data('BIOCHEMISTRY')
+        optionsD = input('What would you like to do now?:\na) Go to main menu   b)Exit\n')
+        wrong_subselect(optionsD)
+        option_2(optionsD)
+
+    if select in ("e","E"): 
         print('Thanks for using our Clinic Data Finder.\nHope we have helped!')
         
  
