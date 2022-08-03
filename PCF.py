@@ -3,7 +3,7 @@ import pandas as pd
 import time
 
 
-
+# Establish connection to my local database
 dbkey = mysql.connector.connect(
     user="root",
     password="TheDoctor3005",
@@ -11,12 +11,17 @@ dbkey = mysql.connector.connect(
     database="perez"
 )
 
+# Create a cursor to operate
 mycursor = dbkey.cursor()
 
 def drop_table(table):
+    """Drops any existing table before creating a new one with the same name."""
+    
     mycursor.execute("DROP TABLE IF EXISTS {}".format(table))
 
 def create_patient():
+    """Using SQL creates a table to store the data of any patient."""
+    
     mycursor.execute("CREATE TABLE PATIENT(\n"
     "ID INT PRIMARY KEY,\n"
     "Name VARCHAR(20),\n"
@@ -27,18 +32,28 @@ def create_patient():
 ")")
 
 def create_data(test):
+    """Using SQL and given a table name as an argument, 
+    creates a table to store the data of any patient's tests."""
+    
     mycursor.execute("CREATE TABLE {}(\n"
     "Test_ID INT PRIMARY KEY AUTO_INCREMENT,\n" # default data
     "Test_name VARCHAR(80),\n" # default data
     "Result FLOAT,\n" # input data
     "Units VARCHAR(80),\n" # default data
     "Reference_values CHAR(200),\n" # default data
-    "Test_date DATE,\n" # default data
+    "Test_date DATE,\n" # input data
     "Patient_ID INT,\n" 
     "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" 
 ")".format(test))
 
 def add_patient_data():
+    """Declare global variables in order to use them in other functions,
+    then ask for each one of a patient's info, then add it to the patient
+    table created before. 
+    A message informs the user whether or not the proccess succeeded.
+    It also add every patient ID successfully added to a list of IDs
+    in order to use it further."""
+    
     global id,name,surname,bd,age,sex
     name = input('\nPlease insert your name: ').upper()
     surname = input("\nPlease enter your last name: ").upper()
@@ -49,20 +64,20 @@ def add_patient_data():
     try:
         mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", (id,name,surname,bd,age,sex))
         time.sleep(2)
-        print("\nPatient successfully added")
+        print("\nPatient successfully added!")
         id_box.append(id)
     except:
         time.sleep(2)
         print('\nIt has been an error adding this patient')
 
-def wrong_mainselect(item):
+def wrong_mainselect(item): # Used to manage wrong typing by the user
     while item not in ("a","A","b","B","c","C","d","D","e","E"):
         print('\n{} is not a valid option'.format(item))
         time.sleep(2)
         item = input('\nWhat would you like to do now?:\na) Go to main menu   b)Exit\n')
         option_2(item)
         
-def wrong_optionA(item):
+def wrong_optionA(item): # Used to manage wrong typing by the user
     while item not in ("a","A","b","B","c","C","d","D"):
         print('\n{} is not a valid option'.format(item))
         time.sleep(2)
@@ -72,7 +87,7 @@ def wrong_optionA(item):
         if item in ("b","B"): 
             print('\nThanks for using our Clinic Data Finder.\nHope we have helped!')
 
-def wrong_subselect(item):
+def wrong_subselect(item): # Used to manage wrong typing by the user
     while item not in ("a","A","b","B"):
         print('\n{} is not a valid option'.format(item))
         time.sleep(2)
@@ -82,7 +97,7 @@ def wrong_subselect(item):
         if item in ("b","B"): 
             print('\nThanks for using our Clinic Data Finder.\nHope we have helped!')
 
-def wrong_show_selection(item):
+def wrong_show_selection(item): # Used to manage wrong typing by the user
     while item not in ("1","2","3"):
         print('\n{} is not a valid option'.format(item))
         time.sleep(2)
@@ -97,7 +112,7 @@ def wrong_show_selection(item):
             time.sleep(2) 
             show_data('ENZYMES')
 
-def wrong_add_selection(item):
+def wrong_add_selection(item): # Used to manage wrong typing by the user
     while item not in ("1","2","3"):
         print('\n{} is not a valid option'.format(item))
         item = input('\nSelect the test you want to add clinic data in:\n1) COMPLETE BLOOD COUNT   2) BIOCHEMISTRY   3) ENZYMES\n')
@@ -108,7 +123,19 @@ def wrong_add_selection(item):
         elif item == '3': 
             insert_enzy()
 
+def option_2(option): # A simple function to manage the workflow of the menu
+    if option in ("a","A"):
+        menu()
+    if option in ("b","B"): 
+        print('\nThanks for using our Clinic Data Finder.\nHope we have helped!')
+
 def insert_cbc():
+    """First it makes sure the ID of the patient exits in the database,
+    if so, it asks the user for every test result and test date, then insert them 
+    along with the unit and reference values into the COMPLETE_BLOOD_COUNT
+    table created before.
+    A message informs the user whether or not the proccess succeeded."""
+    
     ID_insert = int(input('\nPlease insert your ID: '))
     if ID_insert in id_box:
         tests = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
@@ -117,18 +144,22 @@ def insert_cbc():
         for data in tests:    
             try:
                 result = float(input('\nInsert the result of the {}: '.format(data[0])))
-                time.sleep(2)
                 td = input('\nPlease insert your test date in format "YYYY-MM-DD": ')
                 mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                 "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
                 time.sleep(2)
-                print("\nData successfully added.")
+                print("\nData successfully added!")
             except:
                 time.sleep(2)
                 print("\nProcess failed.")
     else: print("\nNo patient with this ID number.")
 
 def insert_bio():
+    """First it makes sure the ID of the patient exits in the database,
+    if so, it asks the user for every test result and test date, then insert them 
+    along with the unit and reference values into the BIOCHEMISTRY table created before.
+    A message informs the user whether or not the proccess succeeded."""
+    
     ID_insert = int(input('\nPlease insert your ID: '))
     if ID_insert in id_box:
         tests = [['Glucose','mg/dL','(74-109)'],
@@ -141,13 +172,18 @@ def insert_bio():
                 mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                 "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
                 time.sleep(2)
-                print("\nData successfully added.")
+                print("\nData successfully added!")
             except:
                 time.sleep(2)
                 print("\nProcess failed.")
     else: print("\nNo patient with this ID number.")
 
 def insert_enzy():
+    """First it makes sure the ID of the patient exits in the database,
+    if so, it asks the user for every test result and test date, then insert them 
+    along with the unit and reference values into the ENZYMES table created before.
+    A message informs the user whether or not the proccess succeeded."""
+    
     ID_insert = int(input('\nPlease insert your ID: '))
     if ID_insert in id_box:
         tests = [['AST','UI/L','(5-40)'],
@@ -160,20 +196,19 @@ def insert_enzy():
                 mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                 "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],result,data[1],data[2],td,ID_insert))
                 time.sleep(2)
-                print("\nData successfully added.")
+                print("\nData successfully added!")
             except:
                 time.sleep(2)
                 print("\nProcess failed.")
     else: print("\nNo patient with this ID number.")
 
-def option_2(option):
-    if option in ("a","A"):
-        menu()
-    if option in ("b","B"): 
-        print('\nThanks for using our Clinic Data Finder.\nHope we have helped!')
 
 
 def show_patient_data():
+    """First it makes sure the ID of the patient exits in the database,
+    if so, it prints all the personal info related to the patient.
+    A message informs the user whether or not the proccess succeeded."""
+    
     ID_show = int(input('\nPlease insert your ID: '))
     if ID_show in id_box:
         try:
@@ -184,6 +219,11 @@ def show_patient_data():
     else: print('\nWrong ID or no patient data available.')
 
 def show_data(test):
+    """First it makes sure the ID of the patient exits in the database,
+    if so, (and given the test table name) it prints all the test info 
+    related to the patient.
+    A message informs the user whether or not the proccess succeeded."""
+    
     ID_show_clinic = int(input('\nPlease insert your ID: '))
     if ID_show_clinic in id_box:
         try:
@@ -193,21 +233,24 @@ def show_data(test):
             print('\nWrong ID or no patient data available.')
     else: print('\nWrong ID or no patient data available.')
 
-
+# Drop every existing table
 drop_table('ENZYMES')
 drop_table('COMPLETE_BLOOD_COUNT')
 drop_table('BIOCHEMISTRY')
 drop_table('PATIENT')
 
+# Create every table to store data
 create_patient()
 create_data('COMPLETE_BLOOD_COUNT')
 create_data('BIOCHEMISTRY')
 create_data('ENZYMES')
 
+# Store every ID of every patient successfully added to the database
 id_box = []
-id_box.append(id)
 
-# Create menu
+
+
+# Create the menu
 
 def menu():
     time.sleep(2)
