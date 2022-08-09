@@ -81,7 +81,7 @@ def add_patient():
     (id.get(),name.get().upper(),surname.get().upper(),
     bd.get(),age.get(),sex.get().upper()))
 
-    # Commit changes
+    # commit changes
     cnx.commit()
 
     # close connection
@@ -99,6 +99,30 @@ def add_patient():
 # Create submit-patient button
 submit_patient = Button(root, width=20, text='Add new patient', command=add_patient)
 submit_patient.grid(row=7, column=1, pady=10, padx=10)
+
+# Create display-results function
+def display():
+    global r
+    # establish connection to the database
+    cnx = sqlc.connect(
+    user="root",
+    password="TheDoctor3005",
+    host="localhost",
+    database="perez"
+)
+
+    # create data in panda style
+    r= pd.read_sql("SELECT * FROM PATIENT",cnx)
+    results = Label(root, text=r)
+    results.grid(row=9, column=1)
+
+    # close connection
+    cnx.close()
+
+
+# Create query button
+query = Button(root, width=20, text='Show results', command=display)
+query.grid(row=8, column=1)
 
 
 
