@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import mysql.connector as sqlc
 import pandas as pd
 from tkinter import *
@@ -76,13 +77,16 @@ def add_patient():
     # create a cursor
     mycursor = cnx.cursor()
 
+    try:
+        mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", 
+        (id.get(),name.get().upper(),surname.get().upper(),
+        bd.get(),age.get(),sex.get().upper()))
 
-    mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", 
-    (id.get(),name.get().upper(),surname.get().upper(),
-    bd.get(),age.get(),sex.get().upper()))
-
-    # commit changes
-    cnx.commit()
+        # commit changes
+        cnx.commit()
+        messagebox.showinfo('GOOD NEWS! :)','PATIENT SUCCESFULLY ADDED!')
+    except:
+        messagebox.showerror('BAD NEWS :(','IT HAS BEEN AN ERROR ADDING THIS PATIENT')
 
     # close connection
     cnx.close()
