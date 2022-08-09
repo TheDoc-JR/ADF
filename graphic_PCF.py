@@ -63,12 +63,48 @@ age_label.grid(row=5, column=0)
 sex_label = Label(root, text="Gender:")
 sex_label.grid(row=6, column=0)
 
+# Create submit-patient function
+def add_patient():
+    # establish connection to the database
+    cnx = sqlc.connect(
+    user="root",
+    password="TheDoctor3005",
+    host="localhost",
+    database="perez"
+)
+
+    # create a cursor
+    mycursor = cnx.cursor()
 
 
+    mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", 
+    (id.get(),name.get().upper(),surname.get().upper(),
+    bd.get(),age.get(),sex.get().upper()))
+
+    # Commit changes
+    cnx.commit()
+
+    # close connection
+    cnx.close()
+
+    # clear the text boxes
+    name.delete(0, END)
+    surname.delete(0, END)
+    id.delete(0, END)
+    bd.delete(0, END)
+    age.delete(0, END)
+    sex.delete(0, END)
+
+
+# Create submit-patient button
+submit_patient = Button(root, width=20, text='Add new patient', command=add_patient)
+submit_patient.grid(row=7, column=1, pady=10, padx=10)
 
 
 
 
 root.mainloop()
 
-
+# (Only for debuggin purposes)
+result = pd.read_sql("SELECT * FROM PATIENT",cnx)
+print(result)
