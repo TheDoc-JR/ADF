@@ -13,4 +13,14 @@ cnx = sqlc.connect(
 mycursor = cnx.cursor()
 
 
+root = Tk()
+root.title('CLINIC DATA FINDER')
+root.geometry("800x800")
+
+
+
+
+
+root.mainloop()
+
 
