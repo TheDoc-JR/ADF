@@ -13,6 +13,18 @@ cnx = sqlc.connect(
 # Create a cursor
 mycursor = cnx.cursor()
 
+# Create patients table
+mycursor.execute("DROP TABLE IF EXISTS ENZYMES")
+mycursor.execute("DROP TABLE IF EXISTS COMPLETE_BLOOD_COUNT")
+mycursor.execute("DROP TABLE IF EXISTS BIOCHEMISTRY")
+mycursor.execute("DROP TABLE IF EXISTS PATIENT")
+mycursor.execute("CREATE TABLE PATIENT(\n"
+    "ID INT PRIMARY KEY,\n"
+    "Name VARCHAR(20),\n"
+    "Last_name VARCHAR(20),\n"
+    "Birth_date DATE,\n"
+    "Age INT,\n"
+    "Sex CHAR(1))")
 
 # Config the GUI
 root = Tk()
@@ -21,7 +33,7 @@ root.geometry("400x400")
 
 # Create the head message
 welcome = Label(root, width=50, text="CLINIC DATA FINDER")
-welcome.grid(row=0, column=0, columnspan=2)
+welcome.grid(row=0, column=0, columnspan=3)
 
 # Create the data boxes
 name = Entry(root, width=30)
@@ -50,6 +62,9 @@ age_label = Label(root, text="Current age:")
 age_label.grid(row=5, column=0)
 sex_label = Label(root, text="Gender:")
 sex_label.grid(row=6, column=0)
+
+
+
 
 
 
