@@ -113,8 +113,10 @@ def display():
 
     # create data in panda style
     r= pd.read_sql("SELECT * FROM PATIENT",cnx)
-    results = Label(root, text=r)
-    results.grid(row=9, column=1)
+    results_frame = LabelFrame(root, width=40)
+    results_frame.grid(row=9, column=1)
+    results = Label(results_frame, text=r, pady=10, padx=10)
+    results.pack()
 
     # close connection
     cnx.close()
