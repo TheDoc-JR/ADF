@@ -56,17 +56,24 @@ def logpw():
         messagebox.showinfo("","ACCESS GRANTED!")
     else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
     pw.delete(0, END)
-    
+
 # Add Login button
 i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
 
 logbtn = Button(root, image=i, borderwidth=0, command=logpw)
 logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
 
+# Create quit function
+def xit():
+    q = messagebox.askyesno("","Hey Doc!\nare you sure you want to exit?")
+    if q == 1:
+        root.destroy()
+    else: pass
+
 # Add Quit button
 q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\quit_button.png")
 
-qbtn = Button(root, image=q, borderwidth=0)
+qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 
 # Add Password entry
