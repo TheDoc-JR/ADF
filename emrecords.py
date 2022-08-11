@@ -30,12 +30,12 @@ mycursor.execute("CREATE TABLE PATIENT(\n"
 # Config the GUI
 root = Tk()
 root.title('CLINIC DATA FINDER')
-root.geometry("612x360")
+root.geometry("690x291")
 
 # Set a background image
-bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginBackground.jpg"))
+bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\BG_50.jpg"))
 
-canv = Canvas(root, width=612, height=360)
+canv = Canvas(root, width=690, height=291)
 canv.pack(fill="both", expand=True)
 canv.create_image(0, 0, image=bg, anchor="nw")
 
@@ -46,6 +46,21 @@ resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red")
 
-log_img_window = canv.create_window(256, 60, anchor="nw", window=label)
+log_img_window = canv.create_window(26, 20, anchor="nw", window=label)
+
+
+
+# Add Login Button
+i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
+
+logbtn = Button(root, image=i, borderwidth=0)
+logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
+
+
+
+
+
+
+
 
 root.mainloop()
