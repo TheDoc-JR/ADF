@@ -41,25 +41,26 @@ canv.create_image(0, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginImage.jpeg")
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginImage-modified.jpg")
 resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
-label = Label(root, image=new_pic, highlightcolor="red")
+label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
 log_img_window = canv.create_window(26, 20, anchor="nw", window=label)
 
 
 
-# Add Login Button
+# Add Login button
 i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
 
 logbtn = Button(root, image=i, borderwidth=0)
 logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
 
+# Add Quit button
+q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\quit_button.png")
 
-
-
-
+qbtn = Button(root, image=q, borderwidth=0)
+qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 
 
 
