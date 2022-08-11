@@ -39,5 +39,13 @@ canv = Canvas(root, width=612, height=360)
 canv.pack(fill="both", expand=True)
 canv.create_image(0, 0, image=bg, anchor="nw")
 
+# Create Login frame
+# Add Dr Image
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginImage.jpeg")
+resized = log_img.resize((100,100), Image.ANTIALIAS)
+new_pic = ImageTk.PhotoImage(resized)
+label = Label(root, image=new_pic, highlightcolor="red")
+
+log_img_window = canv.create_window(256, 60, anchor="nw", window=label)
 
 root.mainloop()
