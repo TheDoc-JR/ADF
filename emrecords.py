@@ -1,4 +1,5 @@
 from tkinter import messagebox
+from tkinter.font import BOLD
 import pandas as pd
 from tkinter import *
 import mysql.connector as sqlc
@@ -47,7 +48,7 @@ resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
-log_img_window = canv.create_window(80, 20, anchor="nw", window=label)
+log_img_window = canv.create_window(75, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
@@ -82,8 +83,9 @@ pw.config(show="*")
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
 
 
-
-
+# Add greeting message
+greeting = Label(root, text="WELCOME DR. CAROL!", font=("Helvetica",13))
+greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
 
