@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import pandas as pd
 from tkinter import *
 import mysql.connector as sqlc
@@ -48,10 +49,18 @@ label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
 log_img_window = canv.create_window(80, 20, anchor="nw", window=label)
 
+# Create login function
+def logpw():
+    pssw = pw.get()
+    if pssw == "TheDoctor3005":
+        messagebox.showinfo("","ACCESS GRANTED!")
+    else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
+    pw.delete(0, END)
+    
 # Add Login button
 i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
 
-logbtn = Button(root, image=i, borderwidth=0)
+logbtn = Button(root, image=i, borderwidth=0, command=logpw)
 logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
 
 # Add Quit button
@@ -64,5 +73,33 @@ qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 pw = Entry(root)
 
 pw_window = canv.create_window(70, 180, anchor="nw", window=pw)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 root.mainloop()
