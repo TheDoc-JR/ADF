@@ -65,7 +65,7 @@ logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
 
 # Create quit function
 def xit():
-    q = messagebox.askyesno("","Hey Doc!\nare you sure you want to exit?")
+    q = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
     if q == 1:
         root.destroy()
     else: pass
@@ -77,9 +77,9 @@ qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 
 # Add Password entry
-pw = Entry(root)
-
-pw_window = canv.create_window(70, 180, anchor="nw", window=pw)
+pw = Entry(root, font=("Helvetica",13), bd=2)
+pw.config(show="*")
+pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
 
 
 
