@@ -46,9 +46,7 @@ resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
-log_img_window = canv.create_window(26, 20, anchor="nw", window=label)
-
-
+log_img_window = canv.create_window(80, 20, anchor="nw", window=label)
 
 # Add Login button
 i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
@@ -62,6 +60,9 @@ q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\quit_button.png")
 qbtn = Button(root, image=q, borderwidth=0)
 qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 
+# Add Password entry
+pw = Entry(root)
 
+pw_window = canv.create_window(70, 180, anchor="nw", window=pw)
 
 root.mainloop()
