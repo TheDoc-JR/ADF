@@ -34,8 +34,10 @@ root.geometry("612x360")
 
 # Set a background image
 bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginBackground.jpg"))
-bg_img = Label(image=bg)
-bg_img.place(x=0, y=0, relwidth=1, relheight=1)
+
+canv = Canvas(root, width=612, height=360)
+canv.pack(fill="both", expand=True)
+canv.create_image(0, 0, image=bg, anchor="nw")
 
 
 root.mainloop()
