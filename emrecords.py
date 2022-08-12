@@ -52,19 +52,35 @@ log_img_window = canv.create_window(75, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
-    global emr,nbg,ncanv
+    global emr,nbg,ncanv,add_p
     pssw = pw.get()
+    
     if pssw == "TheDoctor3005":
         # Open new records window
         emr = Toplevel()
         emr.title("CLINIC DATA FINDER")
         emr.geometry("700x300")
+        
         # Set a background image
         nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\emr2.jpg"))
 
         ncanv = Canvas(emr, width=600, height=300)
         ncanv.pack(fill="both", expand=True)
-        ncanv.create_image(100, 0, image=nbg, anchor="nw")
+        ncanv.create_image(0, 0, image=nbg, anchor="nw")
+
+        # Add buttons
+        add_p = Button(emr, width=13, height=3, text="Add patient")
+        ncanv.create_window(600, 0, anchor="nw", window=add_p)
+        show_p = Button(emr, width=13, height=3, text="Show patient data")
+        ncanv.create_window(600, 60, anchor="nw", window=show_p)
+        add_r = Button(emr, width=13, height=3, text="Add record")
+        ncanv.create_window(600, 120, anchor="nw", window=add_r)
+        show_r = Button(emr, width=13, height=3, text="Show patient record")
+        ncanv.create_window(600, 180, anchor="nw", window=show_r)
+        ext = Button(emr, width=13, height=3, text="Exit")
+        ncanv.create_window(600, 240, anchor="nw", window=ext)
+        
+    
     else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
     pw.delete(0, END)
 
