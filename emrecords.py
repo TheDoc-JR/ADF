@@ -52,7 +52,7 @@ log_img_window = canv.create_window(75, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
-    global emr,nbg,ncanv,add_p
+    global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,showr_img,ext_img
     pssw = pw.get()
     
     if pssw == "TheDoctor3005":
@@ -69,15 +69,24 @@ def logpw():
         ncanv.create_image(0, 0, image=nbg, anchor="nw")
 
         # Add buttons
-        add_p = Button(emr, width=13, height=3, text="Add patient")
+        addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
+        add_p = Button(emr, width=100, height=55, image=addp_img)
         ncanv.create_window(600, 0, anchor="nw", window=add_p)
-        show_p = Button(emr, width=13, height=3, text="Show patient data")
+        
+        showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
+        show_p = Button(emr, width=100, height=55, image=showp_img)
         ncanv.create_window(600, 60, anchor="nw", window=show_p)
-        add_r = Button(emr, width=13, height=3, text="Add record")
+        
+        addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
+        add_r = Button(emr, width=100, height=55, image=addr_img)
         ncanv.create_window(600, 120, anchor="nw", window=add_r)
-        show_r = Button(emr, width=13, height=3, text="Show patient record")
+        
+        showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
+        show_r = Button(emr, width=100, height=55, image=showr_img)
         ncanv.create_window(600, 180, anchor="nw", window=show_r)
-        ext = Button(emr, width=13, height=3, text="Exit")
+        
+        ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
+        ext = Button(emr, width=100, height=55, image=ext_img)
         ncanv.create_window(600, 240, anchor="nw", window=ext)
         
     
