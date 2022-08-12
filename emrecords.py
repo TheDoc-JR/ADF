@@ -1,4 +1,3 @@
-from ast import Delete
 from tkinter import messagebox
 from tkinter.font import BOLD
 import pandas as pd
@@ -36,7 +35,7 @@ root.title('CLINIC DATA FINDER')
 root.geometry("690x291")
 
 # Set a background image
-bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\BG_50.jpg"))
+bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\BG_50.jpg"))
 
 canv = Canvas(root, width=690, height=291)
 canv.pack(fill="both", expand=True)
@@ -44,7 +43,7 @@ canv.create_image(0, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LP.jpg")
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\LP.jpg")
 resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
@@ -53,14 +52,24 @@ log_img_window = canv.create_window(75, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
+    global emr,nbg,ncanv
     pssw = pw.get()
     if pssw == "TheDoctor3005":
-        messagebox.showinfo("","ACCESS GRANTED!")
+        # Open new records window
+        emr = Toplevel()
+        emr.title("CLINIC DATA FINDER")
+        emr.geometry("700x300")
+        # Set a background image
+        nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\emr2.jpg"))
+
+        ncanv = Canvas(emr, width=600, height=300)
+        ncanv.pack(fill="both", expand=True)
+        ncanv.create_image(100, 0, image=nbg, anchor="nw")
     else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
     pw.delete(0, END)
 
 # Add Login button
-i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Login.png")
+i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\Login.png")
 
 logbtn = Button(root, image=i, borderwidth=0, command=logpw)
 logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
@@ -73,7 +82,7 @@ def xit():
     else: pass
 
 # Add Quit button
-q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Exit_button.png")
+q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\Exit_button.png")
 
 qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(180, 250, anchor="nw", window=qbtn)
