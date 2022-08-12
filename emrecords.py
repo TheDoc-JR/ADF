@@ -44,7 +44,7 @@ canv.create_image(0, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LoginImage-modified.jpg")
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\LP.jpg")
 resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
@@ -73,10 +73,10 @@ def xit():
     else: pass
 
 # Add Quit button
-q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\quit_button.png")
+q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Exit_button.png")
 
 qbtn = Button(root, image=q, borderwidth=0, command=xit)
-qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
+qwindow = canv.create_window(180, 250, anchor="nw", window=qbtn)
 
 # Add Password entry
 pw = Entry(root, font=("Helvetica",13), bd=2)
