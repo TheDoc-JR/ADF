@@ -32,23 +32,24 @@ mycursor.execute("CREATE TABLE PATIENT(\n"
 # Config the GUI
 root = Tk()
 root.title('CLINIC DATA FINDER')
-root.geometry("690x291")
+root.geometry("700x300")
+root.configure(bg='#E1F0ED')
 
 # Set a background image
-bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\BG_50.jpg"))
+bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\BGI.jpg"))
 
-canv = Canvas(root, width=690, height=291)
+canv = Canvas(root, width=500, height=300)
 canv.pack(fill="both", expand=True)
-canv.create_image(0, 0, image=bg, anchor="nw")
+canv.create_image(300, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\LP.jpg")
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\LoginImage-modified.png")
 resized = log_img.resize((100,100), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
-log_img_window = canv.create_window(75, 20, anchor="nw", window=label)
+log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
@@ -94,7 +95,7 @@ def logpw():
     pw.delete(0, END)
 
 # Add Login button
-i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\Login.png")
+i = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\Login-PNG.png")
 
 logbtn = Button(root, image=i, borderwidth=0, command=logpw)
 logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
@@ -107,13 +108,13 @@ def xit():
     else: pass
 
 # Add Quit button
-q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\Exit_button.png")
+q = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\shutdown.png")
 
 qbtn = Button(root, image=q, borderwidth=0, command=xit)
-qwindow = canv.create_window(180, 250, anchor="nw", window=qbtn)
+qwindow = canv.create_window(200, 243, anchor="nw", window=qbtn)
 
 # Add Password entry
-pw = Entry(root, font=("Helvetica",13), bd=2)
+pw = Entry(root, font=("Rockwell",13), bd=2)
 pw.insert(0, "Enter your password")
 
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
@@ -127,7 +128,7 @@ def pw_clear(e):
 pw.bind("<Button-1>", pw_clear )
 
 # Add greeting message
-greeting = Label(root, text="WELCOME DR. CAROL!", font=("Helvetica",13))
+greeting = Label(root, text="WELCOME DR. CAROL!", font=("Bauhaus 93",15), fg="#94D3C8")
 greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
