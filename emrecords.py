@@ -53,7 +53,7 @@ log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
-    global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,showr_img,ext_img
+    global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,showr_img,ext_img,extn
     pssw = pw.get()
     
     if pssw == "TheDoctor3005":
@@ -68,6 +68,14 @@ def logpw():
         ncanv = Canvas(emr, width=600, height=300)
         ncanv.pack(fill="both", expand=True)
         ncanv.create_image(0, 0, image=nbg, anchor="nw")
+
+        #Add exit function
+        def extn():
+            x = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
+            if x == 1:
+                emr.destroy()
+                root.destroy()
+            else: pass
 
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
@@ -87,7 +95,7 @@ def logpw():
         ncanv.create_window(600, 180, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
-        ext = Button(emr, width=100, height=55, image=ext_img)
+        ext = Button(emr, width=100, height=55, image=ext_img, command=extn)
         ncanv.create_window(600, 240, anchor="nw", window=ext)
         
     
