@@ -1,3 +1,4 @@
+from ast import Delete
 from tkinter import messagebox
 from tkinter.font import BOLD
 import pandas as pd
@@ -79,9 +80,17 @@ qwindow = canv.create_window(180, 235, anchor="nw", window=qbtn)
 
 # Add Password entry
 pw = Entry(root, font=("Helvetica",13), bd=2)
-pw.config(show="*")
+pw.insert(0, "Enter your password")
+
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
 
+# Define pw_clear function
+def pw_clear(e):
+    pw.delete(0, END)
+    pw.config(show="*")
+
+# Bind the entry box
+pw.bind("<Button-1>", pw_clear )
 
 # Add greeting message
 greeting = Label(root, text="WELCOME DR. CAROL!", font=("Helvetica",13))
