@@ -33,7 +33,7 @@ def logpw():
     global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,\
            showr_img,ext_img,extn,ap,id,cnx,mycursor, pid,\
            name,pname,surname,psurname,bd,pbd,age,page,sex,\
-           psex, add_patient
+           psex,add_patient,entry_clear
     
     pssw = pw.get()
     
@@ -88,34 +88,69 @@ def logpw():
                    bd,pbd,age,page,sex,psex,add_patient
             
             # Create the data boxes
-            id = Entry(emr)
+            id = Entry(emr, font=("Rockwell",13), bd=2)
+            id.insert(0, "Enter patient's ID")
             
             ncanv.create_window(30, 20, anchor="nw", window=id)
 
-            name = Entry(emr)
+            name = Entry(emr, font=("Rockwell",13), bd=2)
+            name.insert(0, "Patient's name")
             
             ncanv.create_window(30, 60, anchor="nw", window=name)
 
-            surname = Entry(emr)
+            surname = Entry(emr, font=("Rockwell",13), bd=2)
+            surname.insert(0, "Patient's lastname")
             
             ncanv.create_window(30, 100, anchor="nw", window=surname)
 
-            bd = Entry(emr)
+            bd = Entry(emr, font=("Rockwell",13), bd=2)
+            bd.insert(0, "Date of birth (Y-M-D)")
             
             ncanv.create_window(30, 140, anchor="nw", window=bd)
 
-            age = Entry(emr)
+            age = Entry(emr, font=("Rockwell",13), bd=2)
+            age.insert(0, "Patient's age")
             
             ncanv.create_window(30, 180, anchor="nw", window=age)
 
-            sex = Entry(emr)
+            sex = Entry(emr, font=("Rockwell",13), bd=2)
+            sex.insert(0, "Gender ('m' or 'f')")
             
             ncanv.create_window(30, 220, anchor="nw", window=sex)
             
             # Create submit-patient button
-            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient)
-            ncanv.create_window(30, 260, anchor="nw", window=submit_patient)
+            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13))
+            ncanv.create_window(350, 150, anchor="nw", window=submit_patient)
         
+            # Define entry_clear function
+            def entry_clear(e):
+                if id.get() == "Enter patient's ID":
+                    id.delete(0, END)
+            def entry_clear2(e):
+                if name.get() == "Patient's name":
+                    name.delete(0, END)
+            def entry_clear3(e):
+                if surname.get() == "Patient's lastname":
+                    surname.delete(0, END)
+            def entry_clear4(e):
+                if bd.get() == "Date of birth (Y-M-D)":
+                    bd.delete(0, END)
+            def entry_clear5(e):
+                if age.get() == "Patient's age":
+                    age.delete(0, END)
+            def entry_clear6(e):
+                if sex.get() == "Gender ('m' or 'f')":
+                    sex.delete(0, END)
+                
+
+            # Bind the entry boxes
+            id.bind("<Button-1>", entry_clear )
+            name.bind("<Button-1>", entry_clear2 )
+            surname.bind("<Button-1>", entry_clear3 )
+            bd.bind("<Button-1>", entry_clear4 )
+            age.bind("<Button-1>", entry_clear5 )
+            sex.bind("<Button-1>", entry_clear6 )
+
 
         # Create submit-patient function
         def add_patient():
@@ -162,9 +197,6 @@ def logpw():
 
 
         
-
-
-
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
         add_p = Button(emr, width=100, height=55, image=addp_img, command=ap)
