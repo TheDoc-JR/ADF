@@ -38,8 +38,9 @@ def logpw():
     pssw = pw.get()
     
     if pssw == "q":
+        root.destroy()
         # Open new records window
-        emr = Toplevel()
+        emr = Tk()
         emr.title("ABLORH® DATA FINDER")
         emr.geometry("700x300")
         
@@ -187,7 +188,7 @@ def logpw():
             # close connection
             cnx.close()
 
-            # clear the text boxes
+            # destroy the entry boxes and submit button
             name.destroy()
             surname.destroy()
             id.destroy()
@@ -284,4 +285,4 @@ greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
 
-root.mainloop()
+mainloop()
