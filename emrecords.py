@@ -85,7 +85,7 @@ def logpw():
         # Create ap function
         def ap():
             global id,pid,name,pname,surname,psurname,\
-                   bd,pbd,age,page,sex,psex,add_patient
+                   bd,pbd,age,page,sex,psex,add_patient,submit_patient
             
             # Create the data boxes
             id = Entry(emr, font=("Rockwell",13), bd=2)
@@ -156,7 +156,7 @@ def logpw():
         def add_patient():
             global pid,pname,psurname,pbd,page,psex
 
-            pid = int(id.get())
+            pid = id.get()
             pname = name.get()
             psurname = surname.get()
             pbd = bd.get()
@@ -188,12 +188,13 @@ def logpw():
             cnx.close()
 
             # clear the text boxes
-            name.delete(0, END)
-            surname.delete(0, END)
-            id.delete(0, END)
-            bd.delete(0, END)
-            age.delete(0, END)
-            sex.delete(0, END)
+            name.destroy()
+            surname.destroy()
+            id.destroy()
+            bd.destroy()
+            age.destroy()
+            sex.destroy()
+            submit_patient.destroy()
 
 
         
