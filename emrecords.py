@@ -5,33 +5,10 @@ from tkinter import *
 import mysql.connector as sqlc
 from PIL import Image, ImageTk
 
-# Establish connection to the database
-cnx = sqlc.connect(
-    user="root",
-    password="TheDoctor3005",
-    host="localhost",
-    database="perez"
-)
-
-# Create a cursor
-mycursor = cnx.cursor()
-
-# Create patients table
-mycursor.execute("DROP TABLE IF EXISTS ENZYMES")
-mycursor.execute("DROP TABLE IF EXISTS COMPLETE_BLOOD_COUNT")
-mycursor.execute("DROP TABLE IF EXISTS BIOCHEMISTRY")
-mycursor.execute("DROP TABLE IF EXISTS PATIENT")
-mycursor.execute("CREATE TABLE PATIENT(\n"
-    "ID INT PRIMARY KEY,\n"
-    "Name VARCHAR(20),\n"
-    "Last_name VARCHAR(20),\n"
-    "Birth_date DATE,\n"
-    "Age INT,\n"
-    "Sex CHAR(1))")
 
 # Config the GUI
 root = Tk()
-root.title('CLINIC DATA FINDER')
+root.title('ABLORH® DATA FINDER')
 root.geometry("700x300")
 root.configure(bg='#E1F0ED')
 
@@ -53,13 +30,17 @@ log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
 
 # Create login function
 def logpw():
-    global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,showr_img,ext_img,extn
+    global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,\
+           showr_img,ext_img,extn,ap,id,cnx,mycursor, pid,\
+           name,pname,surname,psurname,bd,pbd,age,page,sex,\
+           psex, add_patient
+    
     pssw = pw.get()
     
-    if pssw == "TheDoctor3005":
+    if pssw == "q":
         # Open new records window
         emr = Toplevel()
-        emr.title("CLINIC DATA FINDER")
+        emr.title("ABLORH® DATA FINDER")
         emr.geometry("700x300")
         
         # Set a background image
@@ -69,7 +50,31 @@ def logpw():
         ncanv.pack(fill="both", expand=True)
         ncanv.create_image(0, 0, image=nbg, anchor="nw")
 
-        #Add exit function
+        # Establish connection to the database
+        cnx = sqlc.connect(
+            user="root",
+            password="TheDoctor3005",
+            host="localhost",
+            database="perez"
+        )
+
+        # Create a cursor
+        mycursor = cnx.cursor()
+
+        # Create patients table
+        mycursor.execute("DROP TABLE IF EXISTS ENZYMES")
+        mycursor.execute("DROP TABLE IF EXISTS COMPLETE_BLOOD_COUNT")
+        mycursor.execute("DROP TABLE IF EXISTS BIOCHEMISTRY")
+        mycursor.execute("DROP TABLE IF EXISTS PATIENT")
+        mycursor.execute("CREATE TABLE PATIENT(\n"
+            "ID INT PRIMARY KEY,\n"
+            "Name VARCHAR(20),\n"
+            "Last_name VARCHAR(20),\n"
+            "Birth_date DATE,\n"
+            "Age INT,\n"
+            "Sex CHAR(1))")
+
+        # Add exit function
         def extn():
             x = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
             if x == 1:
@@ -77,9 +82,92 @@ def logpw():
                 root.destroy()
             else: pass
 
+        # Create ap function
+        def ap():
+            global id,pid,name,pname,surname,psurname,\
+                   bd,pbd,age,page,sex,psex,add_patient
+            
+            # Create the data boxes
+            id = Entry(emr)
+            
+            ncanv.create_window(30, 20, anchor="nw", window=id)
+
+            name = Entry(emr)
+            
+            ncanv.create_window(30, 60, anchor="nw", window=name)
+
+            surname = Entry(emr)
+            
+            ncanv.create_window(30, 100, anchor="nw", window=surname)
+
+            bd = Entry(emr)
+            
+            ncanv.create_window(30, 140, anchor="nw", window=bd)
+
+            age = Entry(emr)
+            
+            ncanv.create_window(30, 180, anchor="nw", window=age)
+
+            sex = Entry(emr)
+            
+            ncanv.create_window(30, 220, anchor="nw", window=sex)
+            
+            # Create submit-patient button
+            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient)
+            ncanv.create_window(30, 260, anchor="nw", window=submit_patient)
+        
+
+        # Create submit-patient function
+        def add_patient():
+            global pid,pname,psurname,pbd,page,psex
+
+            pid = int(id.get())
+            pname = name.get()
+            psurname = surname.get()
+            pbd = bd.get()
+            page = age.get()
+            psex = sex.get()
+
+            # establish connection to the database
+            cnx = sqlc.connect(
+            user="root",
+            password="TheDoctor3005",
+            host="localhost",
+            database="perez"
+        )
+
+            # create a cursor
+            mycursor = cnx.cursor()
+
+            try:
+                mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", 
+                (pid, pname.upper(),psurname.upper(), pbd, page, psex.upper()))
+
+                # commit changes
+                cnx.commit()
+                messagebox.showinfo('GOOD NEWS! :)','PATIENT SUCCESFULLY ADDED!')
+            except:
+                messagebox.showerror('BAD NEWS :(','IT HAS BEEN AN ERROR ADDING THIS PATIENT')
+
+            # close connection
+            cnx.close()
+
+            # clear the text boxes
+            name.delete(0, END)
+            surname.delete(0, END)
+            id.delete(0, END)
+            bd.delete(0, END)
+            age.delete(0, END)
+            sex.delete(0, END)
+
+
+        
+
+
+
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
-        add_p = Button(emr, width=100, height=55, image=addp_img)
+        add_p = Button(emr, width=100, height=55, image=addp_img, command=ap)
         ncanv.create_window(600, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
