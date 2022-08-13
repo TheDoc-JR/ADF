@@ -286,7 +286,8 @@ def logpw():
                 bch.destroy()
                 enzy.destroy()
                 tok.destroy()
-                
+                sel.destroy()
+
                 # Add data depending on the test selected
                 test = tests.get()
 
@@ -308,11 +309,57 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ht)
 
-                    # Create submit-patient button
-                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13))
+                    td = Entry(emr, font=("Rockwell",13), bd=2)
+                    td.insert(0, "Test date")
+                    
+                    ncanv.create_window(30, 140, anchor="nw", window=td)
+
+                    # Create submit-test function
+                    def add_tests():
+                        global tRbc,tHb,tHt
+
+                        tRbc = Rbc.get()
+                        tHb = Hb.get()
+                        tHt = Ht.get()
+                        ttd = td.get()
+
+                        ts = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
+                                ['Hemoglobin (Hb)','g/dL','(13.7-16.5)'],
+                                ['Hematocrit','%','(40-50)']] 
+
+                        data = [ts[0][0], ts[0][1], ts[0][2]]
+                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
+                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+
+                        try:
+                            mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tRbc,data[1],data[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tRbc,data[1],data[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tRbc,data[1],data[2],ttd,prid))
+
+                            messagebox.showinfo("","Data successfully added!")
+                        except:
+                            messagebox.showerror("","Process failed.")
+                        
+                        # Clear the window
+                        Rbc.destroy()
+                        Hb.destroy()
+                        Ht.destroy()
+                        td.destroy()
+                        submit_test.destroy()
+
+                            
+
+
+                    # Create submit-test button
+                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_tests)
                     ncanv.create_window(350, 150, anchor="nw", window=submit_test)
                 
-                    # Define entry_clear function
+                    # Define test_clear function
                     def test_clear(e):
                         if Rbc.get() == "Red blood cells (RBC)":
                             Rbc.delete(0, END)
@@ -322,11 +369,15 @@ def logpw():
                     def test_clear3(e):
                         if Ht.get() == "Hematocrit":
                             Ht.delete(0, END)
+                    def test_clear4(e):
+                        if td.get() == "Test date":
+                            td.delete(0, END)
 
                     # Bind the entry boxes
                     Rbc.bind("<Button-1>", test_clear )
                     Hb.bind("<Button-1>", test_clear2 )
                     Ht.bind("<Button-1>", test_clear3 )
+                    td.bind("<Button-1>", test_clear4 )
                 
                 else: 
                     print("Else")
