@@ -32,13 +32,16 @@ log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
 def logpw():
     global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,\
            showr_img,ext_img,extn,ap,id,cnx,mycursor, pid,\
-           name,pname,surname,psurname,bd,pbd,age,page,sex,\
-           psex,add_patient,entry_clear
+           name,pname,surname,psurname,bd,pbd,age,page,\
+           psex,add_patient,idbox
     
     pssw = pw.get()
     
     if pssw == "q":
         root.destroy()
+        # Store every ID of every patient successfully added to the database
+        idbox = []
+        
         # Open new records window
         emr = Tk()
         emr.title("ABLORH® DATA FINDER")
@@ -87,13 +90,15 @@ def logpw():
         def ap():
             global id,pid,name,pname,surname,psurname,\
                    bd,pbd,age,page,psex,add_patient,\
-                   submit_patient,gender,female,male
+                   submit_patient,gender,female,male,idbox
             
             # Create the data boxes
             id = Entry(emr, font=("Rockwell",13), bd=2)
             id.insert(0, "Enter patient's ID")
             
             ncanv.create_window(30, 20, anchor="nw", window=id)
+
+            
 
             name = Entry(emr, font=("Rockwell",13), bd=2)
             name.insert(0, "Patient's name")
@@ -182,7 +187,11 @@ def logpw():
 
                 # commit changes
                 cnx.commit()
+
                 messagebox.showinfo('GOOD NEWS! :)','PATIENT SUCCESFULLY ADDED!')
+
+                idbox.append(pid)
+                
             except:
                 messagebox.showerror('BAD NEWS :(','IT HAS BEEN AN ERROR ADDING THIS PATIENT')
 
@@ -225,7 +234,46 @@ def logpw():
             ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
             ncanv.create_window(290, 200, anchor="nw", window=ok)
 
+
+        # Create add-records function
+        def addr():
+            global rid, prid
+            # Create the id box
+            rid = Entry(emr, font=("Rockwell",13), bd=2)
+            rid.insert(0, "Enter patient's ID")
+            
+            ncanv.create_window(230, 70, anchor="nw", window=rid)
+
+            # Define id_clear function
+            def id_clear(e):
+                if rid.get() == "Enter patient's ID":
+                    rid.delete(0, END)
+
+            # Bind the id box
+            rid.bind("<Button-1>", id_clear )
+
+            # create ok button
+            rok = Button(emr, text="OK", font=("Rockwell",13), command=okr)
+            ncanv.create_window(290, 200, anchor="nw", window=rok)
+
+        # Check if patient in database
+        def okr():
+            global prid
+
+            prid = rid.get()
+
+            if prid in idbox:
+                print("yes")
+            else: 
+                messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
+
+            
         
+            
+
+              
+
+
         
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
@@ -237,7 +285,7 @@ def logpw():
         ncanv.create_window(600, 60, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
-        add_r = Button(emr, width=100, height=55, image=addr_img)
+        add_r = Button(emr, width=100, height=55, image=addr_img, command=addr)
         ncanv.create_window(600, 120, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
