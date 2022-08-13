@@ -86,7 +86,8 @@ def logpw():
         # Create ap function
         def ap():
             global id,pid,name,pname,surname,psurname,\
-                   bd,pbd,age,page,sex,psex,add_patient,submit_patient
+                   bd,pbd,age,page,psex,add_patient,\
+                   submit_patient,gender,female,male
             
             # Create the data boxes
             id = Entry(emr, font=("Rockwell",13), bd=2)
@@ -114,10 +115,12 @@ def logpw():
             
             ncanv.create_window(30, 180, anchor="nw", window=age)
 
-            sex = Entry(emr, font=("Rockwell",13), bd=2)
-            sex.insert(0, "Gender ('m' or 'f')")
-            
-            ncanv.create_window(30, 220, anchor="nw", window=sex)
+            gender = StringVar()
+            gender.set(' ')
+            female = Radiobutton(emr, text="Female", variable=gender, value='F')
+            male = Radiobutton(emr, text="Male", variable=gender, value='M')
+            ncanv.create_window(30, 220, anchor="nw", window=female)
+            ncanv.create_window(150, 220, anchor="nw", window=male)
             
             # Create submit-patient button
             submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13))
@@ -139,9 +142,7 @@ def logpw():
             def entry_clear5(e):
                 if age.get() == "Patient's age":
                     age.delete(0, END)
-            def entry_clear6(e):
-                if sex.get() == "Gender ('m' or 'f')":
-                    sex.delete(0, END)
+            
                 
 
             # Bind the entry boxes
@@ -150,7 +151,7 @@ def logpw():
             surname.bind("<Button-1>", entry_clear3 )
             bd.bind("<Button-1>", entry_clear4 )
             age.bind("<Button-1>", entry_clear5 )
-            sex.bind("<Button-1>", entry_clear6 )
+            
 
 
         # Create submit-patient function
@@ -162,7 +163,7 @@ def logpw():
             psurname = surname.get()
             pbd = bd.get()
             page = age.get()
-            psex = sex.get()
+            psex = gender.get()
 
             # establish connection to the database
             cnx = sqlc.connect(
@@ -177,7 +178,7 @@ def logpw():
 
             try:
                 mycursor.execute("INSERT INTO PATIENT VALUES(%s,%s,%s,%s,%s,%s)", 
-                (pid, pname.upper(),psurname.upper(), pbd, page, psex.upper()))
+                (pid, pname.upper(),psurname.upper(), pbd, page, psex))
 
                 # commit changes
                 cnx.commit()
@@ -194,7 +195,8 @@ def logpw():
             id.destroy()
             bd.destroy()
             age.destroy()
-            sex.destroy()
+            female.destroy()
+            male.destroy()
             submit_patient.destroy()
 
 
