@@ -237,7 +237,7 @@ def logpw():
 
         # Create add-records function
         def addr():
-            global rid, prid
+            global rid,prid,rok
             # Create the id box
             rid = Entry(emr, font=("Rockwell",13), bd=2)
             rid.insert(0, "Enter patient's ID")
@@ -263,7 +263,22 @@ def logpw():
             prid = rid.get()
 
             if prid in idbox:
-                print("yes")
+                rid.destroy()
+                rok.destroy()
+                # Show test tables to select
+                sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Rockwell",12))
+                ncanv.create_window(120, 70, anchor="nw", window=sel)
+                
+                tests = StringVar()
+                tests.set(" ")
+                
+                cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=tests, value='COMPLETE BLOOD COUNT', font=("Rockwell",12))
+                bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=tests, value='BIOCHEMISTRY', font=("Rockwell",12))
+                enzy = Radiobutton(emr, text="ENZYMES", variable=tests, value='ENZYMES', font=("Rockwell",12))
+                
+                ncanv.create_window(180, 160, anchor="nw", window=cbc)
+                ncanv.create_window(120, 200, anchor="nw", window=bch)
+                ncanv.create_window(350, 200, anchor="nw", window=enzy)
             else: 
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
