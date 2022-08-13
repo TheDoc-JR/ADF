@@ -117,8 +117,8 @@ def logpw():
 
             gender = StringVar()
             gender.set(' ')
-            female = Radiobutton(emr, text="Female", variable=gender, value='F')
-            male = Radiobutton(emr, text="Male", variable=gender, value='M')
+            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12))
+            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12))
             ncanv.create_window(30, 220, anchor="nw", window=female)
             ncanv.create_window(150, 220, anchor="nw", window=male)
             
@@ -199,7 +199,24 @@ def logpw():
             male.destroy()
             submit_patient.destroy()
 
+        # Create show patients records function
+        def display():
+            global r
+            # establish connection to the database
+            cnx = sqlc.connect(
+            user="root",
+            password="TheDoctor3005",
+            host="localhost",
+            database="perez"
+        )
 
+            # create data in panda style
+            r = pd.read_sql("SELECT * FROM PATIENT",cnx)
+            rp = Label(emr, text=r)
+            ncanv.create_window(200, 150, anchor="nw", window=rp)
+
+            # Debugging purposes
+            print(r)
         
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
@@ -207,7 +224,7 @@ def logpw():
         ncanv.create_window(600, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
-        show_p = Button(emr, width=100, height=55, image=showp_img)
+        show_p = Button(emr, width=100, height=55, image=showp_img, command=display)
         ncanv.create_window(600, 60, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
@@ -221,6 +238,10 @@ def logpw():
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
         ext = Button(emr, width=100, height=55, image=ext_img, command=extn)
         ncanv.create_window(600, 240, anchor="nw", window=ext)
+
+        emr.mainloop
+
+
         
     
     else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
@@ -287,4 +308,4 @@ greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
 
-mainloop()
+root.mainloop()
