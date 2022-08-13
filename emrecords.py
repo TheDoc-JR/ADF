@@ -73,7 +73,7 @@ def logpw():
             "Last_name VARCHAR(20),\n"
             "Birth_date DATE,\n"
             "Age INT,\n"
-            "Sex CHAR(1))")
+            "Gender CHAR(1))")
 
         # Add exit function
         def extn():
@@ -213,10 +213,19 @@ def logpw():
             # create data in panda style
             r = pd.read_sql("SELECT * FROM PATIENT",cnx)
             rp = Label(emr, text=r)
-            ncanv.create_window(200, 150, anchor="nw", window=rp)
 
-            # Debugging purposes
-            print(r)
+            ncanv.create_window(180, 150, anchor="nw", window=rp)
+
+            # create ok function
+            def okf():
+                rp.destroy()
+                ok.destroy()
+            
+            # create ok button
+            ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
+            ncanv.create_window(290, 200, anchor="nw", window=ok)
+
+        
         
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
