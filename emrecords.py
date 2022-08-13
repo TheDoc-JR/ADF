@@ -78,6 +78,26 @@ def logpw():
             "Age INT,\n"
             "Gender CHAR(1))")
 
+        def create_data(test):
+            """Using SQL and given a table name as an argument, 
+            creates a table to store the data of any patient's tests."""
+            
+            mycursor.execute("CREATE TABLE {}(\n"
+            "Test_ID INT PRIMARY KEY AUTO_INCREMENT,\n" # default data
+            "Test_name VARCHAR(80),\n" # default data
+            "Result FLOAT,\n" # input data
+            "Units VARCHAR(80),\n" # default data
+            "Reference_values CHAR(200),\n" # default data
+            "Test_date DATE,\n" # input data
+            "Patient_ID INT,\n" 
+            "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" 
+        ")".format(test))
+
+        # Create tests table
+        create_data('COMPLETE_BLOOD_COUNT')
+        create_data('BIOCHEMISTRY')
+        create_data('ENZYMES')
+
         # Add exit function
         def extn():
             x = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
@@ -97,8 +117,6 @@ def logpw():
             id.insert(0, "Enter patient's ID")
             
             ncanv.create_window(30, 20, anchor="nw", window=id)
-
-            
 
             name = Entry(emr, font=("Rockwell",13), bd=2)
             name.insert(0, "Patient's name")
@@ -258,13 +276,65 @@ def logpw():
 
         # Check if patient in database
         def okr():
-            global prid
+            global prid,add_tests,okt,tok
 
             prid = rid.get()
+            
+            # create ok function
+            def okt():
+                cbc.destroy()
+                bch.destroy()
+                enzy.destroy()
+                tok.destroy()
+                
+                # Add data depending on the test selected
+                test = tests.get()
+
+                if test == 'COMPLETE BLOOD COUNT':
+
+                    # create test boxes
+                    Rbc = Entry(emr, font=("Rockwell",13), bd=2)
+                    Rbc.insert(0, "Red blood cells (RBC)")
+                    
+                    ncanv.create_window(30, 20, anchor="nw", window=Rbc)
+
+                    Hb = Entry(emr, font=("Rockwell",13), bd=2)
+                    Hb.insert(0, "Hemoglobin (Hb)")
+                    
+                    ncanv.create_window(30, 60, anchor="nw", window=Hb)
+
+                    Ht = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ht.insert(0, "Hematocrit")
+                    
+                    ncanv.create_window(30, 100, anchor="nw", window=Ht)
+
+                    # Create submit-patient button
+                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13))
+                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                
+                    # Define entry_clear function
+                    def test_clear(e):
+                        if Rbc.get() == "Red blood cells (RBC)":
+                            Rbc.delete(0, END)
+                    def test_clear2(e):
+                        if Hb.get() == "Hemoglobin (Hb)":
+                            Hb.delete(0, END)
+                    def test_clear3(e):
+                        if Ht.get() == "Hematocrit":
+                            Ht.delete(0, END)
+
+                    # Bind the entry boxes
+                    Rbc.bind("<Button-1>", test_clear )
+                    Hb.bind("<Button-1>", test_clear2 )
+                    Ht.bind("<Button-1>", test_clear3 )
+                
+                else: 
+                    print("Else")
 
             if prid in idbox:
                 rid.destroy()
                 rok.destroy()
+                
                 # Show test tables to select
                 sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Rockwell",12))
                 ncanv.create_window(120, 70, anchor="nw", window=sel)
@@ -279,6 +349,12 @@ def logpw():
                 ncanv.create_window(180, 160, anchor="nw", window=cbc)
                 ncanv.create_window(120, 200, anchor="nw", window=bch)
                 ncanv.create_window(350, 200, anchor="nw", window=enzy)
+
+                # create ok button
+                tok = Button(emr, text="OK", font=("Rockwell",13), command=okt)
+                ncanv.create_window(270, 250, anchor="nw", window=tok)
+
+
             else: 
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
