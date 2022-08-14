@@ -700,7 +700,7 @@ def logpw():
 
                         if trc.empty == False:  
                             trcp = Label(emr, text=trc)
-                            ncanv.create_window(60, 50, anchor="nw", window=trcp)
+                            ncanv.create_window(30, 50, anchor="nw", window=trcp)
                             
                             # create ok function
                             def tokf():
@@ -713,8 +713,41 @@ def logpw():
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
-                    else:
-                        print("STH STILL WRONG")
+                    
+                    
+                    if pshow_tests == 'BIOCHEMISTRY':
+
+                        # establish connection to the database
+                        cnx = sqlc.connect(
+                        user="root",
+                        password="TheDoctor3005",
+                        host="localhost",
+                        database="perez"
+                    )
+                    
+                        # create data in panda style
+                        trb = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN BIOCHEMISTRY\
+                                        ON ID = {}".format(tpcheckid), cnx)
+                        
+
+                        if trb.empty == False:  
+                            trbp = Label(emr, text=trb)
+                            ncanv.create_window(30, 50, anchor="nw", window=trbp)
+                            
+                            # create ok function
+                            def tokf():
+                                trbp.destroy()
+                                okc.destroy()
+                            
+                            # create ok button
+                            okb = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            ncanv.create_window(290, 200, anchor="nw", window=okb)
+
+                        else:
+                            messagebox.showerror("","NO TEST DATA AVAILABLE")
 
                 # Show test tables to select
                 show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Rockwell",12))
