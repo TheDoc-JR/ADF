@@ -515,6 +515,98 @@ def logpw():
                     Ua.bind("<Button-1>", test_clear3 )
                     td.bind("<Button-1>", test_clear4 )
 
+                else:
+
+                    # create test boxes
+                    ASTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    ASTr.insert(0, "AST/GOT")
+                    
+                    ncanv.create_window(30, 20, anchor="nw", window=ASTr)
+
+                    ALTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    ALTr.insert(0, "ALT/GPT")
+                    
+                    ncanv.create_window(30, 60, anchor="nw", window=ALTr)
+
+                    GGTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    GGTr.insert(0, "GGT")
+                    
+                    ncanv.create_window(30, 100, anchor="nw", window=GGTr)
+
+                    td = Entry(emr, font=("Rockwell",13), bd=2)
+                    td.insert(0, "Test date")
+                    
+                    ncanv.create_window(30, 140, anchor="nw", window=td)
+
+                    # Create submit-test function
+                    def add_enzy():
+                        global tASTr,tALTr,tGGTr
+
+                        tASTr = ASTr.get()
+                        tALTr = ALTr.get()
+                        tGGTr = GGTr.get()
+                        ttd = td.get()
+
+                        ts = [['AST','UI/L','(5-40)'],
+                            ['ALT','UI/L','(5-41)'],
+                            ['Gamma-GT','UI/L','(<60)']]
+
+                        data = [ts[0][0], ts[0][1], ts[0][2]]
+                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
+                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+
+                        try:
+                            mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tASTr,data[1],data[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tALTr,data2[1],data2[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tGGTr,data3[1],data3[2],ttd,prid))
+
+                            messagebox.showinfo("","Data successfully added!")
+
+                            # commit the changes
+                            cnx.commit()
+
+                            print(pd.read_sql("SELECT * FROM ENZYMES", cnx))
+
+                        except:
+                            messagebox.showerror("","Process failed.")
+                        
+                        finally:
+                            # Clear the window
+                            ASTr.destroy()
+                            ALTr.destroy()
+                            GGTr.destroy()
+                            td.destroy()
+                            submit_test.destroy()
+
+                    # Create submit-test button
+                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_enzy)
+                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                
+                    # Define test_clear function
+                    def test_clear(e):
+                        if ASTr.get() == "AST/GOT":
+                            ASTr.delete(0, END)
+                    def test_clear2(e):
+                        if ALTr.get() == "ALT/GPT":
+                            ALTr.delete(0, END)
+                    def test_clear3(e):
+                        if GGTr.get() == "GGT":
+                            GGTr.delete(0, END)
+                    def test_clear4(e):
+                        if td.get() == "Test date":
+                            td.delete(0, END)
+
+                    # Bind the entry boxes
+                    ASTr.bind("<Button-1>", test_clear )
+                    ALTr.bind("<Button-1>", test_clear2 )
+                    GGTr.bind("<Button-1>", test_clear3 )
+                    td.bind("<Button-1>", test_clear4 )
+
             if prid in idbox:
                 rid.destroy()
                 rok.destroy()
