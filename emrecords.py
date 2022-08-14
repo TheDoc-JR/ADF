@@ -64,11 +64,12 @@ def logpw():
         # Create a cursor
         mycursor = cnx.cursor()
 
-        # Create patients table
+        # Drop existing tables and create patients table
         mycursor.execute("DROP TABLE IF EXISTS ENZYMES")
         mycursor.execute("DROP TABLE IF EXISTS COMPLETE_BLOOD_COUNT")
         mycursor.execute("DROP TABLE IF EXISTS BIOCHEMISTRY")
         mycursor.execute("DROP TABLE IF EXISTS PATIENT")
+        
         mycursor.execute("CREATE TABLE PATIENT(\n"
             "ID INT PRIMARY KEY,\n"
             "Name VARCHAR(20),\n"
@@ -355,7 +356,7 @@ def logpw():
                     ncanv.create_window(30, 140, anchor="nw", window=td)
 
                     # Create submit-test function
-                    def add_tests():
+                    def add_cbc():
                         global tRbc,tHb,tHt
 
                         tRbc = Rbc.get()
@@ -376,27 +377,30 @@ def logpw():
                             "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tRbc,data[1],data[2],ttd,prid))
 
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tRbc,data[1],data[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tHb,data2[1],data2[2],ttd,prid))
 
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tRbc,data[1],data[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tHt,data3[1],data3[2],ttd,prid))
 
                             messagebox.showinfo("","Data successfully added!")
+
+                            # commit the changes
+                            cnx.commit()
+                            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", cnx))
+
                         except:
                             messagebox.showerror("","Process failed.")
                         
-                        # Clear the window
-                        Rbc.destroy()
-                        Hb.destroy()
-                        Ht.destroy()
-                        td.destroy()
-                        submit_test.destroy()
-
-                            
-
+                        finally:
+                            # Clear the window
+                            Rbc.destroy()
+                            Hb.destroy()
+                            Ht.destroy()
+                            td.destroy()
+                            submit_test.destroy()
 
                     # Create submit-test button
-                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_tests)
+                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_cbc)
                     ncanv.create_window(350, 150, anchor="nw", window=submit_test)
                 
                     # Define test_clear function
@@ -419,8 +423,97 @@ def logpw():
                     Ht.bind("<Button-1>", test_clear3 )
                     td.bind("<Button-1>", test_clear4 )
                 
-                else: 
-                    print("Else")
+                if test == 'BIOCHEMISTRY':
+
+                    # create test boxes
+                    Gc = Entry(emr, font=("Rockwell",13), bd=2)
+                    Gc.insert(0, "Glucose")
+                    
+                    ncanv.create_window(30, 20, anchor="nw", window=Gc)
+
+                    Ct = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ct.insert(0, "Creatinine")
+                    
+                    ncanv.create_window(30, 60, anchor="nw", window=Ct)
+
+                    Ua = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ua.insert(0, "Uric acid")
+                    
+                    ncanv.create_window(30, 100, anchor="nw", window=Ua)
+
+                    td = Entry(emr, font=("Rockwell",13), bd=2)
+                    td.insert(0, "Test date")
+                    
+                    ncanv.create_window(30, 140, anchor="nw", window=td)
+
+                    # Create submit-test function
+                    def add_bio():
+                        global tGc,tCt,tUa
+
+                        tGc = Gc.get()
+                        tCt = Ct.get()
+                        tUa = Ua.get()
+                        ttd = td.get()
+
+                        ts = [['Glucose','mg/dL','(74-109)'],
+                            ['Creatinine','mg/dL','(0.7-1.2)'],
+                            ['Uric acid','mg/dL','(3.4-7.0)']]
+
+                        data = [ts[0][0], ts[0][1], ts[0][2]]
+                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
+                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+
+                        try:
+                            mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tGc,data[1],data[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tCt,data2[1],data2[2],ttd,prid))
+
+                            mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tUa,data3[1],data3[2],ttd,prid))
+
+                            messagebox.showinfo("","Data successfully added!")
+
+                            # commit the changes
+                            cnx.commit()
+
+                            print(pd.read_sql("SELECT * FROM BIOCHEMISTRY", cnx))
+
+                        except:
+                            messagebox.showerror("","Process failed.")
+                        
+                        finally:
+                            # Clear the window
+                            Gc.destroy()
+                            Ct.destroy()
+                            Ua.destroy()
+                            td.destroy()
+                            submit_test.destroy()
+
+                    # Create submit-test button
+                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_bio)
+                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                
+                    # Define test_clear function
+                    def test_clear(e):
+                        if Gc.get() == "Glucose":
+                            Gc.delete(0, END)
+                    def test_clear2(e):
+                        if Ct.get() == "Creatinine":
+                            Ct.delete(0, END)
+                    def test_clear3(e):
+                        if Ua.get() == "Uric acid":
+                            Ua.delete(0, END)
+                    def test_clear4(e):
+                        if td.get() == "Test date":
+                            td.delete(0, END)
+
+                    # Bind the entry boxes
+                    Gc.bind("<Button-1>", test_clear )
+                    Ct.bind("<Button-1>", test_clear2 )
+                    Ua.bind("<Button-1>", test_clear3 )
+                    td.bind("<Button-1>", test_clear4 )
 
             if prid in idbox:
                 rid.destroy()
