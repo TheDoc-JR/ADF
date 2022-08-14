@@ -1,5 +1,4 @@
 from tkinter import messagebox
-from tkinter.font import BOLD
 import pandas as pd
 from tkinter import *
 import mysql.connector as sqlc
@@ -226,31 +225,72 @@ def logpw():
             male.destroy()
             submit_patient.destroy()
 
+
+
         # Create show patients records function
         def display():
-            global r
-            # establish connection to the database
-            cnx = sqlc.connect(
-            user="root",
-            password="TheDoctor3005",
-            host="localhost",
-            database="perez"
-        )
+            global checkid, cnx, checkok
 
-            # create data in panda style
-            r = pd.read_sql("SELECT * FROM PATIENT",cnx)
-            rp = Label(emr, text=r)
-
-            ncanv.create_window(180, 150, anchor="nw", window=rp)
-
-            # create ok function
-            def okf():
-                rp.destroy()
-                ok.destroy()
+            # Create the id box
+            checkid = Entry(emr, font=("Rockwell",13), bd=2)
+            checkid.insert(0, "Enter patient's ID")
             
+            ncanv.create_window(230, 70, anchor="nw", window=checkid)
+
+            # Define id_clear function
+            def id_clear(e):
+                if checkid.get() == "Enter patient's ID":
+                    checkid.delete(0, END)
+
+            # Bind the id box
+            checkid.bind("<Button-1>", id_clear )
+
             # create ok button
-            ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
-            ncanv.create_window(290, 200, anchor="nw", window=ok)
+            checkok = Button(emr, text="OK", font=("Rockwell",13), command=checkokr)
+            ncanv.create_window(290, 200, anchor="nw", window=checkok)
+            
+
+        # Check if patient in database
+        def checkokr():
+            global pcheckid
+
+            pcheckid = checkid.get()
+            
+            if pcheckid in idbox:
+                checkid.destroy()
+                checkok.destroy()
+
+                # establish connection to the database
+                cnx = sqlc.connect(
+                user="root",
+                password="TheDoctor3005",
+                host="localhost",
+                database="perez"
+            )
+
+                # create data in panda style
+                r = pd.read_sql("SELECT * FROM PATIENT WHERE ID = {}".format(pcheckid),cnx)
+                
+                if r.empty == False:  
+                    rp = Label(emr, text=r)
+                    ncanv.create_window(180, 150, anchor="nw", window=rp)
+                    # create ok function
+                    def okf():
+                        rp.destroy()
+                        ok.destroy()
+                    
+                    # create ok button
+                    ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
+                    ncanv.create_window(290, 200, anchor="nw", window=ok)
+                
+                else:
+                    messagebox.showerror("","NO PATIENT DATA AVAILABLE")
+            else:
+                messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
+                checkid.destroy()
+                checkok.destroy()
+
+           
 
 
         # Create add-records function
@@ -406,7 +446,9 @@ def logpw():
                 ncanv.create_window(270, 250, anchor="nw", window=tok)
 
 
-            else: 
+            else:
+                rid.destroy()
+                rok.destroy() 
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
             
