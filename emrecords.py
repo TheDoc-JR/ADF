@@ -386,7 +386,7 @@ def logpw():
 
                             # commit the changes
                             cnx.commit()
-                            print(pd.read_sql("SELECT * FROM COMPLETE_BLOOD_COUNT", cnx))
+                            
 
                         except:
                             messagebox.showerror("","Process failed.")
@@ -570,8 +570,6 @@ def logpw():
                             # commit the changes
                             cnx.commit()
 
-                            print(pd.read_sql("SELECT * FROM ENZYMES", cnx))
-
                         except:
                             messagebox.showerror("","Process failed.")
                         
@@ -667,44 +665,85 @@ def logpw():
             global tpcheckid
 
             tpcheckid = tcheckid.get()
-            
+
             if tpcheckid in idbox:
                 tcheckid.destroy()
                 tcheckok.destroy()
 
-                # establish connection to the database
-                cnx = sqlc.connect(
-                user="root",
-                password="TheDoctor3005",
-                host="localhost",
-                database="perez"
-            )
+                def show_okt():
 
-                # create data in panda style
-                tr = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
-                                Units,Reference_values,Test_date,Patient_ID \
-                                FROM PATIENT\
-                                JOIN COMPLETE_BLOOD_COUNT\
-                                ON ID = {}".format(tpcheckid), cnx)
-                
-                if tr.empty == False:  
-                    trp = Label(emr, text=tr)
-                    ncanv.create_window(180, 150, anchor="nw", window=trp)
-                    # create ok function
-                    def tokf():
-                        trp.destroy()
-                        ok.destroy()
+                    pshow_tests = show_tests.get()
+
+                    show_sel.destroy()
+                    show_cbc.destroy()
+                    show_bch.destroy()
+                    show_enzy.destroy()
+                    show_tok.destroy()
+
+                    if pshow_tests == 'COMPLETE BLOOD COUNT':
+
+                        # establish connection to the database
+                        cnx = sqlc.connect(
+                        user="root",
+                        password="TheDoctor3005",
+                        host="localhost",
+                        database="perez"
+                    )
                     
-                    # create ok button
-                    ok = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
-                    ncanv.create_window(290, 200, anchor="nw", window=ok)
+                        # create data in panda style
+                        trc = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN COMPLETE_BLOOD_COUNT\
+                                        ON ID = {}".format(tpcheckid), cnx)
+                        
+
+                        if trc.empty == False:  
+                            trcp = Label(emr, text=trc)
+                            ncanv.create_window(60, 50, anchor="nw", window=trcp)
+                            
+                            # create ok function
+                            def tokf():
+                                trcp.destroy()
+                                okc.destroy()
+                            
+                            # create ok button
+                            okc = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            ncanv.create_window(290, 200, anchor="nw", window=okc)
+
+                        else:
+                            messagebox.showerror("","NO TEST DATA AVAILABLE")
+                    else:
+                        print("STH STILL WRONG")
+
+                # Show test tables to select
+                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Rockwell",12))
+                ncanv.create_window(120, 70, anchor="nw", window=show_sel)
                 
-                else:
-                    messagebox.showerror("","NO TEST DATA AVAILABLE")
+                show_tests = StringVar()
+                show_tests.set(" ")
+                
+                show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, value='COMPLETE BLOOD COUNT', font=("Rockwell",12))
+                show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, value='BIOCHEMISTRY', font=("Rockwell",12))
+                show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, value='ENZYMES', font=("Rockwell",12))
+                
+                ncanv.create_window(180, 160, anchor="nw", window=show_cbc)
+                ncanv.create_window(120, 200, anchor="nw", window=show_bch)
+                ncanv.create_window(350, 200, anchor="nw", window=show_enzy)
+
+                # create ok button
+                show_tok = Button(emr, text="OK", font=("Rockwell",13), command=show_okt)
+                ncanv.create_window(270, 250, anchor="nw", window=show_tok)
+
+
             else:
                 messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
                 tcheckid.destroy()
                 tcheckok.destroy()
+
+
+            
+            
             
 
               
