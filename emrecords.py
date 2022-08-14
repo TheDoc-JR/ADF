@@ -317,7 +317,7 @@ def logpw():
 
         # Check if patient in database
         def okr():
-            global prid,add_tests,okt,tok
+            global prid,okt,tok
 
             prid = rid.get()
             
@@ -350,10 +350,10 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ht)
 
-                    td = Entry(emr, font=("Rockwell",13), bd=2)
-                    td.insert(0, "Test date")
+                    ctd = Entry(emr, font=("Rockwell",13), bd=2)
+                    ctd.insert(0, "Test date")
                     
-                    ncanv.create_window(30, 140, anchor="nw", window=td)
+                    ncanv.create_window(30, 140, anchor="nw", window=ctd)
 
                     # Create submit-test function
                     def add_cbc():
@@ -362,25 +362,25 @@ def logpw():
                         tRbc = Rbc.get()
                         tHb = Hb.get()
                         tHt = Ht.get()
-                        ttd = td.get()
+                        tctd = ctd.get()
 
-                        ts = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
+                        cts = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
                                 ['Hemoglobin (Hb)','g/dL','(13.7-16.5)'],
                                 ['Hematocrit','%','(40-50)']] 
 
-                        data = [ts[0][0], ts[0][1], ts[0][2]]
-                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
-                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+                        cdata = [cts[0][0], cts[0][1], cts[0][2]]
+                        cdata2 = [cts[1][0], cts[1][1], cts[1][2]]
+                        cdata3 = [cts[2][0], cts[2][1], cts[2][2]]
 
                         try:
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tRbc,data[1],data[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (cdata[0],tRbc,cdata[1],cdata[2],tctd,prid))
 
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tHb,data2[1],data2[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (cdata2[0],tHb,cdata2[1],cdata2[2],tctd,prid))
 
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tHt,data3[1],data3[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (cdata3[0],tHt,cdata3[1],cdata3[2],tctd,prid))
 
                             messagebox.showinfo("","Data successfully added!")
 
@@ -396,12 +396,12 @@ def logpw():
                             Rbc.destroy()
                             Hb.destroy()
                             Ht.destroy()
-                            td.destroy()
-                            submit_test.destroy()
+                            ctd.destroy()
+                            csubmit_test.destroy()
 
                     # Create submit-test button
-                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_cbc)
-                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                    csubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_cbc)
+                    ncanv.create_window(350, 150, anchor="nw", window=csubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
@@ -414,14 +414,14 @@ def logpw():
                         if Ht.get() == "Hematocrit":
                             Ht.delete(0, END)
                     def test_clear4(e):
-                        if td.get() == "Test date":
-                            td.delete(0, END)
+                        if ctd.get() == "Test date":
+                            ctd.delete(0, END)
 
                     # Bind the entry boxes
                     Rbc.bind("<Button-1>", test_clear )
                     Hb.bind("<Button-1>", test_clear2 )
                     Ht.bind("<Button-1>", test_clear3 )
-                    td.bind("<Button-1>", test_clear4 )
+                    ctd.bind("<Button-1>", test_clear4 )
                 
                 if test == 'BIOCHEMISTRY':
 
@@ -441,10 +441,10 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ua)
 
-                    td = Entry(emr, font=("Rockwell",13), bd=2)
-                    td.insert(0, "Test date")
+                    btd = Entry(emr, font=("Rockwell",13), bd=2)
+                    btd.insert(0, "Test date")
                     
-                    ncanv.create_window(30, 140, anchor="nw", window=td)
+                    ncanv.create_window(30, 140, anchor="nw", window=btd)
 
                     # Create submit-test function
                     def add_bio():
@@ -453,25 +453,25 @@ def logpw():
                         tGc = Gc.get()
                         tCt = Ct.get()
                         tUa = Ua.get()
-                        ttd = td.get()
+                        tbtd = btd.get()
 
-                        ts = [['Glucose','mg/dL','(74-109)'],
+                        bts = [['Glucose','mg/dL','(74-109)'],
                             ['Creatinine','mg/dL','(0.7-1.2)'],
                             ['Uric acid','mg/dL','(3.4-7.0)']]
 
-                        data = [ts[0][0], ts[0][1], ts[0][2]]
-                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
-                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+                        bdata = [bts[0][0], bts[0][1], bts[0][2]]
+                        bdata2 = [bts[1][0], bts[1][1], bts[1][2]]
+                        bdata3 = [bts[2][0], bts[2][1], bts[2][2]]
 
                         try:
                             mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tGc,data[1],data[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (bdata[0],tGc,bdata[1],bdata[2],tbtd,prid))
 
                             mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tCt,data2[1],data2[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (bdata2[0],tCt,bdata2[1],bdata2[2],tbtd,prid))
 
                             mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tUa,data3[1],data3[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (bdata3[0],tUa,bdata3[1],bdata3[2],tbtd,prid))
 
                             messagebox.showinfo("","Data successfully added!")
 
@@ -488,12 +488,12 @@ def logpw():
                             Gc.destroy()
                             Ct.destroy()
                             Ua.destroy()
-                            td.destroy()
-                            submit_test.destroy()
+                            btd.destroy()
+                            bsubmit_test.destroy()
 
                     # Create submit-test button
-                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_bio)
-                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                    bsubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_bio)
+                    ncanv.create_window(350, 150, anchor="nw", window=bsubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
@@ -506,16 +506,16 @@ def logpw():
                         if Ua.get() == "Uric acid":
                             Ua.delete(0, END)
                     def test_clear4(e):
-                        if td.get() == "Test date":
-                            td.delete(0, END)
+                        if btd.get() == "Test date":
+                            btd.delete(0, END)
 
                     # Bind the entry boxes
                     Gc.bind("<Button-1>", test_clear )
                     Ct.bind("<Button-1>", test_clear2 )
                     Ua.bind("<Button-1>", test_clear3 )
-                    td.bind("<Button-1>", test_clear4 )
+                    btd.bind("<Button-1>", test_clear4 )
 
-                else:
+                if test == "ENZYMES":
 
                     # create test boxes
                     ASTr = Entry(emr, font=("Rockwell",13), bd=2)
@@ -533,10 +533,10 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=GGTr)
 
-                    td = Entry(emr, font=("Rockwell",13), bd=2)
-                    td.insert(0, "Test date")
+                    etd = Entry(emr, font=("Rockwell",13), bd=2)
+                    etd.insert(0, "Test date")
                     
-                    ncanv.create_window(30, 140, anchor="nw", window=td)
+                    ncanv.create_window(30, 140, anchor="nw", window=etd)
 
                     # Create submit-test function
                     def add_enzy():
@@ -545,25 +545,25 @@ def logpw():
                         tASTr = ASTr.get()
                         tALTr = ALTr.get()
                         tGGTr = GGTr.get()
-                        ttd = td.get()
+                        tetd = etd.get()
 
-                        ts = [['AST','UI/L','(5-40)'],
+                        ets = [['AST','UI/L','(5-40)'],
                             ['ALT','UI/L','(5-41)'],
                             ['Gamma-GT','UI/L','(<60)']]
 
-                        data = [ts[0][0], ts[0][1], ts[0][2]]
-                        data2 = [ts[1][0], ts[1][1], ts[1][2]]
-                        data3 = [ts[2][0], ts[2][1], ts[2][2]]
+                        edata = [ets[0][0], ets[0][1], ets[0][2]]
+                        edata2 = [ets[1][0], ets[1][1], ets[1][2]]
+                        edata3 = [ets[2][0], ets[2][1], ets[2][2]]
 
                         try:
                             mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data[0],tASTr,data[1],data[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (edata[0],tASTr,edata[1],edata[2],tetd,prid))
 
                             mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data2[0],tALTr,data2[1],data2[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (edata2[0],tALTr,edata2[1],edata2[2],tetd,prid))
 
                             mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
-                            "VALUES(%s,%s,%s,%s,%s,%s)", (data3[0],tGGTr,data3[1],data3[2],ttd,prid))
+                            "VALUES(%s,%s,%s,%s,%s,%s)", (edata3[0],tGGTr,edata3[1],edata3[2],tetd,prid))
 
                             messagebox.showinfo("","Data successfully added!")
 
@@ -580,12 +580,12 @@ def logpw():
                             ASTr.destroy()
                             ALTr.destroy()
                             GGTr.destroy()
-                            td.destroy()
-                            submit_test.destroy()
+                            etd.destroy()
+                            esubmit_test.destroy()
 
                     # Create submit-test button
-                    submit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_enzy)
-                    ncanv.create_window(350, 150, anchor="nw", window=submit_test)
+                    esubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_enzy)
+                    ncanv.create_window(350, 150, anchor="nw", window=esubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
@@ -598,14 +598,14 @@ def logpw():
                         if GGTr.get() == "GGT":
                             GGTr.delete(0, END)
                     def test_clear4(e):
-                        if td.get() == "Test date":
-                            td.delete(0, END)
+                        if etd.get() == "Test date":
+                            etd.delete(0, END)
 
                     # Bind the entry boxes
                     ASTr.bind("<Button-1>", test_clear )
                     ALTr.bind("<Button-1>", test_clear2 )
                     GGTr.bind("<Button-1>", test_clear3 )
-                    td.bind("<Button-1>", test_clear4 )
+                    etd.bind("<Button-1>", test_clear4 )
 
             if prid in idbox:
                 rid.destroy()
@@ -636,14 +636,78 @@ def logpw():
                 rok.destroy() 
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
+
+
+
+        # Show tests by patient ID
+        def tdisplay():
+            global tcheckid, cnx, tcheckok
+
+            # Create the id box
+            tcheckid = Entry(emr, font=("Rockwell",13), bd=2)
+            tcheckid.insert(0, "Enter patient's ID")
             
-        
+            ncanv.create_window(230, 70, anchor="nw", window=tcheckid)
+
+            # Define id_clear function
+            def tid_clear(e):
+                if tcheckid.get() == "Enter patient's ID":
+                    tcheckid.delete(0, END)
+
+            # Bind the id box
+            tcheckid.bind("<Button-1>", tid_clear )
+
+            # create ok button
+            tcheckok = Button(emr, text="OK", font=("Rockwell",13), command=tcheckokr)
+            ncanv.create_window(290, 200, anchor="nw", window=tcheckok)
+            
+
+        # Check if patient in database
+        def tcheckokr():
+            global tpcheckid
+
+            tpcheckid = tcheckid.get()
+            
+            if tpcheckid in idbox:
+                tcheckid.destroy()
+                tcheckok.destroy()
+
+                # establish connection to the database
+                cnx = sqlc.connect(
+                user="root",
+                password="TheDoctor3005",
+                host="localhost",
+                database="perez"
+            )
+
+                # create data in panda style
+                tr = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                                Units,Reference_values,Test_date,Patient_ID \
+                                FROM PATIENT\
+                                JOIN COMPLETE_BLOOD_COUNT\
+                                ON ID = {}".format(tpcheckid), cnx)
+                
+                if tr.empty == False:  
+                    trp = Label(emr, text=tr)
+                    ncanv.create_window(180, 150, anchor="nw", window=trp)
+                    # create ok function
+                    def tokf():
+                        trp.destroy()
+                        ok.destroy()
+                    
+                    # create ok button
+                    ok = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                    ncanv.create_window(290, 200, anchor="nw", window=ok)
+                
+                else:
+                    messagebox.showerror("","NO TEST DATA AVAILABLE")
+            else:
+                messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
+                tcheckid.destroy()
+                tcheckok.destroy()
             
 
               
-
-
-        
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
         add_p = Button(emr, width=100, height=55, image=addp_img, command=ap)
@@ -658,7 +722,7 @@ def logpw():
         ncanv.create_window(600, 120, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
-        show_r = Button(emr, width=100, height=55, image=showr_img)
+        show_r = Button(emr, width=100, height=55, image=showr_img, command=tdisplay)
         ncanv.create_window(600, 180, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
