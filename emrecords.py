@@ -740,11 +740,45 @@ def logpw():
                             # create ok function
                             def tokf():
                                 trbp.destroy()
-                                okc.destroy()
+                                okb.destroy()
                             
                             # create ok button
                             okb = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
                             ncanv.create_window(290, 200, anchor="nw", window=okb)
+
+                        else:
+                            messagebox.showerror("","NO TEST DATA AVAILABLE")
+
+                    if pshow_tests == 'ENZYMES':
+
+                        # establish connection to the database
+                        cnx = sqlc.connect(
+                        user="root",
+                        password="TheDoctor3005",
+                        host="localhost",
+                        database="perez"
+                    )
+                    
+                        # create data in panda style
+                        tre = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN ENZYMES\
+                                        ON ID = {}".format(tpcheckid), cnx)
+                        
+
+                        if tre.empty == False:  
+                            trep = Label(emr, text=tre)
+                            ncanv.create_window(30, 50, anchor="nw", window=trep)
+                            
+                            # create ok function
+                            def tokf():
+                                trep.destroy()
+                                oke.destroy()
+                            
+                            # create ok button
+                            oke = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            ncanv.create_window(290, 200, anchor="nw", window=oke)
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
@@ -782,19 +816,19 @@ def logpw():
               
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
-        add_p = Button(emr, width=100, height=55, image=addp_img, command=ap)
+        add_p = Button(emr, width=100, height=55, image=addp_img, text="ADD\nPATIENT", font=("Helvetica",7), compound="left", command=ap)
         ncanv.create_window(600, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
-        show_p = Button(emr, width=100, height=55, image=showp_img, command=display)
+        show_p = Button(emr, width=100, height=55, image=showp_img, text="SEARCH\nPATIENT", font=("Helvetica",7), compound="left", command=display)
         ncanv.create_window(600, 60, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
-        add_r = Button(emr, width=100, height=55, image=addr_img, command=addr)
+        add_r = Button(emr, width=100, height=55, image=addr_img, text="ADD\nTESTS", font=("Helvetica",7), compound="left", command=addr)
         ncanv.create_window(600, 120, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
-        show_r = Button(emr, width=100, height=55, image=showr_img, command=tdisplay)
+        show_r = Button(emr, width=100, height=55, image=showr_img, text="SEARCH\nTESTS", font=("Helvetica",7), compound="left", command=tdisplay)
         ncanv.create_window(600, 180, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
