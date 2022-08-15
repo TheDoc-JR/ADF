@@ -113,8 +113,56 @@ def logpw():
             global id,pid,name,pname,surname,psurname,\
                    bd,pbd,age,page,psex,add_patient,\
                    submit_patient,gender,female,male,\
-                   idbox
+                   idbox,bd_yr,bd_ms,bd_dy,bdl
             
+
+            # Create dob function
+            def dob(e):
+                global d, dy_s 
+                
+                d = bd_dy.get()
+                dy_s = d
+
+                if d in ("1","2","3","4","5","6","7","8","9"):
+                    dy_s = "0"+ d
+                
+            # Create mob function
+            def mob(e):
+                global mth_s
+
+                mth_s = bd_ms.get()
+                
+                if mth_s == "January":
+                    mth_s = "01"
+                elif mth_s == "February":
+                    mth_s = "02"
+                elif mth_s == "March":
+                    mth_s = "03"
+                elif mth_s == "April":
+                    mth_s = "04"
+                elif mth_s == "May":
+                    mth_s = "05"
+                elif mth_s == "June":
+                    mth_s = "06"
+                elif mth_s == "July":
+                    mth_s = "07"
+                elif mth_s == "August":
+                    mth_s = "08"
+                elif mth_s == "September":
+                    mth_s = "09"
+                elif mth_s == "October":
+                    mth_s = "10"
+                elif mth_s == "November":
+                    mth_s = "11"
+                elif mth_s == "December":
+                    mth_s = "12"
+
+            # Create yob function
+            def yob(e):
+                global yr_s
+
+                yr_s = bd_yr.get()
+
             # Create the data boxes
             id = Entry(emr, font=("Rockwell",13), bd=2)
             id.insert(0, "Enter patient's ID")
@@ -128,8 +176,21 @@ def logpw():
 
             surname = Entry(emr, font=("Rockwell",13), bd=2)
             surname.insert(0, "Patient's lastname")
-            
+
             ncanv.create_window(30, 100, anchor="nw", window=surname)
+
+            age = Entry(emr, font=("Rockwell",13), bd=2)
+            age.insert(0, "Patient's age")
+            
+            ncanv.create_window(30, 205, anchor="nw", window=age)
+
+            gender = StringVar()
+            gender.set(' ')
+            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12))
+            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12))
+            ncanv.create_window(30, 245, anchor="nw", window=female)
+            ncanv.create_window(150, 245, anchor="nw", window=male)
+
 
             bdl = Label(emr, font=("Rockwell",13), bd=2, text="Date of birth")
             
@@ -162,25 +223,10 @@ def logpw():
             ncanv.create_window(160, 165, anchor="nw", window=bd_yr)
 
 
-
-
-
-
-            age = Entry(emr, font=("Rockwell",13), bd=2)
-            age.insert(0, "Patient's age")
-            
-            ncanv.create_window(30, 205, anchor="nw", window=age)
-
-            gender = StringVar()
-            gender.set(' ')
-            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12))
-            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12))
-            ncanv.create_window(30, 245, anchor="nw", window=female)
-            ncanv.create_window(150, 245, anchor="nw", window=male)
-            
             # Create submit-patient button
             submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13))
             ncanv.create_window(350, 150, anchor="nw", window=submit_patient)
+
         
             # Define entry_clear function
             def entry_clear(e):
@@ -192,34 +238,36 @@ def logpw():
             def entry_clear3(e):
                 if surname.get() == "Patient's lastname":
                     surname.delete(0, END)
-            """def entry_clear4(e):
-                if bd.get() == "Date of birth (Y-M-D)":
-                    bd.delete(0, END)"""
-            def entry_clear5(e):
+            def entry_clear4(e):
                 if age.get() == "Patient's age":
                     age.delete(0, END)
             
                 
 
-            # Bind the entry boxes
+            # Bind the entry and combo boxes
             id.bind("<Button-1>", entry_clear )
             name.bind("<Button-1>", entry_clear2 )
             surname.bind("<Button-1>", entry_clear3 )
-            #bd.bind("<Button-1>", entry_clear4 )
-            age.bind("<Button-1>", entry_clear5 )
+            bd_dy.bind("<<ComboboxSelected>>", dob )
+            bd_ms.bind("<<ComboboxSelected>>", mob )
+            bd_yr.bind("<<ComboboxSelected>>", yob )
+            age.bind("<Button-1>", entry_clear4 )
             
 
 
         # Create submit-patient function
         def add_patient():
-            global pid,pname,psurname,pbd,page,psex
+            global pid,pname,psurname,pbd,page,psex,bd
 
             pid = id.get()
             pname = name.get()
             psurname = surname.get()
-            pbd = bd.get()
+            bd = "{}-{}-{}".format(yr_s, mth_s, dy_s)
+            pbd = bd
             page = age.get()
             psex = gender.get()
+
+            
 
             # establish connection to the database
             cnx = sqlc.connect(
@@ -253,7 +301,10 @@ def logpw():
             name.destroy()
             surname.destroy()
             id.destroy()
-            bd.destroy()
+            bdl.destroy()
+            bd_dy.destroy()
+            bd_ms.destroy()
+            bd_yr.destroy()
             age.destroy()
             female.destroy()
             male.destroy()
