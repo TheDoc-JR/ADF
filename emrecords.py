@@ -1,8 +1,10 @@
 from tkinter import messagebox
 import pandas as pd
 from tkinter import *
+from tkinter import ttk
 import mysql.connector as sqlc
 from PIL import Image, ImageTk
+
 
 
 # Config the GUI
@@ -110,7 +112,8 @@ def logpw():
         def ap():
             global id,pid,name,pname,surname,psurname,\
                    bd,pbd,age,page,psex,add_patient,\
-                   submit_patient,gender,female,male,idbox
+                   submit_patient,gender,female,male,\
+                   idbox
             
             # Create the data boxes
             id = Entry(emr, font=("Rockwell",13), bd=2)
@@ -128,22 +131,52 @@ def logpw():
             
             ncanv.create_window(30, 100, anchor="nw", window=surname)
 
-            bd = Entry(emr, font=("Rockwell",13), bd=2)
-            bd.insert(0, "Date of birth (Y-M-D)")
+            bdl = Label(emr, font=("Rockwell",13), bd=2, text="Date of birth")
             
-            ncanv.create_window(30, 140, anchor="nw", window=bd)
+            dy = list(range(1,32))
+
+            ms = ["January", "February", "March", "April",
+                    "May", "June", "July", "August",
+                    "September", "October", "November", "December"]
+
+            yr = list(reversed(range(1900,2023)))
+
+
+            bd_dy = ttk.Combobox(emr, value=dy, width=5)
+            bd_dy.set("DAY")
+
+            bd_ms = ttk.Combobox(emr, value=ms, width=8)
+            bd_ms.set("MONTH")
+
+            bd_yr = ttk.Combobox(emr, value=yr, width=5)
+            bd_yr.set("YEAR")
+            
+
+            
+            ncanv.create_window(70, 140, anchor="nw", window=bdl)
+
+            ncanv.create_window(30, 165, anchor="nw", window=bd_dy)
+
+            ncanv.create_window(85, 165, anchor="nw", window=bd_ms)
+
+            ncanv.create_window(160, 165, anchor="nw", window=bd_yr)
+
+
+
+
+
 
             age = Entry(emr, font=("Rockwell",13), bd=2)
             age.insert(0, "Patient's age")
             
-            ncanv.create_window(30, 180, anchor="nw", window=age)
+            ncanv.create_window(30, 205, anchor="nw", window=age)
 
             gender = StringVar()
             gender.set(' ')
             female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12))
             male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12))
-            ncanv.create_window(30, 220, anchor="nw", window=female)
-            ncanv.create_window(150, 220, anchor="nw", window=male)
+            ncanv.create_window(30, 245, anchor="nw", window=female)
+            ncanv.create_window(150, 245, anchor="nw", window=male)
             
             # Create submit-patient button
             submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13))
@@ -159,9 +192,9 @@ def logpw():
             def entry_clear3(e):
                 if surname.get() == "Patient's lastname":
                     surname.delete(0, END)
-            def entry_clear4(e):
+            """def entry_clear4(e):
                 if bd.get() == "Date of birth (Y-M-D)":
-                    bd.delete(0, END)
+                    bd.delete(0, END)"""
             def entry_clear5(e):
                 if age.get() == "Patient's age":
                     age.delete(0, END)
@@ -172,7 +205,7 @@ def logpw():
             id.bind("<Button-1>", entry_clear )
             name.bind("<Button-1>", entry_clear2 )
             surname.bind("<Button-1>", entry_clear3 )
-            bd.bind("<Button-1>", entry_clear4 )
+            #bd.bind("<Button-1>", entry_clear4 )
             age.bind("<Button-1>", entry_clear5 )
             
 
@@ -271,6 +304,7 @@ def logpw():
 
                 # create data in panda style
                 r = pd.read_sql("SELECT * FROM PATIENT WHERE ID = {}".format(pcheckid),cnx)
+                
                 
                 if r.empty == False:  
                     rp = Label(emr, text=r)
