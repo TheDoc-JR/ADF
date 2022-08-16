@@ -419,7 +419,7 @@ def logpw():
         # Create add-records function
         def addr():
             global rid,prid,rok
-            # Create the id box
+            # Create the id check box
             rid = Entry(emr, font=("Rockwell",13), bd=2)
             rid.insert(0, "Enter patient's ID")
             
@@ -454,7 +454,90 @@ def logpw():
                 # Add data depending on the test selected
                 test = tests.get()
 
+                # Create dob function
+                def dot(e):
+                    global dt, dy_t 
+                    
+                    dt = td_dy.get()
+                    dy_t = dt
+
+                    if dt in ("1","2","3","4","5","6","7","8","9"):
+                        dy_t = "0"+ dt
+                    
+                # Create mob function
+                def mot(e):
+                    global mth_t
+
+                    mth_t = td_ms.get()
+                    
+                    if mth_t == "January":
+                        mth_t = "01"
+                    elif mth_t == "February":
+                        mth_t = "02"
+                    elif mth_t == "March":
+                        mth_t = "03"
+                    elif mth_t == "April":
+                        mth_t = "04"
+                    elif mth_t == "May":
+                        mth_t = "05"
+                    elif mth_t == "June":
+                        mth_t = "06"
+                    elif mth_t == "July":
+                        mth_t = "07"
+                    elif mth_t == "August":
+                        mth_t = "08"
+                    elif mth_t == "September":
+                        mth_t = "09"
+                    elif mth_t == "October":
+                        mth_t = "10"
+                    elif mth_t == "November":
+                        mth_t = "11"
+                    elif mth_t == "December":
+                        mth_t = "12"
+
+                # Create yob function
+                def yot(e):
+                    global yr_t
+
+                    yr_t = td_yr.get()
+                
+                # Create display-tests_date function
+                def dt_date():
+                    global tdl,tdy,tms,\
+                        tyr,td_dy,td_ms,td_yr
+
+                    tdl = Label(emr, font=("Rockwell",13), bd=2, text="Test date")
+            
+                    tdy = list(range(1,32))
+
+                    tms = ["January", "February", "March", "April",
+                            "May", "June", "July", "August",
+                            "September", "October", "November", "December"]
+
+                    tyr = list(reversed(range(1900,2023)))
+
+
+                    td_dy = ttk.Combobox(emr, value=tdy, width=5)
+                    td_dy.set("DAY")
+
+                    td_ms = ttk.Combobox(emr, value=tms, width=8)
+                    td_ms.set("MONTH")
+
+                    td_yr = ttk.Combobox(emr, value=tyr, width=5)
+                    td_yr.set("YEAR")
+                    
+
+                    ncanv.create_window(70, 140, anchor="nw", window=tdl)
+
+                    ncanv.create_window(30, 165, anchor="nw", window=td_dy)
+
+                    ncanv.create_window(85, 165, anchor="nw", window=td_ms)
+
+                    ncanv.create_window(160, 165, anchor="nw", window=td_yr)
+
+
                 if test == 'COMPLETE BLOOD COUNT':
+
 
                     # create test boxes
                     Rbc = Entry(emr, font=("Rockwell",13), bd=2)
@@ -472,19 +555,18 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ht)
 
-                    ctd = Entry(emr, font=("Rockwell",13), bd=2)
-                    ctd.insert(0, "Test date")
-                    
-                    ncanv.create_window(30, 140, anchor="nw", window=ctd)
+                    dt_date()
 
                     # Create submit-test function
                     def add_cbc():
-                        global tRbc,tHb,tHt
+                        global tRbc,tHb,tHt, t
+
+                        t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
 
                         tRbc = Rbc.get()
                         tHb = Hb.get()
                         tHt = Ht.get()
-                        tctd = ctd.get()
+                        tctd = t
 
                         cts = [['Red blood cells (RBC)','10^6/µl','(4.3-5.6)'],
                                 ['Hemoglobin (Hb)','g/dL','(13.7-16.5)'],
@@ -518,7 +600,10 @@ def logpw():
                             Rbc.destroy()
                             Hb.destroy()
                             Ht.destroy()
-                            ctd.destroy()
+                            tdl.destroy()
+                            td_dy.destroy()
+                            td_ms.destroy()
+                            td_yr.destroy()
                             csubmit_test.destroy()
 
                     # Create submit-test button
@@ -535,15 +620,15 @@ def logpw():
                     def test_clear3(e):
                         if Ht.get() == "Hematocrit":
                             Ht.delete(0, END)
-                    def test_clear4(e):
-                        if ctd.get() == "Test date":
-                            ctd.delete(0, END)
+                    
 
                     # Bind the entry boxes
                     Rbc.bind("<Button-1>", test_clear )
                     Hb.bind("<Button-1>", test_clear2 )
                     Ht.bind("<Button-1>", test_clear3 )
-                    ctd.bind("<Button-1>", test_clear4 )
+                    td_dy.bind("<<ComboboxSelected>>", dot )
+                    td_ms.bind("<<ComboboxSelected>>", mot )
+                    td_yr.bind("<<ComboboxSelected>>", yot )
                 
                 if test == 'BIOCHEMISTRY':
 
@@ -563,19 +648,18 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ua)
 
-                    btd = Entry(emr, font=("Rockwell",13), bd=2)
-                    btd.insert(0, "Test date")
-                    
-                    ncanv.create_window(30, 140, anchor="nw", window=btd)
+                    dt_date()
 
                     # Create submit-test function
                     def add_bio():
                         global tGc,tCt,tUa
 
+                        t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
+
                         tGc = Gc.get()
                         tCt = Ct.get()
                         tUa = Ua.get()
-                        tbtd = btd.get()
+                        tbtd = t
 
                         bts = [['Glucose','mg/dL','(74-109)'],
                             ['Creatinine','mg/dL','(0.7-1.2)'],
@@ -610,7 +694,10 @@ def logpw():
                             Gc.destroy()
                             Ct.destroy()
                             Ua.destroy()
-                            btd.destroy()
+                            tdl.destroy()
+                            td_dy.destroy()
+                            td_ms.destroy()
+                            td_yr.destroy()
                             bsubmit_test.destroy()
 
                     # Create submit-test button
@@ -627,15 +714,15 @@ def logpw():
                     def test_clear3(e):
                         if Ua.get() == "Uric acid":
                             Ua.delete(0, END)
-                    def test_clear4(e):
-                        if btd.get() == "Test date":
-                            btd.delete(0, END)
+                
 
                     # Bind the entry boxes
                     Gc.bind("<Button-1>", test_clear )
                     Ct.bind("<Button-1>", test_clear2 )
                     Ua.bind("<Button-1>", test_clear3 )
-                    btd.bind("<Button-1>", test_clear4 )
+                    td_dy.bind("<<ComboboxSelected>>", dot )
+                    td_ms.bind("<<ComboboxSelected>>", mot )
+                    td_yr.bind("<<ComboboxSelected>>", yot )
 
                 if test == "ENZYMES":
 
@@ -655,19 +742,18 @@ def logpw():
                     
                     ncanv.create_window(30, 100, anchor="nw", window=GGTr)
 
-                    etd = Entry(emr, font=("Rockwell",13), bd=2)
-                    etd.insert(0, "Test date")
-                    
-                    ncanv.create_window(30, 140, anchor="nw", window=etd)
+                    dt_date()
 
                     # Create submit-test function
                     def add_enzy():
                         global tASTr,tALTr,tGGTr
 
+                        t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
+
                         tASTr = ASTr.get()
                         tALTr = ALTr.get()
                         tGGTr = GGTr.get()
-                        tetd = etd.get()
+                        tetd = t
 
                         ets = [['AST','UI/L','(5-40)'],
                             ['ALT','UI/L','(5-41)'],
@@ -700,7 +786,10 @@ def logpw():
                             ASTr.destroy()
                             ALTr.destroy()
                             GGTr.destroy()
-                            etd.destroy()
+                            tdl.destroy()
+                            td_dy.destroy()
+                            td_ms.destroy()
+                            td_yr.destroy()
                             esubmit_test.destroy()
 
                     # Create submit-test button
@@ -717,15 +806,15 @@ def logpw():
                     def test_clear3(e):
                         if GGTr.get() == "GGT":
                             GGTr.delete(0, END)
-                    def test_clear4(e):
-                        if etd.get() == "Test date":
-                            etd.delete(0, END)
+                    
 
                     # Bind the entry boxes
                     ASTr.bind("<Button-1>", test_clear )
                     ALTr.bind("<Button-1>", test_clear2 )
                     GGTr.bind("<Button-1>", test_clear3 )
-                    etd.bind("<Button-1>", test_clear4 )
+                    td_dy.bind("<<ComboboxSelected>>", dot )
+                    td_ms.bind("<<ComboboxSelected>>", mot )
+                    td_yr.bind("<<ComboboxSelected>>", yot )
 
             if prid in idbox:
                 rid.destroy()
