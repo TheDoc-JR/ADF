@@ -792,6 +792,52 @@ def logpw():
                 tcheckid.destroy()
                 tcheckok.destroy()
 
+                # Create a function to display results in Treeview form
+                def tview(fetch):
+                    global ttree
+                    # Create the treeview 
+                    ttree = ttk.Treeview(emr, height=3)
+
+                    # Define the columns
+                    ttree["columns"] = ("NAME", "LASTNAME", "TESTNAME", "RESULTS", "UNITS", "REF_VALUES", "TESTDATE", "P_ID")
+
+                    # Format the columns
+                    ttree.column("#0", width=0, stretch=NO)
+                    
+                    ttree.column("NAME", width=100, anchor="w")
+                    ttree.column("LASTNAME", width=100, anchor="w")
+                    ttree.column("TESTNAME", width=120, anchor="w")
+                    ttree.column("RESULTS", width=60, anchor="center")
+                    ttree.column("UNITS", width=50, anchor="center")
+                    ttree.column("REF_VALUES", width=60, anchor="center")
+                    ttree.column("TESTDATE", width=100, anchor="center")
+                    ttree.column("P_ID", width=80, anchor="center")
+                    
+
+                    # Define the headings
+                    ttree.heading("#0", text="")
+                    ttree.heading("NAME", text="NAME", anchor="w")
+                    ttree.heading("LASTNAME", text="LAST NAME", anchor="w")
+                    ttree.heading("TESTNAME", text="TEST", anchor="w")
+                    ttree.heading("RESULTS", text="RESULTS", anchor="center")
+                    ttree.heading("UNITS", text="UNITS", anchor="center")
+                    ttree.heading("REF_VALUES", text="REF. VALUES", anchor="center")
+                    ttree.heading("TESTDATE", text="TEST DATE", anchor="center")
+                    ttree.heading("P_ID", text="PATIENT ID", anchor="center")
+                    
+                    # Add DB data to the screen
+                    count = 0
+
+                    for record in fetch:
+                        ttree.insert(parent="", index="end", iid=count,\
+                                    text="", values=(record[0], record[1],\
+                                    record[2], record[3], record[4],\
+                                    record[5],record[6], record[7]))
+                        count += 1
+
+                    # Display the results
+                    ncanv.create_window(20, 20, anchor="nw", window=ttree)
+
                 def show_okt():
 
                     pshow_tests = show_tests.get()
@@ -801,6 +847,7 @@ def logpw():
                     show_bch.destroy()
                     show_enzy.destroy()
                     show_tok.destroy()
+
 
                     if pshow_tests == 'COMPLETE BLOOD COUNT':
 
@@ -812,21 +859,25 @@ def logpw():
                         database="perez"
                     )
                     
-                        # create data in panda style
-                        trc = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+    
+                        ccur = cnx.cursor()
+                        
+                        ccur.execute("SELECT Name,Last_name,Test_name,Result,\
                                         Units,Reference_values,Test_date,Patient_ID \
                                         FROM PATIENT\
                                         JOIN COMPLETE_BLOOD_COUNT\
-                                        ON ID = {}".format(tpcheckid), cnx)
-                        
+                                        ON ID = {}".format(tpcheckid))
 
-                        if trc.empty == False:  
-                            trcp = Label(emr, text=trc)
-                            ncanv.create_window(30, 50, anchor="nw", window=trcp)
+                        cshow = ccur.fetchall()
+
+                        
+                        if len(cshow) > 0:
                             
+                            tview(cshow)
+
                             # create ok function
                             def tokf():
-                                trcp.destroy()
+                                ttree.destroy()
                                 okc.destroy()
                             
                             # create ok button
@@ -847,21 +898,25 @@ def logpw():
                         database="perez"
                     )
                     
-                        # create data in panda style
-                        trb = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                        bcur = cnx.cursor()
+                        
+                        bcur.execute("SELECT Name,Last_name,Test_name,Result,\
                                         Units,Reference_values,Test_date,Patient_ID \
                                         FROM PATIENT\
                                         JOIN BIOCHEMISTRY\
-                                        ON ID = {}".format(tpcheckid), cnx)
+                                        ON ID = {}".format(tpcheckid))
+
+                        bshow = bcur.fetchall()
+                        
                         
 
-                        if trb.empty == False:  
-                            trbp = Label(emr, text=trb)
-                            ncanv.create_window(30, 50, anchor="nw", window=trbp)
+                        if len(bshow) > 0:
+                            
+                            tview(bshow)
                             
                             # create ok function
                             def tokf():
-                                trbp.destroy()
+                                ttree.destroy()
                                 okb.destroy()
                             
                             # create ok button
@@ -881,21 +936,25 @@ def logpw():
                         database="perez"
                     )
                     
-                        # create data in panda style
-                        tre = pd.read_sql("SELECT Name,Last_name,Test_name,Result,\
+                        ecur = cnx.cursor()
+                        
+                        ecur.execute("SELECT Name,Last_name,Test_name,Result,\
                                         Units,Reference_values,Test_date,Patient_ID \
                                         FROM PATIENT\
                                         JOIN ENZYMES\
-                                        ON ID = {}".format(tpcheckid), cnx)
+                                        ON ID = {}".format(tpcheckid))
+
+                        eshow = ecur.fetchall()
+                        
                         
 
-                        if tre.empty == False:  
-                            trep = Label(emr, text=tre)
-                            ncanv.create_window(30, 50, anchor="nw", window=trep)
+                        if len(eshow) > 0:
+                            
+                            tview(eshow)
                             
                             # create ok function
                             def tokf():
-                                trep.destroy()
+                                ttree.destroy()
                                 oke.destroy()
                             
                             # create ok button
