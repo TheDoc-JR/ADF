@@ -352,29 +352,66 @@ def logpw():
                 host="localhost",
                 database="perez"
             )
+                cur = cnx.cursor()
 
-                # create data in panda style
-                r = pd.read_sql("SELECT * FROM PATIENT WHERE ID = {}".format(pcheckid),cnx)
+                cur.execute("SELECT * FROM PATIENT WHERE ID = {}".format(pcheckid))
+                show = cur.fetchall()
                 
                 
-                if r.empty == False:  
-                    rp = Label(emr, text=r)
-                    ncanv.create_window(180, 150, anchor="nw", window=rp)
-                    # create ok function
-                    def okf():
-                        rp.destroy()
-                        ok.destroy()
-                    
-                    # create ok button
-                    ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
-                    ncanv.create_window(290, 200, anchor="nw", window=ok)
+                # Create the treeview 
+                ptree = ttk.Treeview(emr, height=1)
+
+                # Define the columns
+                ptree["columns"] = ("ID", "NAME", "LASTNAME", "DOB", "AGE", "GENDER")
+
+                # Format the columns
+                ptree.column("#0", width=0, stretch=NO)
+                ptree.column("ID", width=80 , anchor="center")
+                ptree.column("NAME", width=120, anchor="w")
+                ptree.column("LASTNAME", width=120, anchor="w")
+                ptree.column("DOB", width=100, anchor="center")
+                ptree.column("AGE", width=40, anchor="center")
+                ptree.column("GENDER", width=60, anchor="center")
                 
-                else:
-                    messagebox.showerror("","NO PATIENT DATA AVAILABLE")
+
+                # Define the headings
+                ptree.heading("#0", text="")
+                ptree.heading("ID", text="ID", anchor="center")
+                ptree.heading("NAME", text="NAME", anchor="w")
+                ptree.heading("LASTNAME", text="LASTNAME", anchor="w")
+                ptree.heading("DOB", text="DATE OF BIRTH", anchor="center")
+                ptree.heading("AGE", text="AGE", anchor="center")
+                ptree.heading("GENDER", text="GENDER", anchor="center")
+                
+                # Add DB data to the screen
+                count = 0
+
+                for record in show:
+                    ptree.insert(parent="", index="end", iid=count, \
+                                text="", values=(record[0], record[1], \
+                                record[2], record[3], record[4], record[5]))
+                    count += 1
+
+                # Display the results
+                ncanv.create_window(20, 20, anchor="nw", window=ptree)
+
+                # Close connection
+                cur.close()
+
+                # Define Ok button function
+                def okf():
+                    ptree.destroy()
+                    ok.destroy()
+                
+                # Create OK button
+                ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
+                ncanv.create_window(290, 200, anchor="nw", window=ok)
+            
             else:
                 messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
                 checkid.destroy()
                 checkok.destroy()
+
 
            
 
