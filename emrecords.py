@@ -1,4 +1,5 @@
 from tkinter import messagebox
+from turtle import width
 import pandas as pd
 from tkinter import *
 from tkinter import ttk
@@ -357,9 +358,13 @@ def logpw():
                 cur.execute("SELECT * FROM PATIENT WHERE ID = {}".format(pcheckid))
                 show = cur.fetchall()
                 
+                # Create a Label Frame
+                lf = LabelFrame(ncanv, width=400, height=200, text="PATIENT")
+                lf.pack()
                 
                 # Create the treeview 
-                ptree = ttk.Treeview(emr, height=1)
+                ptree = ttk.Treeview(lf, height=1)
+                ptree.pack()
 
                 # Define the columns
                 ptree["columns"] = ("ID", "NAME", "LASTNAME", "DOB", "AGE", "GENDER")
@@ -393,7 +398,7 @@ def logpw():
                     count += 1
 
                 # Display the results
-                ncanv.create_window(20, 20, anchor="nw", window=ptree)
+                ncanv.create_window(20, 20, anchor="nw", window=lf)
 
                 # Close connection
                 cur.close()
@@ -402,6 +407,7 @@ def logpw():
                 def okf():
                     ptree.destroy()
                     ok.destroy()
+                    lf.destroy()
                 
                 # Create OK button
                 ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
