@@ -117,7 +117,7 @@ def logpw():
             global id,pid,name,pname,surname,psurname,\
                    bd,pbd,age,page,psex,add_patient,\
                    submit_patient,gender,female,male,\
-                   idbox,bd_yr,bd_ms,bd_dy,bdl
+                   idbox,bd_yr,bd_ms,bd_dy,bdl,sumbitp_img
             
 
             # Create dob function
@@ -168,35 +168,35 @@ def logpw():
                 yr_s = bd_yr.get()
 
             # Create the data boxes
-            id = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
+            id = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             id.insert(0, "Enter patient's ID")
             
             ncanv.create_window(150, 60, anchor="nw", window=id)
 
-            name = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
+            name = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             name.insert(0, "Patient's name")
             
             ncanv.create_window(150, 125, anchor="nw", window=name)
 
-            surname = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
+            surname = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             surname.insert(0, "Patient's last name")
 
             ncanv.create_window(150, 185, anchor="nw", window=surname)
 
-            age = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
+            age = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             age.insert(0, "Patient's age")
             
             ncanv.create_window(410, 125, anchor="nw", window=age)
 
             gender = StringVar()
             gender.set(' ')
-            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12), bg="#DEEDEA")
-            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12), bg="#DEEDEA")
+            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Helvetica",12), bg="#DEEDEA")
+            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Helvetica",12), bg="#DEEDEA")
             ncanv.create_window(410, 185, anchor="nw", window=female)
             ncanv.create_window(530, 185, anchor="nw", window=male)
 
 
-            bdl = Label(emr, font=("Rockwell",13), bd=2, text="Date of birth", bg="#DEEDEA")
+            bdl = Label(emr, font=("Helvetica",13), bd=2, text="Date of birth", bg="#DEEDEA")
             
             dy = list(range(1,32))
 
@@ -228,8 +228,10 @@ def logpw():
 
 
             # Create submit-patient button
-            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13), bg="#DEEDEA")
-            ncanv.create_window(270, 330, anchor="nw", window=submit_patient)
+            sumbitp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\addp.png")
+            submit_patient = Button(emr, width=180, height=60, text='ADD\nNEW PATIENT', command=add_patient, \
+                font=("Helvetica",12), bg="#DEEDEA", image=sumbitp_img, compound="left")
+            ncanv.create_window(270, 280, anchor="nw", window=submit_patient)
 
         
             # Define entry_clear function
@@ -321,7 +323,7 @@ def logpw():
             global checkid, cnx, checkok
 
             # Create the id box
-            checkid = Entry(emr, font=("Rockwell",13), bd=2)
+            checkid = Entry(emr, font=("Helvetica",13), bd=2)
             checkid.insert(0, "Enter patient's ID")
             
             ncanv.create_window(230, 70, anchor="nw", window=checkid)
@@ -335,7 +337,7 @@ def logpw():
             checkid.bind("<Button-1>", id_clear )
 
             # create ok button
-            checkok = Button(emr, text="OK", font=("Rockwell",13), command=checkokr)
+            checkok = Button(emr, text="OK", font=("Helvetica",13), command=checkokr)
             ncanv.create_window(290, 200, anchor="nw", window=checkok)
             
 
@@ -413,7 +415,7 @@ def logpw():
                     lf.destroy()
                 
                 # Create OK button
-                ok = Button(emr, text="OK", font=("Rockwell",13), command=okf)
+                ok = Button(emr, text="OK", font=("Helvetica",13), command=okf)
                 ncanv.create_window(290, 200, anchor="nw", window=ok)
             
             else:
@@ -429,7 +431,7 @@ def logpw():
         def addr():
             global rid,prid,rok
             # Create the id check box
-            rid = Entry(emr, font=("Rockwell",13), bd=2)
+            rid = Entry(emr, font=("Helvetica",13), bd=2)
             rid.insert(0, "Enter patient's ID")
             
             ncanv.create_window(230, 70, anchor="nw", window=rid)
@@ -443,7 +445,7 @@ def logpw():
             rid.bind("<Button-1>", id_clear )
 
             # create ok button
-            rok = Button(emr, text="OK", font=("Rockwell",13), command=okr)
+            rok = Button(emr, text="OK", font=("Helvetica",13), command=okr)
             ncanv.create_window(290, 200, anchor="nw", window=rok)
 
         # Check if patient in database
@@ -515,7 +517,7 @@ def logpw():
                     global tdl,tdy,tms,\
                         tyr,td_dy,td_ms,td_yr
 
-                    tdl = Label(emr, font=("Rockwell",13), bd=2, text="Test date")
+                    tdl = Label(emr, font=("Helvetica",13), bd=2, text="Test date")
             
                     tdy = list(range(1,32))
 
@@ -549,17 +551,17 @@ def logpw():
 
 
                     # create test boxes
-                    Rbc = Entry(emr, font=("Rockwell",13), bd=2)
+                    Rbc = Entry(emr, font=("Helvetica",13), bd=2)
                     Rbc.insert(0, "Red blood cells (RBC)")
                     
                     ncanv.create_window(30, 20, anchor="nw", window=Rbc)
 
-                    Hb = Entry(emr, font=("Rockwell",13), bd=2)
+                    Hb = Entry(emr, font=("Helvetica",13), bd=2)
                     Hb.insert(0, "Hemoglobin (Hb)")
                     
                     ncanv.create_window(30, 60, anchor="nw", window=Hb)
 
-                    Ht = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ht = Entry(emr, font=("Helvetica",13), bd=2)
                     Ht.insert(0, "Hematocrit")
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ht)
@@ -616,7 +618,7 @@ def logpw():
                             csubmit_test.destroy()
 
                     # Create submit-test button
-                    csubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_cbc)
+                    csubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_cbc)
                     ncanv.create_window(350, 150, anchor="nw", window=csubmit_test)
                 
                     # Define test_clear function
@@ -642,17 +644,17 @@ def logpw():
                 if test == 'BIOCHEMISTRY':
 
                     # create test boxes
-                    Gc = Entry(emr, font=("Rockwell",13), bd=2)
+                    Gc = Entry(emr, font=("Helvetica",13), bd=2)
                     Gc.insert(0, "Glucose")
                     
                     ncanv.create_window(30, 20, anchor="nw", window=Gc)
 
-                    Ct = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ct = Entry(emr, font=("Helvetica",13), bd=2)
                     Ct.insert(0, "Creatinine")
                     
                     ncanv.create_window(30, 60, anchor="nw", window=Ct)
 
-                    Ua = Entry(emr, font=("Rockwell",13), bd=2)
+                    Ua = Entry(emr, font=("Helvetica",13), bd=2)
                     Ua.insert(0, "Uric acid")
                     
                     ncanv.create_window(30, 100, anchor="nw", window=Ua)
@@ -710,7 +712,7 @@ def logpw():
                             bsubmit_test.destroy()
 
                     # Create submit-test button
-                    bsubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_bio)
+                    bsubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_bio)
                     ncanv.create_window(350, 150, anchor="nw", window=bsubmit_test)
                 
                     # Define test_clear function
@@ -736,17 +738,17 @@ def logpw():
                 if test == "ENZYMES":
 
                     # create test boxes
-                    ASTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    ASTr = Entry(emr, font=("Helvetica",13), bd=2)
                     ASTr.insert(0, "AST/GOT")
                     
                     ncanv.create_window(30, 20, anchor="nw", window=ASTr)
 
-                    ALTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    ALTr = Entry(emr, font=("Helvetica",13), bd=2)
                     ALTr.insert(0, "ALT/GPT")
                     
                     ncanv.create_window(30, 60, anchor="nw", window=ALTr)
 
-                    GGTr = Entry(emr, font=("Rockwell",13), bd=2)
+                    GGTr = Entry(emr, font=("Helvetica",13), bd=2)
                     GGTr.insert(0, "GGT")
                     
                     ncanv.create_window(30, 100, anchor="nw", window=GGTr)
@@ -804,7 +806,7 @@ def logpw():
                             esubmit_test.destroy()
 
                     # Create submit-test button
-                    esubmit_test = Button(emr, width=20, text='Add tests', font=("Rockwell",13), command=add_enzy)
+                    esubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_enzy)
                     ncanv.create_window(350, 150, anchor="nw", window=esubmit_test)
                 
                     # Define test_clear function
@@ -832,22 +834,22 @@ def logpw():
                 rok.destroy()
                 
                 # Show test tables to select
-                sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Rockwell",12))
+                sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Helvetica",12))
                 ncanv.create_window(120, 70, anchor="nw", window=sel)
                 
                 tests = StringVar()
                 tests.set(" ")
                 
-                cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=tests, value='COMPLETE BLOOD COUNT', font=("Rockwell",12))
-                bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=tests, value='BIOCHEMISTRY', font=("Rockwell",12))
-                enzy = Radiobutton(emr, text="ENZYMES", variable=tests, value='ENZYMES', font=("Rockwell",12))
+                cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=tests, value='COMPLETE BLOOD COUNT', font=("Helvetica",12))
+                bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=tests, value='BIOCHEMISTRY', font=("Helvetica",12))
+                enzy = Radiobutton(emr, text="ENZYMES", variable=tests, value='ENZYMES', font=("Helvetica",12))
                 
                 ncanv.create_window(180, 160, anchor="nw", window=cbc)
                 ncanv.create_window(120, 200, anchor="nw", window=bch)
                 ncanv.create_window(350, 200, anchor="nw", window=enzy)
 
                 # create ok button
-                tok = Button(emr, text="OK", font=("Rockwell",13), command=okt)
+                tok = Button(emr, text="OK", font=("Helvetica",13), command=okt)
                 ncanv.create_window(270, 250, anchor="nw", window=tok)
 
 
@@ -864,7 +866,7 @@ def logpw():
             global tcheckid, cnx, tcheckok
 
             # Create the id box
-            tcheckid = Entry(emr, font=("Rockwell",13), bd=2)
+            tcheckid = Entry(emr, font=("Helvetica",13), bd=2)
             tcheckid.insert(0, "Enter patient's ID")
             
             ncanv.create_window(230, 70, anchor="nw", window=tcheckid)
@@ -878,7 +880,7 @@ def logpw():
             tcheckid.bind("<Button-1>", tid_clear )
 
             # create ok button
-            tcheckok = Button(emr, text="OK", font=("Rockwell",13), command=tcheckokr)
+            tcheckok = Button(emr, text="OK", font=("Helvetica",13), command=tcheckokr)
             ncanv.create_window(290, 200, anchor="nw", window=tcheckok)
             
 
@@ -995,7 +997,7 @@ def logpw():
                                 okc.destroy()
                             
                             # create ok button
-                            okc = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            okc = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
                             ncanv.create_window(300, 200, anchor="nw", window=okc)
 
                         else:
@@ -1035,7 +1037,7 @@ def logpw():
                                 okb.destroy()
                             
                             # create ok button
-                            okb = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            okb = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
                             ncanv.create_window(300, 200, anchor="nw", window=okb)
 
                         else:
@@ -1074,29 +1076,29 @@ def logpw():
                                 oke.destroy()
                             
                             # create ok button
-                            oke = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
+                            oke = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
                             ncanv.create_window(300, 200, anchor="nw", window=oke)
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
 
                 # Show test tables to select
-                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Rockwell",12))
+                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",12))
                 ncanv.create_window(120, 70, anchor="nw", window=show_sel)
                 
                 show_tests = StringVar()
                 show_tests.set(" ")
                 
-                show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, value='COMPLETE BLOOD COUNT', font=("Rockwell",12))
-                show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, value='BIOCHEMISTRY', font=("Rockwell",12))
-                show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, value='ENZYMES', font=("Rockwell",12))
+                show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, value='COMPLETE BLOOD COUNT', font=("Helvetica",12))
+                show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, value='BIOCHEMISTRY', font=("Helvetica",12))
+                show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, value='ENZYMES', font=("Helvetica",12))
                 
                 ncanv.create_window(180, 160, anchor="nw", window=show_cbc)
                 ncanv.create_window(120, 200, anchor="nw", window=show_bch)
                 ncanv.create_window(350, 200, anchor="nw", window=show_enzy)
 
                 # create ok button
-                show_tok = Button(emr, text="OK", font=("Rockwell",13), command=show_okt)
+                show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt)
                 ncanv.create_window(270, 250, anchor="nw", window=show_tok)
 
 
@@ -1160,7 +1162,7 @@ qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(200, 243, anchor="nw", window=qbtn)
 
 # Add Password entry
-pw = Entry(root, font=("Rockwell",13), bd=2)
+pw = Entry(root, font=("Helvetica",13), bd=2)
 pw.insert(0, "Enter your password")
 
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
