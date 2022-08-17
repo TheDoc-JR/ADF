@@ -438,12 +438,12 @@ def logpw():
 
         # Create add-records function
         def addr():
-            global rid,prid,rok
+            global rid,prid,rok,rok_img
             # Create the id check box
-            rid = Entry(emr, font=("Helvetica",13), bd=2)
+            rid = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             rid.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(230, 70, anchor="nw", window=rid)
+            ncanv.create_window(300, 170, anchor="nw", window=rid)
 
             # Define id_clear function
             def id_clear(e):
@@ -454,12 +454,14 @@ def logpw():
             rid.bind("<Button-1>", id_clear )
 
             # create ok button
-            rok = Button(emr, text="OK", font=("Helvetica",13), command=okr)
-            ncanv.create_window(290, 200, anchor="nw", window=rok)
+            rok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
+            rok = Button(emr, text="CHECK", font=("Helvetica",13), command=okr,\
+                 image=rok_img, compound="left", width=180, height=60, bg="#DEEDEA")
+            ncanv.create_window(290, 250, anchor="nw", window=rok)
 
         # Check if patient in database
         def okr():
-            global prid,okt,tok
+            global prid,okt,tok,tokk_img
 
             prid = rid.get()
             
@@ -843,23 +845,28 @@ def logpw():
                 rok.destroy()
                 
                 # Show test tables to select
-                sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Helvetica",12))
+                sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Helvetica",15), bg="#DEEDEA")
                 ncanv.create_window(120, 70, anchor="nw", window=sel)
                 
                 tests = StringVar()
                 tests.set(" ")
                 
-                cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=tests, value='COMPLETE BLOOD COUNT', font=("Helvetica",12))
-                bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=tests, value='BIOCHEMISTRY', font=("Helvetica",12))
-                enzy = Radiobutton(emr, text="ENZYMES", variable=tests, value='ENZYMES', font=("Helvetica",12))
+                cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=tests, \
+                    value='COMPLETE BLOOD COUNT', font=("Helvetica",12), bg="#DEEDEA")
+                bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=tests, \
+                    value='BIOCHEMISTRY', font=("Helvetica",12), bg="#DEEDEA")
+                enzy = Radiobutton(emr, text="ENZYMES", variable=tests, \
+                    value='ENZYMES', font=("Helvetica",12), bg="#DEEDEA")
                 
-                ncanv.create_window(180, 160, anchor="nw", window=cbc)
-                ncanv.create_window(120, 200, anchor="nw", window=bch)
-                ncanv.create_window(350, 200, anchor="nw", window=enzy)
+                ncanv.create_window(230, 160, anchor="nw", window=cbc)
+                ncanv.create_window(170, 200, anchor="nw", window=bch)
+                ncanv.create_window(400, 200, anchor="nw", window=enzy)
 
                 # create ok button
-                tok = Button(emr, text="OK", font=("Helvetica",13), command=okt)
-                ncanv.create_window(270, 250, anchor="nw", window=tok)
+                tokk_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
+                tok = Button(emr, text="OK", font=("Helvetica",13), command=okt, \
+                    image=tokk_img, compound="left", width=120, height=30, bg="#DEEDEA")
+                ncanv.create_window(300, 250, anchor="nw", window=tok)
 
 
             else:
@@ -1124,23 +1131,27 @@ def logpw():
               
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
-        add_p = Button(emr, width=92, height=70, image=addp_img, text="ADD\nPATIENT", font=("Helvetica",7), compound="left", command=ap)
+        add_p = Button(emr, width=92, height=70, image=addp_img, text="ADD\nPATIENT", \
+            font=("Helvetica",7), compound="left", command=ap, bg="#DEEDEA")
         ncanv.create_window(700, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
-        show_p = Button(emr, width=92, height=70, image=showp_img, text="SEARCH\nPATIENT", font=("Helvetica",7), compound="left", command=display)
+        show_p = Button(emr, width=92, height=70, image=showp_img, text="SEARCH\nPATIENT", \
+            font=("Helvetica",7), compound="left", command=display, bg="#87BFB5")
         ncanv.create_window(700, 80, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
-        add_r = Button(emr, width=92, height=70, image=addr_img, text="ADD\nTESTS", font=("Helvetica",7), compound="left", command=addr)
+        add_r = Button(emr, width=92, height=70, image=addr_img, text="ADD\nTESTS", \
+            font=("Helvetica",7), compound="left", command=addr, bg="#DEEDEA")
         ncanv.create_window(700, 160, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
-        show_r = Button(emr, width=92, height=70, image=showr_img, text="SEARCH\nTESTS", font=("Helvetica",7), compound="left", command=tdisplay)
+        show_r = Button(emr, width=92, height=70, image=showr_img, text="SEARCH\nTESTS", \
+            font=("Helvetica",7), compound="left", command=tdisplay, bg="#87BFB5")
         ncanv.create_window(700, 240, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
-        ext = Button(emr, width=92, height=73, image=ext_img, command=extn)
+        ext = Button(emr, width=92, height=73, image=ext_img, command=extn, bg="red")
         ncanv.create_window(702, 321, anchor="nw", window=ext)
 
         emr.mainloop
