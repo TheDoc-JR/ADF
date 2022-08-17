@@ -47,14 +47,14 @@ def logpw():
         # Open new records window
         emr = Tk()
         emr.title("ABLORH® DATA FINDER")
-        emr.geometry("700x300")
+        emr.geometry("800x300")
         
         # Set a background image
         nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\emr2.jpg"))
 
-        ncanv = Canvas(emr, width=600, height=300)
+        ncanv = Canvas(emr, width=700, height=300)
         ncanv.pack(fill="both", expand=True)
-        ncanv.create_image(0, 0, image=nbg, anchor="nw")
+        ncanv.create_image(100, 0, image=nbg, anchor="nw")
 
         # Establish connection to the database
         cnx = sqlc.connect(
@@ -784,6 +784,8 @@ def logpw():
                             # commit the changes
                             cnx.commit()
 
+            
+
                         except:
                             messagebox.showerror("","Process failed.")
                         
@@ -889,9 +891,22 @@ def logpw():
 
                 # Create a function to display results in Treeview form
                 def tview(fetch):
-                    global ttree
-                    # Create the treeview 
-                    ttree = ttk.Treeview(emr, height=3)
+                    global ttree,lft
+
+                    # Create the Label Frame
+                    lft = LabelFrame(ncanv, width=400, height=250, text="TESTS DATA")
+                    lft.pack()
+
+                    # Create the scrollbar
+                    tsb = Scrollbar(lft)
+                    tsb.pack(side=RIGHT, fill=Y)
+
+                    # Create the Treeview 
+                    ttree = ttk.Treeview(lft, yscrollcommand=tsb.set)
+                    ttree.pack()
+
+                    # Configure the scrollbar
+                    tsb.config(command=ttree.yview)
 
                     # Define the columns
                     ttree["columns"] = ("NAME", "LASTNAME", "TESTNAME", "RESULTS", "UNITS", "REF_VALUES", "TESTDATE", "P_ID")
@@ -901,7 +916,7 @@ def logpw():
                     
                     ttree.column("NAME", width=100, anchor="w")
                     ttree.column("LASTNAME", width=100, anchor="w")
-                    ttree.column("TESTNAME", width=120, anchor="w")
+                    ttree.column("TESTNAME", width=110, anchor="w")
                     ttree.column("RESULTS", width=60, anchor="center")
                     ttree.column("UNITS", width=50, anchor="center")
                     ttree.column("REF_VALUES", width=60, anchor="center")
@@ -931,7 +946,7 @@ def logpw():
                         count += 1
 
                     # Display the results
-                    ncanv.create_window(20, 20, anchor="nw", window=ttree)
+                    ncanv.create_window(20, 20, anchor="nw", window=lft)
 
                 def show_okt():
 
@@ -972,6 +987,7 @@ def logpw():
 
                             # create ok function
                             def tokf():
+                                lft.destroy()
                                 ttree.destroy()
                                 okc.destroy()
                             
@@ -1011,6 +1027,7 @@ def logpw():
                             
                             # create ok function
                             def tokf():
+                                lft.destroy()
                                 ttree.destroy()
                                 okb.destroy()
                             
@@ -1049,12 +1066,17 @@ def logpw():
                             
                             # create ok function
                             def tokf():
+                                lft.destroy()
                                 ttree.destroy()
                                 oke.destroy()
                             
                             # create ok button
                             oke = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
                             ncanv.create_window(290, 200, anchor="nw", window=oke)
+
+                            """# debugging
+                            bug = pd.read_sql("SELECT * FROM ENZYMES WHERE Patient_ID = 85", cnx)
+                            print(bug)"""
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
@@ -1093,23 +1115,23 @@ def logpw():
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
         add_p = Button(emr, width=100, height=55, image=addp_img, text="ADD\nPATIENT", font=("Helvetica",7), compound="left", command=ap)
-        ncanv.create_window(600, 0, anchor="nw", window=add_p)
+        ncanv.create_window(700, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
         show_p = Button(emr, width=100, height=55, image=showp_img, text="SEARCH\nPATIENT", font=("Helvetica",7), compound="left", command=display)
-        ncanv.create_window(600, 60, anchor="nw", window=show_p)
+        ncanv.create_window(700, 60, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
         add_r = Button(emr, width=100, height=55, image=addr_img, text="ADD\nTESTS", font=("Helvetica",7), compound="left", command=addr)
-        ncanv.create_window(600, 120, anchor="nw", window=add_r)
+        ncanv.create_window(700, 120, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
         show_r = Button(emr, width=100, height=55, image=showr_img, text="SEARCH\nTESTS", font=("Helvetica",7), compound="left", command=tdisplay)
-        ncanv.create_window(600, 180, anchor="nw", window=show_r)
+        ncanv.create_window(700, 180, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
         ext = Button(emr, width=100, height=55, image=ext_img, command=extn)
-        ncanv.create_window(600, 240, anchor="nw", window=ext)
+        ncanv.create_window(700, 240, anchor="nw", window=ext)
 
         emr.mainloop
 
