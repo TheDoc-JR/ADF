@@ -10,16 +10,17 @@ from PIL import Image, ImageTk
 
 # Config the GUI
 root = Tk()
-root.title('ABLORH® DATA FINDER')
+root.title('ABLORH DATA FINDER')
 root.geometry("700x300")
-root.configure(bg='#E1F0ED')
+root.iconbitmap("C:\\Users\\Gwendarling\\DarlinGit\\Images\\med.ico")
+root.resizable(False, False)
 
 # Set a background image
 bg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\BGI.jpg"))
 
 canv = Canvas(root, width=500, height=300)
 canv.pack(fill="both", expand=True)
-canv.create_image(300, 0, image=bg, anchor="nw")
+canv.create_image(270, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
@@ -46,8 +47,10 @@ def logpw():
         
         # Open new records window
         emr = Tk()
-        emr.title("ABLORH® DATA FINDER")
+        emr.title("ABLORH DATA FINDER")
         emr.geometry("800x400")
+        emr.iconbitmap("C:\\Users\\Gwendarling\\DarlinGit\\Images\\med2.ico")
+        emr.resizable(False, False)
         
         # Set a background image
         nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\bg5.jpg"))
@@ -176,7 +179,7 @@ def logpw():
             ncanv.create_window(30, 60, anchor="nw", window=name)
 
             surname = Entry(emr, font=("Rockwell",13), bd=2)
-            surname.insert(0, "Patient's lastname")
+            surname.insert(0, "Patient's last name")
 
             ncanv.create_window(30, 100, anchor="nw", window=surname)
 
@@ -237,7 +240,7 @@ def logpw():
                 if name.get() == "Patient's name":
                     name.delete(0, END)
             def entry_clear3(e):
-                if surname.get() == "Patient's lastname":
+                if surname.get() == "Patient's last name":
                     surname.delete(0, END)
             def entry_clear4(e):
                 if age.get() == "Patient's age":
