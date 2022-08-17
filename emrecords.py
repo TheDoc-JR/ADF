@@ -112,6 +112,9 @@ def logpw():
                 root.destroy()
             else: pass
 
+
+        # ADD NEW PATIENT DATA-------------------------------------------------------------------------
+        
         # Create ap function
         def ap():
             global id,pid,name,pname,surname,psurname,\
@@ -317,16 +320,17 @@ def logpw():
             submit_patient.destroy()
 
 
+        # SEARCH AND DISPLAY PATIENT DATA-----------------------------------------------------------------------------
 
         # Create show patients records function
         def display():
-            global checkid, cnx, checkok
+            global checkid, cnx, checkok, checkok_img
 
             # Create the id box
-            checkid = Entry(emr, font=("Helvetica",13), bd=2)
+            checkid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
             checkid.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(230, 70, anchor="nw", window=checkid)
+            ncanv.create_window(300, 170, anchor="nw", window=checkid)
 
             # Define id_clear function
             def id_clear(e):
@@ -337,13 +341,16 @@ def logpw():
             checkid.bind("<Button-1>", id_clear )
 
             # create ok button
-            checkok = Button(emr, text="OK", font=("Helvetica",13), command=checkokr)
-            ncanv.create_window(290, 200, anchor="nw", window=checkok)
+            checkok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
+            checkok = Button(emr, text="FIND\nPATIENT", font=("Helvetica",13), command=checkokr,\
+                 image=checkok_img, compound="left", width=180, height=60, bg="#87BFB5")
+            ncanv.create_window(290, 250, anchor="nw", window=checkok)
             
 
+        
         # Check if patient in database
         def checkokr():
-            global pcheckid
+            global pcheckid, ok_img
 
             pcheckid = checkid.get()
             
@@ -364,7 +371,7 @@ def logpw():
                 show = cur.fetchall()
                 
                 # Create a Label Frame
-                lf = LabelFrame(ncanv, width=400, height=200, text="PATIENT")
+                lf = LabelFrame(ncanv, width=400, height=200, text="PATIENT", bg="#87BFB5")
                 lf.pack()
                 
                 # Create the treeview 
@@ -403,7 +410,7 @@ def logpw():
                     count += 1
 
                 # Display the results
-                ncanv.create_window(20, 20, anchor="nw", window=lf)
+                ncanv.create_window(80, 100, anchor="nw", window=lf)
 
                 # Close connection
                 cur.close()
@@ -415,8 +422,10 @@ def logpw():
                     lf.destroy()
                 
                 # Create OK button
-                ok = Button(emr, text="OK", font=("Helvetica",13), command=okf)
-                ncanv.create_window(290, 200, anchor="nw", window=ok)
+                ok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
+                ok = Button(emr, text="DONE", font=("Helvetica",13), command=okf, \
+                    image=ok_img, compound="left", width=120, height=30, bg="#87BFB5")
+                ncanv.create_window(300, 250, anchor="nw", window=ok)
             
             else:
                 messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
@@ -425,7 +434,7 @@ def logpw():
 
 
            
-
+        # ADD TEST DATA--------------------------------------------------------------------
 
         # Create add-records function
         def addr():
@@ -859,7 +868,7 @@ def logpw():
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
 
-
+        # SEARCH AND DISPLAY TESTS DATA--------------------------------------------------------------------
 
         # Show tests by patient ID
         def tdisplay():
