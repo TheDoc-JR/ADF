@@ -47,14 +47,14 @@ def logpw():
         # Open new records window
         emr = Tk()
         emr.title("ABLORH® DATA FINDER")
-        emr.geometry("800x300")
+        emr.geometry("800x400")
         
         # Set a background image
-        nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\emr2.jpg"))
+        nbg = ImageTk.PhotoImage(Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\bg5.jpg"))
 
-        ncanv = Canvas(emr, width=700, height=300)
+        ncanv = Canvas(emr, width=700, height=400)
         ncanv.pack(fill="both", expand=True)
-        ncanv.create_image(100, 0, image=nbg, anchor="nw")
+        ncanv.create_image(0, 0, image=nbg, anchor="nw")
 
         # Establish connection to the database
         cnx = sqlc.connect(
@@ -894,7 +894,7 @@ def logpw():
                     global ttree,lft
 
                     # Create the Label Frame
-                    lft = LabelFrame(ncanv, width=400, height=250, text="TESTS DATA")
+                    lft = LabelFrame(ncanv, text="TESTS DATA")
                     lft.pack()
 
                     # Create the scrollbar
@@ -902,7 +902,7 @@ def logpw():
                     tsb.pack(side=RIGHT, fill=Y)
 
                     # Create the Treeview 
-                    ttree = ttk.Treeview(lft, yscrollcommand=tsb.set)
+                    ttree = ttk.Treeview(lft, yscrollcommand=tsb.set, height=6)
                     ttree.pack()
 
                     # Configure the scrollbar
@@ -946,7 +946,7 @@ def logpw():
                         count += 1
 
                     # Display the results
-                    ncanv.create_window(20, 20, anchor="nw", window=lft)
+                    ncanv.create_window(10, 20, anchor="nw", window=lft)
 
                 def show_okt():
 
@@ -993,7 +993,7 @@ def logpw():
                             
                             # create ok button
                             okc = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
-                            ncanv.create_window(290, 200, anchor="nw", window=okc)
+                            ncanv.create_window(300, 200, anchor="nw", window=okc)
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
@@ -1033,7 +1033,7 @@ def logpw():
                             
                             # create ok button
                             okb = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
-                            ncanv.create_window(290, 200, anchor="nw", window=okb)
+                            ncanv.create_window(300, 200, anchor="nw", window=okb)
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
@@ -1072,11 +1072,7 @@ def logpw():
                             
                             # create ok button
                             oke = Button(emr, text="OK", font=("Rockwell",13), command=tokf)
-                            ncanv.create_window(290, 200, anchor="nw", window=oke)
-
-                            """# debugging
-                            bug = pd.read_sql("SELECT * FROM ENZYMES WHERE Patient_ID = 85", cnx)
-                            print(bug)"""
+                            ncanv.create_window(300, 200, anchor="nw", window=oke)
 
                         else:
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
@@ -1114,24 +1110,24 @@ def logpw():
               
         # Add buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
-        add_p = Button(emr, width=100, height=55, image=addp_img, text="ADD\nPATIENT", font=("Helvetica",7), compound="left", command=ap)
+        add_p = Button(emr, width=92, height=70, image=addp_img, text="ADD\nPATIENT", font=("Helvetica",7), compound="left", command=ap)
         ncanv.create_window(700, 0, anchor="nw", window=add_p)
         
         showp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find-user.png")
-        show_p = Button(emr, width=100, height=55, image=showp_img, text="SEARCH\nPATIENT", font=("Helvetica",7), compound="left", command=display)
-        ncanv.create_window(700, 60, anchor="nw", window=show_p)
+        show_p = Button(emr, width=92, height=70, image=showp_img, text="SEARCH\nPATIENT", font=("Helvetica",7), compound="left", command=display)
+        ncanv.create_window(700, 80, anchor="nw", window=show_p)
         
         addr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\medical-report.png")
-        add_r = Button(emr, width=100, height=55, image=addr_img, text="ADD\nTESTS", font=("Helvetica",7), compound="left", command=addr)
-        ncanv.create_window(700, 120, anchor="nw", window=add_r)
+        add_r = Button(emr, width=92, height=70, image=addr_img, text="ADD\nTESTS", font=("Helvetica",7), compound="left", command=addr)
+        ncanv.create_window(700, 160, anchor="nw", window=add_r)
         
         showr_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\optimization.png")
-        show_r = Button(emr, width=100, height=55, image=showr_img, text="SEARCH\nTESTS", font=("Helvetica",7), compound="left", command=tdisplay)
-        ncanv.create_window(700, 180, anchor="nw", window=show_r)
+        show_r = Button(emr, width=92, height=70, image=showr_img, text="SEARCH\nTESTS", font=("Helvetica",7), compound="left", command=tdisplay)
+        ncanv.create_window(700, 240, anchor="nw", window=show_r)
         
         ext_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\emergency-exit.png")
-        ext = Button(emr, width=100, height=55, image=ext_img, command=extn)
-        ncanv.create_window(700, 240, anchor="nw", window=ext)
+        ext = Button(emr, width=92, height=73, image=ext_img, command=extn)
+        ncanv.create_window(702, 321, anchor="nw", window=ext)
 
         emr.mainloop
 
