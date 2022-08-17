@@ -168,35 +168,35 @@ def logpw():
                 yr_s = bd_yr.get()
 
             # Create the data boxes
-            id = Entry(emr, font=("Rockwell",13), bd=2)
+            id = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
             id.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(30, 20, anchor="nw", window=id)
+            ncanv.create_window(150, 60, anchor="nw", window=id)
 
-            name = Entry(emr, font=("Rockwell",13), bd=2)
+            name = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
             name.insert(0, "Patient's name")
             
-            ncanv.create_window(30, 60, anchor="nw", window=name)
+            ncanv.create_window(150, 125, anchor="nw", window=name)
 
-            surname = Entry(emr, font=("Rockwell",13), bd=2)
+            surname = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
             surname.insert(0, "Patient's last name")
 
-            ncanv.create_window(30, 100, anchor="nw", window=surname)
+            ncanv.create_window(150, 185, anchor="nw", window=surname)
 
-            age = Entry(emr, font=("Rockwell",13), bd=2)
+            age = Entry(emr, font=("Rockwell",13), bd=2, bg="#DEEDEA")
             age.insert(0, "Patient's age")
             
-            ncanv.create_window(30, 205, anchor="nw", window=age)
+            ncanv.create_window(410, 125, anchor="nw", window=age)
 
             gender = StringVar()
             gender.set(' ')
-            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12))
-            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12))
-            ncanv.create_window(30, 245, anchor="nw", window=female)
-            ncanv.create_window(150, 245, anchor="nw", window=male)
+            female = Radiobutton(emr, text="Female", variable=gender, value='F', font=("Rockwell",12), bg="#DEEDEA")
+            male = Radiobutton(emr, text="Male", variable=gender, value='M', font=("Rockwell",12), bg="#DEEDEA")
+            ncanv.create_window(410, 185, anchor="nw", window=female)
+            ncanv.create_window(530, 185, anchor="nw", window=male)
 
 
-            bdl = Label(emr, font=("Rockwell",13), bd=2, text="Date of birth")
+            bdl = Label(emr, font=("Rockwell",13), bd=2, text="Date of birth", bg="#DEEDEA")
             
             dy = list(range(1,32))
 
@@ -218,18 +218,18 @@ def logpw():
             
 
             
-            ncanv.create_window(70, 140, anchor="nw", window=bdl)
+            ncanv.create_window(450, 40, anchor="nw", window=bdl)
 
-            ncanv.create_window(30, 165, anchor="nw", window=bd_dy)
+            ncanv.create_window(410, 65, anchor="nw", window=bd_dy)
 
-            ncanv.create_window(85, 165, anchor="nw", window=bd_ms)
+            ncanv.create_window(465, 65, anchor="nw", window=bd_ms)
 
-            ncanv.create_window(160, 165, anchor="nw", window=bd_yr)
+            ncanv.create_window(540, 65, anchor="nw", window=bd_yr)
 
 
             # Create submit-patient button
-            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13))
-            ncanv.create_window(350, 150, anchor="nw", window=submit_patient)
+            submit_patient = Button(emr, width=20, text='Add new patient', command=add_patient, font=("Rockwell",13), bg="#DEEDEA")
+            ncanv.create_window(270, 330, anchor="nw", window=submit_patient)
 
         
             # Define entry_clear function
