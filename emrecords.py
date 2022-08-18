@@ -439,6 +439,7 @@ def logpw():
         # Create add-records function
         def addr():
             global rid,prid,rok,rok_img
+            
             # Create the id check box
             rid = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             rid.insert(0, "Enter patient's ID")
@@ -907,9 +908,10 @@ def logpw():
 
         # Check if patient in database
         def tcheckokr():
-            global tpcheckid
+            global tpcheckid, showtok_img
 
             tpcheckid = tcheckid.get()
+            
 
             if tpcheckid in idbox:
                 tcheckid.destroy()
@@ -1104,23 +1106,28 @@ def logpw():
                             messagebox.showerror("","NO TEST DATA AVAILABLE")
 
                 # Show test tables to select
-                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",12))
+                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",15), bg="#DEEDEA")
                 ncanv.create_window(120, 70, anchor="nw", window=show_sel)
                 
                 show_tests = StringVar()
                 show_tests.set(" ")
                 
-                show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, value='COMPLETE BLOOD COUNT', font=("Helvetica",12))
-                show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, value='BIOCHEMISTRY', font=("Helvetica",12))
-                show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, value='ENZYMES', font=("Helvetica",12))
+                show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, \
+                    value='COMPLETE BLOOD COUNT', font=("Helvetica",12), bg="#DEEDEA")
+                show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, \
+                    value='BIOCHEMISTRY', font=("Helvetica",12), bg="#DEEDEA")
+                show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, \
+                    value='ENZYMES', font=("Helvetica",12), bg="#DEEDEA")
                 
-                ncanv.create_window(180, 160, anchor="nw", window=show_cbc)
-                ncanv.create_window(120, 200, anchor="nw", window=show_bch)
-                ncanv.create_window(350, 200, anchor="nw", window=show_enzy)
+                ncanv.create_window(230, 160, anchor="nw", window=show_cbc)
+                ncanv.create_window(170, 200, anchor="nw", window=show_bch)
+                ncanv.create_window(400, 200, anchor="nw", window=show_enzy)
 
                 # create ok button
-                show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt)
-                ncanv.create_window(270, 250, anchor="nw", window=show_tok)
+                showtok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
+                show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt,\
+                    image=showtok_img, compound="left", width=120, height=30, bg="#DEEDEA")
+                ncanv.create_window(300, 250, anchor="nw", window=show_tok)
 
 
             else:
