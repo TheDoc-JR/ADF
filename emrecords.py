@@ -330,7 +330,7 @@ def logpw():
             checkid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
             checkid.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(300, 170, anchor="nw", window=checkid)
+            ncanv.create_window(290, 170, anchor="nw", window=checkid)
 
             # Define id_clear function
             def id_clear(e):
@@ -343,7 +343,7 @@ def logpw():
             # create ok button
             checkok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
             checkok = Button(emr, text="FIND\nPATIENT", font=("Helvetica",13), command=checkokr,\
-                 image=checkok_img, compound="left", width=180, height=60, bg="#87BFB5")
+                 image=checkok_img, compound="left", width=180, height=70, bg="#87BFB5")
             ncanv.create_window(290, 250, anchor="nw", window=checkok)
             
 
@@ -443,7 +443,7 @@ def logpw():
             rid = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
             rid.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(300, 170, anchor="nw", window=rid)
+            ncanv.create_window(290, 170, anchor="nw", window=rid)
 
             # Define id_clear function
             def id_clear(e):
@@ -456,14 +456,15 @@ def logpw():
             # create ok button
             rok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
             rok = Button(emr, text="CHECK", font=("Helvetica",13), command=okr,\
-                 image=rok_img, compound="left", width=180, height=60, bg="#DEEDEA")
+                 image=rok_img, compound="left", width=180, height=70, bg="#DEEDEA")
             ncanv.create_window(290, 250, anchor="nw", window=rok)
 
         # Check if patient in database
         def okr():
-            global prid,okt,tok,tokk_img
+            global prid,okt,tok,tokk_img,sumbitp_img
 
             prid = rid.get()
+            sumbitp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\addt.png")
             
             # create ok function
             def okt():
@@ -528,7 +529,7 @@ def logpw():
                     global tdl,tdy,tms,\
                         tyr,td_dy,td_ms,td_yr
 
-                    tdl = Label(emr, font=("Helvetica",13), bd=2, text="Test date")
+                    tdl = Label(emr, font=("Helvetica",14), bd=2, text="Test date", bg="#DEEDEA")
             
                     tdy = list(range(1,32))
 
@@ -549,33 +550,33 @@ def logpw():
                     td_yr.set("YEAR")
                     
 
-                    ncanv.create_window(70, 140, anchor="nw", window=tdl)
+                    ncanv.create_window(305, 140, anchor="nw", window=tdl)
 
-                    ncanv.create_window(30, 165, anchor="nw", window=td_dy)
+                    ncanv.create_window(265, 165, anchor="nw", window=td_dy)
 
-                    ncanv.create_window(85, 165, anchor="nw", window=td_ms)
+                    ncanv.create_window(320, 165, anchor="nw", window=td_ms)
 
-                    ncanv.create_window(160, 165, anchor="nw", window=td_yr)
+                    ncanv.create_window(395, 165, anchor="nw", window=td_yr)
 
 
                 if test == 'COMPLETE BLOOD COUNT':
 
 
                     # create test boxes
-                    Rbc = Entry(emr, font=("Helvetica",13), bd=2)
+                    Rbc = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Rbc.insert(0, "Red blood cells (RBC)")
                     
-                    ncanv.create_window(30, 20, anchor="nw", window=Rbc)
+                    ncanv.create_window(265, 20, anchor="nw", window=Rbc)
 
-                    Hb = Entry(emr, font=("Helvetica",13), bd=2)
+                    Hb = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Hb.insert(0, "Hemoglobin (Hb)")
                     
-                    ncanv.create_window(30, 60, anchor="nw", window=Hb)
+                    ncanv.create_window(265, 60, anchor="nw", window=Hb)
 
-                    Ht = Entry(emr, font=("Helvetica",13), bd=2)
+                    Ht = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Ht.insert(0, "Hematocrit")
                     
-                    ncanv.create_window(30, 100, anchor="nw", window=Ht)
+                    ncanv.create_window(265, 100, anchor="nw", window=Ht)
 
                     dt_date()
 
@@ -629,8 +630,9 @@ def logpw():
                             csubmit_test.destroy()
 
                     # Create submit-test button
-                    csubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_cbc)
-                    ncanv.create_window(350, 150, anchor="nw", window=csubmit_test)
+                    csubmit_test = Button(emr, width=160, height=65, text='ADD\nTESTS', font=("Helvetica",13), \
+                        command=add_cbc, bg="#DEEDEA", image=sumbitp_img, compound="left")
+                    ncanv.create_window(270, 290, anchor="nw", window=csubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
@@ -655,20 +657,20 @@ def logpw():
                 if test == 'BIOCHEMISTRY':
 
                     # create test boxes
-                    Gc = Entry(emr, font=("Helvetica",13), bd=2)
+                    Gc = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Gc.insert(0, "Glucose")
                     
-                    ncanv.create_window(30, 20, anchor="nw", window=Gc)
+                    ncanv.create_window(265, 20, anchor="nw", window=Gc)
 
-                    Ct = Entry(emr, font=("Helvetica",13), bd=2)
+                    Ct = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Ct.insert(0, "Creatinine")
                     
-                    ncanv.create_window(30, 60, anchor="nw", window=Ct)
+                    ncanv.create_window(265, 60, anchor="nw", window=Ct)
 
-                    Ua = Entry(emr, font=("Helvetica",13), bd=2)
+                    Ua = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     Ua.insert(0, "Uric acid")
                     
-                    ncanv.create_window(30, 100, anchor="nw", window=Ua)
+                    ncanv.create_window(265, 100, anchor="nw", window=Ua)
 
                     dt_date()
 
@@ -706,7 +708,6 @@ def logpw():
                             # commit the changes
                             cnx.commit()
 
-                            print(pd.read_sql("SELECT * FROM BIOCHEMISTRY", cnx))
 
                         except:
                             messagebox.showerror("","Process failed.")
@@ -723,8 +724,9 @@ def logpw():
                             bsubmit_test.destroy()
 
                     # Create submit-test button
-                    bsubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_bio)
-                    ncanv.create_window(350, 150, anchor="nw", window=bsubmit_test)
+                    bsubmit_test = Button(emr, width=160, height=65, text='ADD\nTESTS', font=("Helvetica",13),\
+                         command=add_bio, bg="#DEEDEA", image=sumbitp_img, compound="left")
+                    ncanv.create_window(270, 290, anchor="nw", window=bsubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
@@ -749,20 +751,20 @@ def logpw():
                 if test == "ENZYMES":
 
                     # create test boxes
-                    ASTr = Entry(emr, font=("Helvetica",13), bd=2)
+                    ASTr = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     ASTr.insert(0, "AST/GOT")
                     
-                    ncanv.create_window(30, 20, anchor="nw", window=ASTr)
+                    ncanv.create_window(265, 20, anchor="nw", window=ASTr)
 
-                    ALTr = Entry(emr, font=("Helvetica",13), bd=2)
+                    ALTr = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     ALTr.insert(0, "ALT/GPT")
                     
-                    ncanv.create_window(30, 60, anchor="nw", window=ALTr)
+                    ncanv.create_window(265, 60, anchor="nw", window=ALTr)
 
-                    GGTr = Entry(emr, font=("Helvetica",13), bd=2)
+                    GGTr = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
                     GGTr.insert(0, "GGT")
                     
-                    ncanv.create_window(30, 100, anchor="nw", window=GGTr)
+                    ncanv.create_window(265, 100, anchor="nw", window=GGTr)
 
                     dt_date()
 
@@ -817,8 +819,9 @@ def logpw():
                             esubmit_test.destroy()
 
                     # Create submit-test button
-                    esubmit_test = Button(emr, width=20, text='Add tests', font=("Helvetica",13), command=add_enzy)
-                    ncanv.create_window(350, 150, anchor="nw", window=esubmit_test)
+                    esubmit_test = Button(emr, width=160, height=65, text='ADD\nTESTS', font=("Helvetica",13), \
+                        command=add_enzy, bg="#DEEDEA", image=sumbitp_img, compound="left")
+                    ncanv.create_window(270, 290, anchor="nw", window=esubmit_test)
                 
                     # Define test_clear function
                     def test_clear(e):
