@@ -106,7 +106,7 @@ def logpw():
 
         # Add exit function
         def extn():
-            x = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
+            x = messagebox.askyesno("","HEY DOC!\nARE TOU SURE YOU WANT TO EXIT?")
             if x == 1:
                 emr.destroy()
                 root.destroy()
@@ -296,7 +296,7 @@ def logpw():
                 # commit changes
                 cnx.commit()
 
-                messagebox.showinfo('GOOD NEWS! :)','PATIENT SUCCESFULLY ADDED!')
+                messagebox.showinfo('GOOD NEWS! :)','PATIENT SUCCESSFULLY  ADDED!')
 
                 idbox.append(pid)
                 
@@ -428,7 +428,7 @@ def logpw():
                 ncanv.create_window(300, 250, anchor="nw", window=ok)
             
             else:
-                messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
+                messagebox.showerror("BAD NEWS :(","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
                 checkid.destroy()
                 checkok.destroy()
 
@@ -610,14 +610,14 @@ def logpw():
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (cdata3[0],tHt,cdata3[1],cdata3[2],tctd,prid))
 
-                            messagebox.showinfo("","Data successfully added!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
 
                             # commit the changes
                             cnx.commit()
                             
 
                         except:
-                            messagebox.showerror("","Process failed.")
+                            messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
                         
                         finally:
                             # Clear the window
@@ -704,14 +704,14 @@ def logpw():
                             mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (bdata3[0],tUa,bdata3[1],bdata3[2],tbtd,prid))
 
-                            messagebox.showinfo("","Data successfully added!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
 
                             # commit the changes
                             cnx.commit()
 
 
                         except:
-                            messagebox.showerror("","Process failed.")
+                            messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
                         
                         finally:
                             # Clear the window
@@ -798,7 +798,7 @@ def logpw():
                             mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (edata3[0],tGGTr,edata3[1],edata3[2],tetd,prid))
 
-                            messagebox.showinfo("","Data successfully added!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
 
                             # commit the changes
                             cnx.commit()
@@ -806,7 +806,7 @@ def logpw():
             
 
                         except:
-                            messagebox.showerror("","Process failed.")
+                            messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
                         
                         finally:
                             # Clear the window
@@ -901,7 +901,7 @@ def logpw():
 
             # create ok button
             tcheckok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
-            tcheckok = Button(emr, text="OK", font=("Helvetica",13), \
+            tcheckok = Button(emr, text="CHECK", font=("Helvetica",13), \
                 command=tcheckokr, image=tcheckok_img, compound="left", width=180, height=70, bg="#87BFB5")
             ncanv.create_window(290, 250, anchor="nw", window=tcheckok)
             
@@ -922,7 +922,7 @@ def logpw():
                     global ttree,lft
 
                     # Create the Label Frame
-                    lft = LabelFrame(ncanv, text="TESTS DATA")
+                    lft = LabelFrame(ncanv, text="TESTS DATA", bg="#87BFB5")
                     lft.pack()
 
                     # Create the scrollbar
@@ -998,7 +998,7 @@ def logpw():
                             ncanv.create_window(300, 250, anchor="nw", window=btn)
 
                     else:
-                        messagebox.showerror("","NO TEST DATA AVAILABLE")
+                        messagebox.showerror("SORRY :(","NO TEST DATA AVAILABLE")
 
                 def show_okt():
 
@@ -1083,7 +1083,7 @@ def logpw():
 
 
                 # Show test tables to select
-                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",15), bg="#DEEDEA")
+                show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",15), bg="#87BFB5")
                 ncanv.create_window(120, 70, anchor="nw", window=show_sel)
                 
                 show_tests = StringVar()
@@ -1108,7 +1108,7 @@ def logpw():
 
 
             else:
-                messagebox.showerror("","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
+                messagebox.showerror("SORRY :(","NO PATIENT IN DATABASE WITH THIS ID NUMBER")
                 tcheckid.destroy()
                 tcheckok.destroy()
 
@@ -1148,7 +1148,7 @@ def logpw():
 
         
     
-    else: messagebox.showerror("","ACCESS DENIED\nWRONG PASSWORD")
+    else: messagebox.showerror("SORRY","ACCESS DENIED\nWRONG PASSWORD")
     pw.delete(0, END)
 
 # Add Login button
@@ -1159,7 +1159,7 @@ logbtnwindow = canv.create_window(10, 245, anchor="nw", window=logbtn)
 
 # Create quit function
 def xit():
-    q = messagebox.askyesno("","Hey Doc!\nAre you sure you want to exit?")
+    q = messagebox.askyesno("","HEY DOC!\nARE TOU SURE YOU WANT TO EXIT?")
     if q == 1:
         root.destroy()
     else: pass
@@ -1185,7 +1185,7 @@ def pw_clear(e):
 pw.bind("<Button-1>", pw_clear )
 
 # Add greeting message
-greeting = Label(root, text="WELCOME DR. CAROL!", font=("Bauhaus 93",15), fg="#94D3C8")
+greeting = Label(root, text="WELCOME DR. CAROL!", font=("Bauhaus 93",15), fg="#87BFB5")
 greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
