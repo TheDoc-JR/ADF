@@ -976,6 +976,30 @@ def logpw():
                     # Display the results
                     ncanv.create_window(10, 20, anchor="nw", window=lft)
 
+
+                # Create and display an OK button
+                def ok_button(fetch):
+                    global btn, btn_img
+                    
+                    if len(fetch) > 0:
+                            
+                            tview(fetch)
+
+                            # create ok function
+                            def tokf():
+                                lft.destroy()
+                                ttree.destroy()
+                                btn.destroy()
+                            
+                            # create ok button
+                            btn_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
+                            btn = Button(emr, text="DONE", font=("Helvetica",13), command=tokf, \
+                                image=btn_img, compound="left", width=120, height=30, bg="#87BFB5")
+                            ncanv.create_window(300, 250, anchor="nw", window=btn)
+
+                    else:
+                        messagebox.showerror("","NO TEST DATA AVAILABLE")
+
                 def show_okt():
 
                     pshow_tests = show_tests.get()
@@ -1009,22 +1033,7 @@ def logpw():
                         cshow = ccur.fetchall()
 
                         
-                        if len(cshow) > 0:
-                            
-                            tview(cshow)
-
-                            # create ok function
-                            def tokf():
-                                lft.destroy()
-                                ttree.destroy()
-                                okc.destroy()
-                            
-                            # create ok button
-                            okc = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
-                            ncanv.create_window(300, 200, anchor="nw", window=okc)
-
-                        else:
-                            messagebox.showerror("","NO TEST DATA AVAILABLE")
+                        ok_button(cshow)
                     
                     
                     if pshow_tests == 'BIOCHEMISTRY':
@@ -1047,24 +1056,8 @@ def logpw():
 
                         bshow = bcur.fetchall()
                         
-                        
+                        ok_button(bshow)
 
-                        if len(bshow) > 0:
-                            
-                            tview(bshow)
-                            
-                            # create ok function
-                            def tokf():
-                                lft.destroy()
-                                ttree.destroy()
-                                okb.destroy()
-                            
-                            # create ok button
-                            okb = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
-                            ncanv.create_window(300, 200, anchor="nw", window=okb)
-
-                        else:
-                            messagebox.showerror("","NO TEST DATA AVAILABLE")
 
                     if pshow_tests == 'ENZYMES':
 
@@ -1086,24 +1079,8 @@ def logpw():
 
                         eshow = ecur.fetchall()
                         
-                        
+                        ok_button(eshow)
 
-                        if len(eshow) > 0:
-                            
-                            tview(eshow)
-                            
-                            # create ok function
-                            def tokf():
-                                lft.destroy()
-                                ttree.destroy()
-                                oke.destroy()
-                            
-                            # create ok button
-                            oke = Button(emr, text="OK", font=("Helvetica",13), command=tokf)
-                            ncanv.create_window(300, 200, anchor="nw", window=oke)
-
-                        else:
-                            messagebox.showerror("","NO TEST DATA AVAILABLE")
 
                 # Show test tables to select
                 show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",15), bg="#DEEDEA")
@@ -1113,11 +1090,11 @@ def logpw():
                 show_tests.set(" ")
                 
                 show_cbc = Radiobutton(emr, text='COMPLETE BLOOD COUNT', variable=show_tests, \
-                    value='COMPLETE BLOOD COUNT', font=("Helvetica",12), bg="#DEEDEA")
+                    value='COMPLETE BLOOD COUNT', font=("Helvetica",12), bg="#87BFB5")
                 show_bch = Radiobutton(emr, text="BIOCHEMISTRY", variable=show_tests, \
-                    value='BIOCHEMISTRY', font=("Helvetica",12), bg="#DEEDEA")
+                    value='BIOCHEMISTRY', font=("Helvetica",12), bg="#87BFB5")
                 show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, \
-                    value='ENZYMES', font=("Helvetica",12), bg="#DEEDEA")
+                    value='ENZYMES', font=("Helvetica",12), bg="#87BFB5")
                 
                 ncanv.create_window(230, 160, anchor="nw", window=show_cbc)
                 ncanv.create_window(170, 200, anchor="nw", window=show_bch)
@@ -1126,7 +1103,7 @@ def logpw():
                 # create ok button
                 showtok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
                 show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt,\
-                    image=showtok_img, compound="left", width=120, height=30, bg="#DEEDEA")
+                    image=showtok_img, compound="left", width=120, height=30, bg="#87BFB5")
                 ncanv.create_window(300, 250, anchor="nw", window=show_tok)
 
 
