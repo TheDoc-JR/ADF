@@ -112,6 +112,123 @@ def logpw():
                 root.destroy()
             else: pass
 
+        # Add clear_window function
+        def clear_window():
+
+            # clear add patient window
+            try:
+                name.destroy()
+                surname.destroy()
+                id.destroy()
+                bdl.destroy()
+                bd_dy.destroy()
+                bd_ms.destroy()
+                bd_yr.destroy()
+                age.destroy()
+                female.destroy()
+                male.destroy()
+                submit_patient.destroy()
+            except:
+                pass
+
+            # clear find patient(data) window
+            try:
+                checkid.destroy()
+                checkok.destroy()
+            except:
+                pass
+
+            # clear display patient data
+            try:
+                ptree.destroy()
+                ok.destroy()
+                lf.destroy()
+            except:
+                pass
+
+            # clear find patient (add records) window
+            try:
+                rid.destroy()
+                rok.destroy() 
+            except:
+                pass           
+
+            # clear select test table(add records) window
+            try:
+                cbc.destroy()
+                bch.destroy()
+                enzy.destroy()
+                tok.destroy()
+                sel.destroy()
+            except:
+                pass
+
+            # clear CBC entry tests window
+            try:
+                Rbc.destroy()
+                Hb.destroy()
+                Ht.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                csubmit_test.destroy()
+            except:
+                pass
+
+            # clear Biochemistry entry tests window
+            try:
+                Gc.destroy()
+                Ct.destroy()
+                Ua.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                bsubmit_test.destroy()
+            except:
+                pass
+
+            # clear Enzymes entry tests window
+            try:
+                ASTr.destroy()
+                ALTr.destroy()
+                GGTr.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                esubmit_test.destroy()
+            except:
+                pass
+
+            # clear find patient(tests) window
+            try:
+                tcheckid.destroy()
+                tcheckok.destroy()
+            except:
+                pass
+            
+            
+            # clear select test table(display) window
+            try:
+                show_sel.destroy()
+                show_cbc.destroy()
+                show_bch.destroy()
+                show_enzy.destroy()
+                show_tok.destroy()
+            except:
+                pass
+
+            # clear test display window
+            try:
+                lft.destroy()
+                ttree.destroy()
+                btn.destroy()
+            except:
+                pass
+
+
 
         # ADD NEW PATIENT DATA-------------------------------------------------------------------------
         
@@ -121,6 +238,8 @@ def logpw():
                    bd,pbd,age,page,psex,add_patient,\
                    submit_patient,gender,female,male,\
                    idbox,bd_yr,bd_ms,bd_dy,bdl,sumbitp_img
+
+            clear_window()
             
 
             # Create dob function
@@ -326,6 +445,8 @@ def logpw():
         def display():
             global checkid, cnx, checkok, checkok_img
 
+            clear_window()
+
             # Create the id box
             checkid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
             checkid.insert(0, "Enter patient's ID")
@@ -350,7 +471,7 @@ def logpw():
         
         # Check if patient in database
         def checkokr():
-            global pcheckid, ok_img
+            global pcheckid, ok_img, ptree, ok, lf
 
             pcheckid = checkid.get()
             
@@ -439,6 +560,8 @@ def logpw():
         # Create add-records function
         def addr():
             global rid,prid,rok,rok_img
+
+            clear_window()
             
             # Create the id check box
             rid = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
@@ -462,13 +585,19 @@ def logpw():
 
         # Check if patient in database
         def okr():
-            global prid,okt,tok,tokk_img,sumbitp_img
+            global prid,okt,tok,tokk_img,sumbitp_img, \
+                cbc, bch, enzy, sel
 
             prid = rid.get()
             sumbitp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\addt.png")
             
             # create ok function
             def okt():
+                
+                global Rbc, Hb, Ht, csubmit_test, \
+                    Gc, Ct, Ua, bsubmit_test, \
+                       ASTr, ALTr, GGTr, esubmit_test
+
                 cbc.destroy()
                 bch.destroy()
                 enzy.destroy()
@@ -885,6 +1014,8 @@ def logpw():
         def tdisplay():
             global tcheckid, cnx, tcheckok, tcheckok_img
 
+            clear_window()
+
             # Create the id box
             tcheckid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
             tcheckid.insert(0, "Enter patient's ID")
@@ -908,7 +1039,8 @@ def logpw():
 
         # Check if patient in database
         def tcheckokr():
-            global tpcheckid, showtok_img
+            global tpcheckid, showtok_img, show_sel, \
+                show_cbc, show_bch, show_enzy, show_tok
 
             tpcheckid = tcheckid.get()
             
@@ -1102,7 +1234,7 @@ def logpw():
 
                 # create ok button
                 showtok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
-                show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt,\
+                show_tok = Button(emr, text="DONE", font=("Helvetica",13), command=show_okt,\
                     image=showtok_img, compound="left", width=120, height=30, bg="#87BFB5")
                 ncanv.create_window(300, 250, anchor="nw", window=show_tok)
 
