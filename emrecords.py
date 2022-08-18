@@ -882,13 +882,13 @@ def logpw():
 
         # Show tests by patient ID
         def tdisplay():
-            global tcheckid, cnx, tcheckok
+            global tcheckid, cnx, tcheckok, tcheckok_img
 
             # Create the id box
-            tcheckid = Entry(emr, font=("Helvetica",13), bd=2)
+            tcheckid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
             tcheckid.insert(0, "Enter patient's ID")
             
-            ncanv.create_window(230, 70, anchor="nw", window=tcheckid)
+            ncanv.create_window(290, 170, anchor="nw", window=tcheckid)
 
             # Define id_clear function
             def tid_clear(e):
@@ -899,8 +899,10 @@ def logpw():
             tcheckid.bind("<Button-1>", tid_clear )
 
             # create ok button
-            tcheckok = Button(emr, text="OK", font=("Helvetica",13), command=tcheckokr)
-            ncanv.create_window(290, 200, anchor="nw", window=tcheckok)
+            tcheckok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
+            tcheckok = Button(emr, text="OK", font=("Helvetica",13), \
+                command=tcheckokr, image=tcheckok_img, compound="left", width=180, height=70, bg="#87BFB5")
+            ncanv.create_window(290, 250, anchor="nw", window=tcheckok)
             
 
         # Check if patient in database
