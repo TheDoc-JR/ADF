@@ -24,12 +24,12 @@ canv.create_image(270, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\LoginImage-modified.png")
-resized = log_img.resize((100,100), Image.ANTIALIAS)
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\mission.png")
+resized = log_img.resize((170,85), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
-log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
+log_img_window = canv.create_window(45, 40, anchor="nw", window=label)
 
 # Create login function
 def logpw():
@@ -517,7 +517,7 @@ def logpw():
                 ptree.heading("#0", text="")
                 ptree.heading("ID", text="ID", anchor="center")
                 ptree.heading("NAME", text="NAME", anchor="w")
-                ptree.heading("LASTNAME", text="LASTNAME", anchor="w")
+                ptree.heading("LASTNAME", text="LAST NAME", anchor="w")
                 ptree.heading("DOB", text="DATE OF BIRTH", anchor="center")
                 ptree.heading("AGE", text="AGE", anchor="center")
                 ptree.heading("GENDER", text="GENDER", anchor="center")
@@ -1345,7 +1345,7 @@ qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(200, 243, anchor="nw", window=qbtn)
 
 # Add Password entry
-pw = Entry(root, font=("Helvetica",13), bd=2)
+pw = Entry(root, font=("Helvetica",13), bd=2, bg="#DEEDEA")
 pw.insert(0, "Enter your password")
 
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
@@ -1359,7 +1359,7 @@ def pw_clear(e):
 pw.bind("<Button-1>", pw_clear )
 
 # Add greeting message
-greeting = Label(root, text="WELCOME DR. CAROL!", font=("Bauhaus 93",15), fg="#87BFB5")
+greeting = Label(root, text="WELCOME DOCTOR!", font=("Bauhaus 93",15), fg="#87BFB5")
 greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
