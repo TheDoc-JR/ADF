@@ -11,7 +11,7 @@ A message appears when the user enters a wrong password:
 ![Captura de pantalla 2022-08-19 144334](https://user-images.githubusercontent.com/108229433/185621227-795e7984-bcc7-4072-89f5-59005828bd38.jpg)
 
 # Data Finder Window
-After entering the correct password the Data Finder Windows appears. We have a frame and 5 buttons to add a new patient, search a patient's data, add records to a patient, search records from a patient and exit.
+After entering the correct password the Data Finder Window appears. We have a frame and 5 buttons to add a new patient, search a patient's data, add records to a patient, search records from a patient and exit.
 
 ![Captura de pantalla 2022-08-18 192019](https://user-images.githubusercontent.com/108229433/185598449-761c3b8d-e66a-4560-9f9b-f600a0dc50e6.jpg)
 
