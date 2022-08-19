@@ -24,12 +24,12 @@ canv.create_image(270, 0, image=bg, anchor="nw")
 
 # Create Login frame
 # Add Dr Image
-log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\LoginImage-modified.png")
-resized = log_img.resize((100,100), Image.ANTIALIAS)
+log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\mission.png")
+resized = log_img.resize((170,85), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
 label = Label(root, image=new_pic, highlightcolor="red", borderwidth=0)
 
-log_img_window = canv.create_window(85, 20, anchor="nw", window=label)
+log_img_window = canv.create_window(45, 40, anchor="nw", window=label)
 
 # Create login function
 def logpw():
@@ -112,8 +112,126 @@ def logpw():
                 root.destroy()
             else: pass
 
+        # Add clear_window function
+        def clear_window():
 
-        # ADD NEW PATIENT DATA-------------------------------------------------------------------------
+            # clear add patient window
+            try:
+                name.destroy()
+                surname.destroy()
+                id.destroy()
+                bdl.destroy()
+                bd_dy.destroy()
+                bd_ms.destroy()
+                bd_yr.destroy()
+                age.destroy()
+                female.destroy()
+                male.destroy()
+                submit_patient.destroy()
+            except:
+                pass
+
+            # clear find patient(data) window
+            try:
+                checkid.destroy()
+                checkok.destroy()
+            except:
+                pass
+
+            # clear display patient data
+            try:
+                ptree.destroy()
+                ok.destroy()
+                lf.destroy()
+            except:
+                pass
+
+            # clear find patient (add records) window
+            try:
+                rid.destroy()
+                rok.destroy() 
+            except:
+                pass           
+
+            # clear select test table(add records) window
+            try:
+                cbc.destroy()
+                bch.destroy()
+                enzy.destroy()
+                tok.destroy()
+                sel.destroy()
+            except:
+                pass
+
+            # clear CBC entry tests window
+            try:
+                Rbc.destroy()
+                Hb.destroy()
+                Ht.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                csubmit_test.destroy()
+            except:
+                pass
+
+            # clear Biochemistry entry tests window
+            try:
+                Gc.destroy()
+                Ct.destroy()
+                Ua.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                bsubmit_test.destroy()
+            except:
+                pass
+
+            # clear Enzymes entry tests window
+            try:
+                ASTr.destroy()
+                ALTr.destroy()
+                GGTr.destroy()
+                tdl.destroy()
+                td_dy.destroy()
+                td_ms.destroy()
+                td_yr.destroy()
+                esubmit_test.destroy()
+            except:
+                pass
+
+            # clear find patient(tests) window
+            try:
+                tcheckid.destroy()
+                tcheckok.destroy()
+            except:
+                pass
+            
+            
+            # clear select test table(display) window
+            try:
+                show_sel.destroy()
+                show_cbc.destroy()
+                show_bch.destroy()
+                show_enzy.destroy()
+                show_tok.destroy()
+                show_all.destroy()
+            except:
+                pass
+
+            # clear test display window
+            try:
+                lft.destroy()
+                ttree.destroy()
+                btn.destroy()
+            except:
+                pass
+
+
+
+        # ADD NEW PATIENT DATA----------------------------------------------------------------------------------------------------------------------------------
         
         # Create ap function
         def ap():
@@ -121,6 +239,8 @@ def logpw():
                    bd,pbd,age,page,psex,add_patient,\
                    submit_patient,gender,female,male,\
                    idbox,bd_yr,bd_ms,bd_dy,bdl,sumbitp_img
+
+            clear_window()
             
 
             # Create dob function
@@ -320,11 +440,13 @@ def logpw():
             submit_patient.destroy()
 
 
-        # SEARCH AND DISPLAY PATIENT DATA-----------------------------------------------------------------------------
+        # SEARCH AND DISPLAY PATIENT DATA-------------------------------------------------------------------------------------------------------------------------
 
         # Create show patients records function
         def display():
             global checkid, cnx, checkok, checkok_img
+
+            clear_window()
 
             # Create the id box
             checkid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
@@ -350,7 +472,7 @@ def logpw():
         
         # Check if patient in database
         def checkokr():
-            global pcheckid, ok_img
+            global pcheckid, ok_img, ptree, ok, lf
 
             pcheckid = checkid.get()
             
@@ -395,7 +517,7 @@ def logpw():
                 ptree.heading("#0", text="")
                 ptree.heading("ID", text="ID", anchor="center")
                 ptree.heading("NAME", text="NAME", anchor="w")
-                ptree.heading("LASTNAME", text="LASTNAME", anchor="w")
+                ptree.heading("LASTNAME", text="LAST NAME", anchor="w")
                 ptree.heading("DOB", text="DATE OF BIRTH", anchor="center")
                 ptree.heading("AGE", text="AGE", anchor="center")
                 ptree.heading("GENDER", text="GENDER", anchor="center")
@@ -434,11 +556,13 @@ def logpw():
 
 
            
-        # ADD TEST DATA--------------------------------------------------------------------
+        # ADD TEST DATA-----------------------------------------------------------------------------------------------------------------------------------------
 
         # Create add-records function
         def addr():
             global rid,prid,rok,rok_img
+
+            clear_window()
             
             # Create the id check box
             rid = Entry(emr, font=("Helvetica",13), bd=2, bg="#DEEDEA")
@@ -462,13 +586,19 @@ def logpw():
 
         # Check if patient in database
         def okr():
-            global prid,okt,tok,tokk_img,sumbitp_img
+            global prid,okt,tok,tokk_img,sumbitp_img, \
+                cbc, bch, enzy, sel
 
             prid = rid.get()
             sumbitp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\addt.png")
             
             # create ok function
             def okt():
+                
+                global Rbc, Hb, Ht, csubmit_test, \
+                    Gc, Ct, Ua, bsubmit_test, \
+                       ASTr, ALTr, GGTr, esubmit_test
+
                 cbc.destroy()
                 bch.destroy()
                 enzy.destroy()
@@ -610,7 +740,7 @@ def logpw():
                             mycursor.execute("INSERT INTO COMPLETE_BLOOD_COUNT(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (cdata3[0],tHt,cdata3[1],cdata3[2],tctd,prid))
 
-                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY ADDED!")
 
                             # commit the changes
                             cnx.commit()
@@ -704,7 +834,7 @@ def logpw():
                             mycursor.execute("INSERT INTO BIOCHEMISTRY(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (bdata3[0],tUa,bdata3[1],bdata3[2],tbtd,prid))
 
-                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY ADDED!")
 
                             # commit the changes
                             cnx.commit()
@@ -798,7 +928,7 @@ def logpw():
                             mycursor.execute("INSERT INTO ENZYMES(Test_name,Result,Units,Reference_values,Test_date,Patient_ID)\n"
                             "VALUES(%s,%s,%s,%s,%s,%s)", (edata3[0],tGGTr,edata3[1],edata3[2],tetd,prid))
 
-                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY  ADDED!")
+                            messagebox.showinfo("GOOD NEWS! :)","DATA SUCCESSFULLY ADDED!")
 
                             # commit the changes
                             cnx.commit()
@@ -850,7 +980,7 @@ def logpw():
                 
                 # Show test tables to select
                 sel = Label(emr, text="SELECT THE TEST YOU WANT TO ADD DATA IN", font=("Helvetica",15), bg="#DEEDEA")
-                ncanv.create_window(120, 70, anchor="nw", window=sel)
+                ncanv.create_window(110, 70, anchor="nw", window=sel)
                 
                 tests = StringVar()
                 tests.set(" ")
@@ -862,9 +992,9 @@ def logpw():
                 enzy = Radiobutton(emr, text="ENZYMES", variable=tests, \
                     value='ENZYMES', font=("Helvetica",12), bg="#DEEDEA")
                 
-                ncanv.create_window(230, 160, anchor="nw", window=cbc)
-                ncanv.create_window(170, 200, anchor="nw", window=bch)
-                ncanv.create_window(400, 200, anchor="nw", window=enzy)
+                ncanv.create_window(150, 160, anchor="nw", window=cbc)
+                ncanv.create_window(150, 200, anchor="nw", window=bch)
+                ncanv.create_window(420, 160, anchor="nw", window=enzy)
 
                 # create ok button
                 tokk_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
@@ -879,11 +1009,13 @@ def logpw():
                 messagebox.showerror("ERROR","WRONG ID OR NO PATIENT IN CURRENT DATABASE")  
 
 
-        # SEARCH AND DISPLAY TESTS DATA--------------------------------------------------------------------
+        # SEARCH AND DISPLAY TESTS DATA----------------------------------------------------------------------------------------------------------------------------
 
         # Show tests by patient ID
         def tdisplay():
             global tcheckid, cnx, tcheckok, tcheckok_img
+
+            clear_window()
 
             # Create the id box
             tcheckid = Entry(emr, font=("Helvetica",13), bd=2, bg="#87BFB5")
@@ -908,7 +1040,9 @@ def logpw():
 
         # Check if patient in database
         def tcheckokr():
-            global tpcheckid, showtok_img
+            global tpcheckid, showtok_img, show_sel, \
+                show_cbc, show_bch, show_enzy, show_tok, \
+                    show_all
 
             tpcheckid = tcheckid.get()
             
@@ -1009,6 +1143,7 @@ def logpw():
                     show_bch.destroy()
                     show_enzy.destroy()
                     show_tok.destroy()
+                    show_all.destroy()
 
 
                     if pshow_tests == 'COMPLETE BLOOD COUNT':
@@ -1081,10 +1216,46 @@ def logpw():
                         
                         ok_button(eshow)
 
+                    if pshow_tests == 'ALL':
+
+                        # establish connection to the database
+                        cnx = sqlc.connect(
+                        user="root",
+                        password="TheDoctor3005",
+                        host="localhost",
+                        database="perez"
+                    )
+                    
+                        allcur = cnx.cursor()
+
+                        allcur.execute("SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN COMPLETE_BLOOD_COUNT\
+                                        ON ID = {0}\
+                                        UNION\
+                                        SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN BIOCHEMISTRY\
+                                        ON ID = {0}\
+                                        UNION\
+                                        SELECT Name,Last_name,Test_name,Result,\
+                                        Units,Reference_values,Test_date,Patient_ID \
+                                        FROM PATIENT\
+                                        JOIN ENZYMES\
+                                        ON ID = {0}".format(tpcheckid))
+
+                        allshow = allcur.fetchall()
+
+                        print(allshow)
+                        
+                        ok_button(allshow)
+
 
                 # Show test tables to select
                 show_sel = Label(emr, text="SELECT THE TEST YOU WANT TO SHOW DATA FROM", font=("Helvetica",15), bg="#87BFB5")
-                ncanv.create_window(120, 70, anchor="nw", window=show_sel)
+                ncanv.create_window(110, 70, anchor="nw", window=show_sel)
                 
                 show_tests = StringVar()
                 show_tests.set(" ")
@@ -1095,14 +1266,17 @@ def logpw():
                     value='BIOCHEMISTRY', font=("Helvetica",12), bg="#87BFB5")
                 show_enzy = Radiobutton(emr, text="ENZYMES", variable=show_tests, \
                     value='ENZYMES', font=("Helvetica",12), bg="#87BFB5")
+                show_all = Radiobutton(emr, text="SHOW ALL TESTS", variable=show_tests, \
+                    value='ALL', font=("Helvetica",12), bg="#7DFEF8")
                 
-                ncanv.create_window(230, 160, anchor="nw", window=show_cbc)
-                ncanv.create_window(170, 200, anchor="nw", window=show_bch)
-                ncanv.create_window(400, 200, anchor="nw", window=show_enzy)
+                ncanv.create_window(150, 160, anchor="nw", window=show_cbc)
+                ncanv.create_window(150, 200, anchor="nw", window=show_bch)
+                ncanv.create_window(420, 160, anchor="nw", window=show_enzy)
+                ncanv.create_window(420, 200, anchor="nw", window=show_all)
 
                 # create ok button
                 showtok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\done.png")
-                show_tok = Button(emr, text="OK", font=("Helvetica",13), command=show_okt,\
+                show_tok = Button(emr, text="DONE", font=("Helvetica",13), command=show_okt,\
                     image=showtok_img, compound="left", width=120, height=30, bg="#87BFB5")
                 ncanv.create_window(300, 250, anchor="nw", window=show_tok)
 
@@ -1171,7 +1345,7 @@ qbtn = Button(root, image=q, borderwidth=0, command=xit)
 qwindow = canv.create_window(200, 243, anchor="nw", window=qbtn)
 
 # Add Password entry
-pw = Entry(root, font=("Helvetica",13), bd=2)
+pw = Entry(root, font=("Helvetica",13), bd=2, bg="#DEEDEA")
 pw.insert(0, "Enter your password")
 
 pw_window = canv.create_window(40, 180, anchor="nw", window=pw)
@@ -1185,7 +1359,7 @@ def pw_clear(e):
 pw.bind("<Button-1>", pw_clear )
 
 # Add greeting message
-greeting = Label(root, text="WELCOME DR. CAROL!", font=("Bauhaus 93",15), fg="#87BFB5")
+greeting = Label(root, text="WELCOME DOCTOR!", font=("Bauhaus 93",15), fg="#87BFB5")
 greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
 
 
