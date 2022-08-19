@@ -1,5 +1,5 @@
 # ABLORH DATA FINDER
-This is a PC App to manage clinic data of patients. It was made for authorized medical personnel only.
+ABLORH DATA FINDER is a desktop application to manage clinic data of patients. It was made for authorized medical personnel only.
 
 DISCLAIMER:
 It was made only for training purposes, that is why I used my local database and the tables are deleted and created everytime the program runs. It was made only with 3 types of tests (3 tables) and with 3 types of records by each test.
