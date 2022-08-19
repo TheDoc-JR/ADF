@@ -1,5 +1,4 @@
 from tkinter import messagebox
-from turtle import width
 import pandas as pd
 from tkinter import *
 from tkinter import ttk
@@ -8,7 +7,7 @@ from PIL import Image, ImageTk
 
 
 
-# Config the GUI
+# Config the GUI (Login Window)
 root = Tk()
 root.title('ABLORH DATA FINDER')
 root.geometry("700x300")
@@ -23,7 +22,7 @@ canv.pack(fill="both", expand=True)
 canv.create_image(270, 0, image=bg, anchor="nw")
 
 # Create Login frame
-# Add Dr Image
+# Add a profile picture
 log_img = Image.open("C:\\Users\\Gwendarling\\DarlinGit\\Images\\mission.png")
 resized = log_img.resize((170,85), Image.ANTIALIAS)
 new_pic = ImageTk.PhotoImage(resized)
@@ -33,6 +32,9 @@ log_img_window = canv.create_window(45, 40, anchor="nw", window=label)
 
 # Create login function
 def logpw():
+    """Gets the data entered in the password entry and, if it is correct,
+    destroys the login window and opens the Data Finder window"""
+
     global emr,nbg,ncanv,add_p,addp_img,showp_img,addr_img,\
            showr_img,ext_img,extn,ap,id,cnx,mycursor, pid,\
            name,pname,surname,psurname,bd,pbd,age,page,\
@@ -42,10 +44,11 @@ def logpw():
     
     if pssw == "q":
         root.destroy()
+        
         # Store every ID of every patient successfully added to the database
         idbox = []
         
-        # Open new records window
+        # Open Data Finder window
         emr = Tk()
         emr.title("ABLORH DATA FINDER")
         emr.geometry("800x400")
@@ -99,13 +102,15 @@ def logpw():
             "FOREIGN KEY (Patient_ID) REFERENCES PATIENT(ID) ON DELETE CASCADE\n" 
         ")".format(test))
 
-        # Create tests table
+        # Create tests tables
         create_data('COMPLETE_BLOOD_COUNT')
         create_data('BIOCHEMISTRY')
         create_data('ENZYMES')
 
-        # Add exit function
+        # Create exit function
         def extn():
+            """Confirms with the user whether or not wants to really close the program"""
+
             x = messagebox.askyesno("","HEY DOC!\nARE TOU SURE YOU WANT TO EXIT?")
             if x == 1:
                 emr.destroy()
@@ -114,6 +119,9 @@ def logpw():
 
         # Add clear_window function
         def clear_window():
+            """Everytime a button is accidentally clicked by the user, 
+            instead of showing that button's widgets above the widgets 
+            shown currently, it deletes the old ones and displays the new ones"""
 
             # clear add patient window
             try:
@@ -235,6 +243,10 @@ def logpw():
         
         # Create ap function
         def ap():
+            """When the Add-patient button is clicked this 
+            function calls other functions in order to 
+            successfully add new patient's data to the database"""
+
             global id,pid,name,pname,surname,psurname,\
                    bd,pbd,age,page,psex,add_patient,\
                    submit_patient,gender,female,male,\
@@ -245,6 +257,11 @@ def logpw():
 
             # Create dob function
             def dob(e):
+                """Gets the data entered by the day entry widget
+                and assign it to a variable. If the (string) number 
+                is between 1 and 9 it is stored in 01-09 format
+                in order to correctly add it to the database"""
+
                 global d, dy_s 
                 
                 d = bd_dy.get()
@@ -255,6 +272,11 @@ def logpw():
                 
             # Create mob function
             def mob(e):
+                """Gets the data entered by the month entry widget
+                and assign it to a variable. It changes the month
+                name by a (string) number in format 01-12 in order 
+                to correctly add it to the database"""
+
                 global mth_s
 
                 mth_s = bd_ms.get()
@@ -286,6 +308,10 @@ def logpw():
 
             # Create yob function
             def yob(e):
+                """Gets the data entered by the year entry widget
+                and assign it to a variable in order to correctly 
+                add it to the database"""
+
                 global yr_s
 
                 yr_s = bd_yr.get()
@@ -358,6 +384,8 @@ def logpw():
 
         
             # Define entry_clear function
+            """Clear the text inside the entry boxes when the user clicks inside"""
+
             def entry_clear(e):
                 if id.get() == "Enter patient's ID":
                     id.delete(0, END)
@@ -386,6 +414,10 @@ def logpw():
 
         # Create submit-patient function
         def add_patient():
+            """Gets the data given by the user and tries to add it 
+            to the database. Whether or not the process goes well 
+            a message appears to inform the user"""
+        
             global pid,pname,psurname,pbd,page,psex,bd
 
             pid = id.get()
@@ -444,6 +476,10 @@ def logpw():
 
         # Create show patients records function
         def display():
+            """When the Search-patient button is clicked this 
+            function calls other functions in order to 
+            display a patient's data"""
+
             global checkid, cnx, checkok, checkok_img
 
             clear_window()
@@ -462,7 +498,7 @@ def logpw():
             # Bind the id box
             checkid.bind("<Button-1>", id_clear )
 
-            # create ok button
+            # Create ok button
             checkok_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\find.png")
             checkok = Button(emr, text="FIND\nPATIENT", font=("Helvetica",13), command=checkokr,\
                  image=checkok_img, compound="left", width=180, height=70, bg="#87BFB5")
@@ -472,6 +508,11 @@ def logpw():
         
         # Check if patient in database
         def checkokr():
+            """Ask for a patient's ID in order to check whether or not
+            is in the database. If not, a message informs the user.
+            If patient in database, a treeview appears to show the 
+            patient's data"""
+            
             global pcheckid, ok_img, ptree, ok, lf
 
             pcheckid = checkid.get()
@@ -560,6 +601,10 @@ def logpw():
 
         # Create add-records function
         def addr():
+            """When the Add-tests button is clicked this 
+            function calls other functions in order to 
+            add patient's tests data to the database"""
+
             global rid,prid,rok,rok_img
 
             clear_window()
@@ -586,6 +631,11 @@ def logpw():
 
         # Check if patient in database
         def okr():
+            """Ask for a patient's ID in order to check whether or not
+            is in the database. If not, a message informs the user.
+            If patient in database, radiobuttons appears in order 
+            to select the test you want to add data in."""
+
             global prid,okt,tok,tokk_img,sumbitp_img, \
                 cbc, bch, enzy, sel
 
@@ -599,6 +649,7 @@ def logpw():
                     Gc, Ct, Ua, bsubmit_test, \
                        ASTr, ALTr, GGTr, esubmit_test
 
+                # Clear the window
                 cbc.destroy()
                 bch.destroy()
                 enzy.destroy()
@@ -608,7 +659,7 @@ def logpw():
                 # Add data depending on the test selected
                 test = tests.get()
 
-                # Create dob function
+                # Create dot function
                 def dot(e):
                     global dt, dy_t 
                     
@@ -618,7 +669,7 @@ def logpw():
                     if dt in ("1","2","3","4","5","6","7","8","9"):
                         dy_t = "0"+ dt
                     
-                # Create mob function
+                # Create mot function
                 def mot(e):
                     global mth_t
 
@@ -649,7 +700,7 @@ def logpw():
                     elif mth_t == "December":
                         mth_t = "12"
 
-                # Create yob function
+                # Create yot function
                 def yot(e):
                     global yr_t
 
@@ -657,6 +708,9 @@ def logpw():
                 
                 # Create display-tests_date function
                 def dt_date():
+                    """Creates and displays a label and comboboxes in order to
+                    select the date each group of tests were made"""
+
                     global tdl,tdy,tms,\
                         tyr,td_dy,td_ms,td_yr
 
@@ -711,8 +765,12 @@ def logpw():
 
                     dt_date()
 
-                    # Create submit-test function
+                    # Create submit-test functions
                     def add_cbc():
+                        """Gets the data given by the user and tries to add it 
+                        to the COMPLETE BLOOD COUNT table. Whether or not the 
+                        process goes well a message appears to inform the user"""
+
                         global tRbc,tHb,tHt, t
 
                         t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
@@ -745,7 +803,6 @@ def logpw():
                             # commit the changes
                             cnx.commit()
                             
-
                         except:
                             messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
                         
@@ -807,6 +864,10 @@ def logpw():
 
                     # Create submit-test function
                     def add_bio():
+                        """Gets the data given by the user and tries to add it 
+                        to the BIOCHEMISTRY table. Whether or not the process 
+                        goes well a message appears to inform the user"""
+
                         global tGc,tCt,tUa
 
                         t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
@@ -838,7 +899,6 @@ def logpw():
 
                             # commit the changes
                             cnx.commit()
-
 
                         except:
                             messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
@@ -901,6 +961,10 @@ def logpw():
 
                     # Create submit-test function
                     def add_enzy():
+                        """Gets the data given by the user and tries to add it 
+                        to the ENZYMES table. Whether or not the process goes 
+                        well a message appears to inform the user"""
+
                         global tASTr,tALTr,tGGTr
 
                         t = "{}-{}-{}".format(yr_t, mth_t, dy_t)
@@ -932,8 +996,6 @@ def logpw():
 
                             # commit the changes
                             cnx.commit()
-
-            
 
                         except:
                             messagebox.showerror("BAD NEWS :(","PROCESS FAILED.")
