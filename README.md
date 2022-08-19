@@ -5,10 +5,10 @@ DISCLAIMER:
 It was made only for training purposes, that is why I used my local database and the tables are deleted and created everytime the program runs. It was made only with 3 types of tests (3 tables) and with 3 types of records by each test.
 
 # Login Window
-![Captura de pantalla 2022-08-18 191913](https://user-images.githubusercontent.com/108229433/185598440-162f6515-adaf-47d3-a872-b2cc10cf5a22.jpg)
+![Captura de pantalla 2022-08-19 144256](https://user-images.githubusercontent.com/108229433/185621223-7b61972e-78f6-4c4c-a34b-a7810b965ca7.jpg)
 
 A message appears when the user enters a wrong password:
-![Captura de pantalla 2022-08-18 191955](https://user-images.githubusercontent.com/108229433/185598444-affecc07-01ff-43af-98ec-a216aefe5f13.jpg)
+![Captura de pantalla 2022-08-19 144334](https://user-images.githubusercontent.com/108229433/185621227-795e7984-bcc7-4072-89f5-59005828bd38.jpg)
 
 # Data Finder Window
 After entering the correct password the Data Finder Windows appears. We have a frame and 5 buttons to add a new patient, search a patient's data, add records to a patient, search records from a patient and exit.
