@@ -634,7 +634,7 @@ def logpw():
             """Ask for a patient's ID in order to check whether or not
             is in the database. If not, a message informs the user.
             If patient in database, radiobuttons appears in order 
-            to select the test you want to add data in."""
+            to select the test you want to add data in"""
 
             global prid,okt,tok,tokk_img,sumbitp_img, \
                 cbc, bch, enzy, sel
@@ -1075,6 +1075,10 @@ def logpw():
 
         # Show tests by patient ID
         def tdisplay():
+            """When the Search-tests button is clicked this 
+            function calls other functions in order to 
+            display a patient's tests data"""
+
             global tcheckid, cnx, tcheckok, tcheckok_img
 
             clear_window()
@@ -1102,6 +1106,13 @@ def logpw():
 
         # Check if patient in database
         def tcheckokr():
+            """Ask for a patient's ID in order to check whether or not
+            is in the database. If not, a message informs the user.
+            If patient in database, radiobuttons appears in order 
+            to select the test you want to show data from.
+            We can show records by table or also all the records 
+            that patient has"""
+
             global tpcheckid, showtok_img, show_sel, \
                 show_cbc, show_bch, show_enzy, show_tok, \
                     show_all
@@ -1115,6 +1126,8 @@ def logpw():
 
                 # Create a function to display results in Treeview form
                 def tview(fetch):
+                    """Creates a treeview to show the data"""
+
                     global ttree,lft
 
                     # Create the Label Frame
@@ -1178,6 +1191,11 @@ def logpw():
                     global btn, btn_img
                     
                     if len(fetch) > 0:
+                    
+                            """If patient has records in the test selected, 
+                            a treeview shows the data. Otherwise if patient 
+                            has no data in that test, an error message informs 
+                            the user and the window is cleared"""
                             
                             tview(fetch)
 
@@ -1197,6 +1215,8 @@ def logpw():
                         messagebox.showerror("SORRY :(","NO TEST DATA AVAILABLE")
 
                 def show_okt():
+                    """Displays the patient's tests data depending 
+                    on the table selected by the user"""
 
                     pshow_tests = show_tests.get()
 
@@ -1309,8 +1329,6 @@ def logpw():
                                         ON ID = {0}".format(tpcheckid))
 
                         allshow = allcur.fetchall()
-
-                        print(allshow)
                         
                         ok_button(allshow)
 
@@ -1349,12 +1367,9 @@ def logpw():
                 tcheckok.destroy()
 
 
-            
-            
-            
-
+        
               
-        # Add buttons
+        # Create the buttons
         addp_img = PhotoImage(file="C:\\Users\\Gwendarling\\DarlinGit\\Images\\add-user.png")
         add_p = Button(emr, width=92, height=70, image=addp_img, text="ADD\nPATIENT", \
             font=("Helvetica",7), compound="left", command=ap, bg="#DEEDEA")
@@ -1383,7 +1398,7 @@ def logpw():
 
 
         
-    
+    # When wrong password is entered, a message informs the user
     else: messagebox.showerror("SORRY","ACCESS DENIED\nWRONG PASSWORD")
     pw.delete(0, END)
 
@@ -1423,29 +1438,6 @@ pw.bind("<Button-1>", pw_clear )
 # Add greeting message
 greeting = Label(root, text="WELCOME DOCTOR!", font=("Bauhaus 93",15), fg="#87BFB5")
 greeting_txt = canv.create_window(37, 140, anchor="nw", window=greeting)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 root.mainloop()
