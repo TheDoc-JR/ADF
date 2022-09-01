@@ -15,22 +15,20 @@
         </style>
     </head>
     <body>
-        <div class="row">
-            <ul class="nav nav-pills nav-fill">
-                <li class="nav-item">
-                <a class="nav-link active btn-danger" href="#">ADD PATIENT</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link active" href="#">SEARCH PATIENT</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link active" href="#">ADD TESTS</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link active" href="#">SEARCH TESTS</a>
-                </li>
-            </ul>
-        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <img src="{% static '/images/medical-report.png' %}" alt="Icon">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#">Add patient</a>
+                <a class="nav-item nav-link" href="#">Search patient</a>
+                <a class="nav-item nav-link" href="#">Add tests</a>
+                <a class="nav-item nav-link" href="#">Search tests</a>
+                </div>
+            </div>
+            </nav>
         {% block content %}
         <div class="row">
             <p>MAIN page</p>
