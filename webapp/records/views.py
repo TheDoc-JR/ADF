@@ -7,3 +7,5 @@ def main_page(request):
 def addp_page(request):
     return render(request, 'records/addp.html')
 
+def fp_page(request):
+    return render(request, 'records/findp.html')
