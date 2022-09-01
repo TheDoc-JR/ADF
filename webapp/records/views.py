@@ -9,3 +9,6 @@ def addp_page(request):
 
 def fp_page(request):
     return render(request, 'records/findp.html')
+
+def at_page(request):
+    return render(request, 'records/addt.html')
