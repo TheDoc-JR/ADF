@@ -6,4 +6,5 @@ urlpatterns = [
     path('add_patient/', views.addp_page, name="new_p"),
     path('find_patient/', views.fp_page, name="f_p"),
     path('add_tests/', views.at_page, name="a_t"),
+    path('find_tests/', views.ft_page, name="f_t"),
 ]
