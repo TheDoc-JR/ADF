@@ -10,31 +10,29 @@
                 background-image: url("mrbg2.jpg");
                 background-size: cover;
             }
-
-            #screen {
-                border: double;
-            }
-
-            #btns {
-                border: double;
-            }
-
-            #add_patient, #find_patient, #add_records, #search_records, #exit {
-                border: double;
-                height: 139px;
-            }
         </style>
     </head>
     <body>
         <div class="row">
-            <div class="col-10" id="screen">Screen</div>
-            <div class="col-2" id="btns">
-                <div class="row" id="add_patient"></div>
-                <div class="row" id="find_patient"></div>
-                <div class="row" id="add_records"></div>
-                <div class="row" id="search_records"></div>
-                <div class="row" id="exit"></div>
-            </div>
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                <a class="nav-link active btn-danger" href="#">ADD PATIENT</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link " href="#">SEARCH PATIENT</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link active" href="#">ADD TESTS</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link " href="#">SEARCH TESTS</a>
+                </li>
+            </ul>
         </div>
+        {% block content %}
+        <div class="row">
+            <p>ADD PATIENT page</p>
+        </div>
+        {% endblock %}
     </body>
 </html>
