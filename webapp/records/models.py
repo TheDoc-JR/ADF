@@ -34,3 +34,14 @@ class BCH(models.Model):
     def __str__(self):
         return ("BIOCHEMISTRY")
 
+
+class Enzymes(models.Model):
+    test_name = models.CharField(null=False, max_length=80)
+    results = models.FloatField(null=True, blank=True)
+    test_units = models.CharField(null=False, max_length=200)
+    ref = models.CharField(null=False, max_length=200, verbose_name="ref. values")
+    test_date = models.DateField()
+    patients_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return ("ENZYMES")
