@@ -14,7 +14,6 @@ def createPatient(request):
             form.save()
             return redirect('/')
 
-
     ctx = {'form': form}
 
     return render(request, 'records/addp.html', ctx)
