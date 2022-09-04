@@ -1,11 +1,21 @@
 from django.db import models
 
 class Patient(models.Model):
+    GENDER_CHOICES = [
+        ("MALE", "MALE"),
+        ("FEMALE", "FEMALE"),
+    ]
+
     patient_ID = models.IntegerField(null=False, primary_key=True)
     name = models.CharField(null=False, max_length=20)
     surname = models.CharField(null=False, max_length=20)
-    bd = models.DateField()
-    gender = models.CharField(max_length=6)
+    bd = models.DateField(verbose_name="Date of birth")
+    gender = models.CharField(
+        null=False,
+        max_length=6,
+        choices=GENDER_CHOICES,
+        default = "FEMALE",
+    )
 
     def __str__(self):
         return (self.name + " " + self.surname) 

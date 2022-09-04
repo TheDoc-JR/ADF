@@ -1,6 +1,9 @@
 {% extends 'records/main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block  content %}
+
 <style>
 .container {
     padding-top: 50px;
@@ -11,7 +14,9 @@
     text-align: center;
 }
 
+.alert {max-width: 20em}
 
+input {max-width: 12em}
 
 #info {
     text-align: center;
@@ -25,16 +30,18 @@
 </style>
 
 <div class="container">
-    <div class="alert alert-primary" role="alert" id="info">
-        <b>YOU'RE NOW ADDING A NEW PATIENT</b>
-    </div>
-    <div class="row">
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{form}}
+    <center>
+        <div class="alert alert-primary" role="alert" id="info">
+            <b>YOU'RE NOW ADDING A NEW PATIENT</b>
+        </div>
+        <div class="row">
+            
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% crispy p_form %}
 
-            <input type="submit" name = "ADD PATIENT">
-        </form>
-    </div>
+            </form>
+        </div>
+    </center>
 </div>
 {% endblock  %}
