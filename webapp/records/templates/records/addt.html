@@ -16,5 +16,13 @@
     <div class="alert alert-info" role="alert" id="info">
         <b>YOU'RE NOW ADDING MEDICAL RECORDS</b>
     </div>
+    <div class="row">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{t_form}}
+
+            <input type="submit" name ="ADD TEST">
+        </form>
+    </div>
 </div>
 {% endblock %}

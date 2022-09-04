@@ -1,28 +1,37 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm
+from .forms import PatientForm, CBCForm
 
 
 def main_page(request):
     return render(request, 'records/main.html')
 
 def createPatient(request):
-    form = PatientForm
+    p_form = PatientForm
     if request.method == "POST":
-        form = PatientForm(request.POST)
-        if form.is_valid():
-            form.save()
+        p_form = PatientForm(request.POST)
+        if p_form.is_valid():
+            p_form.save()
             return redirect('/')
 
-    ctx = {'form': form}
+    ctx = {'p_form': p_form}
 
     return render(request, 'records/addp.html', ctx)
 
 def fp_page(request):
     return render(request, 'records/findp.html')
 
-def at_page(request):
-    return render(request, 'records/addt.html')
+def addTests(request):
+    t_form = CBCForm
+    if request.method == "POST":
+        t_form = CBCForm(request.POST)
+        if t_form.is_valid():
+            t_form.save()
+            return redirect('/')
+
+    ctx = {'t_form': t_form}
+
+    return render(request, 'records/addt.html', ctx)
 
 def ft_page(request):
     return render(request, 'records/findt.html')
