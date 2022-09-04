@@ -28,5 +28,13 @@
     <div class="alert alert-primary" role="alert" id="info">
         <b>YOU'RE NOW ADDING A NEW PATIENT</b>
     </div>
+    <div class="row">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+
+            <input type="submit" name = "ADD PATIENT">
+        </form>
+    </div>
 </div>
 {% endblock  %}
