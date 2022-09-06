@@ -21,8 +21,6 @@
         padding-bottom: 10px;
     }
 
-    
-    
     #bd {
         text-align: center;
     }
@@ -42,9 +40,7 @@
                     <div class="alert alert-primary" role="alert" id="tests">
                         <form action="" method="POST">
                             {% csrf_token %}
-                            {% crispy t_form %}
-                
-                            
+                            {% crispy t_form %}   
                         </form>
                     </div>
                 <center>

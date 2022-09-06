@@ -15,7 +15,6 @@ def createPatient(request):
         messages.success(request, ('PATIENT SUCCESFULLY ADDED'))
         return redirect('home')
 
-
     ctx = {'p_form': p_form}
 
     return render(request, 'records/addp.html', ctx)
@@ -27,12 +26,28 @@ def addTests(request):
     t_form = TestForm
     if request.method == "POST":
         t_form = TestForm(request.POST)
+        test = request.POST.get('test_sel')
+        
         if t_form.is_valid():
-            return redirect('home')
+            if test == "CBC":
+                return redirect('a_cbc')
 
     ctx = {'t_form': t_form}
 
     return render(request, 'records/addt.html', ctx)
+
+def addCBC(request):
+    cbc_form = CBCForm
+    if request.method == "POST":
+        cbc_form = CBCForm(request.POST)
+        if cbc_form.is_valid():
+            cbc_form.save()
+        messages.success(request, ('RECORD SUCCESFULLY ADDED'))
+        return redirect('home')
+
+    ctx = {'cbc_form': cbc_form}
+
+    return render(request, 'records/add_cbc.html', ctx)
 
 def ft_page(request):
     return render(request, 'records/findt.html')
