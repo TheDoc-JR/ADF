@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm, CBCForm, TestForm
+from .forms import PatientForm, CBCForm, TestForm, BCHForm
 from django.contrib import messages
 
 def main_page(request):
@@ -31,6 +31,8 @@ def addTests(request):
         if t_form.is_valid():
             if test == "CBC":
                 return redirect('a_cbc')
+            if test == "BCH":
+                return redirect('a_bch')
 
     ctx = {'t_form': t_form}
 
@@ -42,7 +44,7 @@ def addCBC(request):
         cbc_form = CBCForm(request.POST)
         if cbc_form.is_valid():
             cbc_form.save()
-        messages.success(request, ('RECORD SUCCESFULLY ADDED'))
+        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
         return redirect('home')
 
     ctx = {'cbc_form': cbc_form}
@@ -51,4 +53,19 @@ def addCBC(request):
 
 def ft_page(request):
     return render(request, 'records/findt.html')
+
+
+def addBCH(request):
+    bch_form = BCHForm
+    if request.method == "POST":
+        bch_form = BCHForm(request.POST)
+        if bch_form.is_valid():
+            bch_form.save()
+        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+        return redirect('home')
+
+    ctx = {'bch_form': bch_form}
+
+    return render(request, 'records/add_bch.html', ctx)
+
 

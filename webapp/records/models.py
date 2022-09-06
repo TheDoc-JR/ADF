@@ -23,11 +23,29 @@ class Patient(models.Model):
 
 
 class CBC(models.Model):
-    test_name = models.CharField(null=False, max_length=80)
+    CBC_CHOICES = [
+        ("RED BLOOD CELLS", "Red Blood Cells"),
+        ("HEMOGLOBIN", "Hemoglobin"),
+        ("HEMATOCRIT", "Hematocrit"),
+    ]
+
+    TEST_UNITS_CHOICES = [
+        ("10^6/µl", "10^6/µl"),
+        ("g/dL", "g/dL"),
+        ("%", "%"),
+    ]
+
+    REF_VALUES_CHOICES = [
+        ("(4.3 - 5.6)", "(4.3 - 5.6)"),
+        ("(13.7 - 16.5)", "(13.7 - 16.5)"),
+        ("(40 - 50)", "(40 - 50)"),
+    ]
+    
+    test_name = models.CharField(null=False, max_length=80, choices=CBC_CHOICES, verbose_name="Test name", default="")
     results = models.FloatField(null=True, blank=True)
-    test_units = models.CharField(null=False, max_length=200)
-    ref = models.CharField(null=False, max_length=200, verbose_name="ref. values")
-    test_date = models.DateField()
+    test_units = models.CharField(null=False, max_length=200, choices=TEST_UNITS_CHOICES, verbose_name="Units", default="")
+    ref = models.CharField(null=False, max_length=200, choices=REF_VALUES_CHOICES, verbose_name="Reference values", default="" )
+    test_date = models.DateField(verbose_name="Test date")
     patients_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -35,10 +53,26 @@ class CBC(models.Model):
 
     
 class BCH(models.Model):
-    test_name = models.CharField(null=False, max_length=80)
+    BCH_CHOICES = [
+        ("Glucose", "Glucose"),
+        ("Creatinine", "Creatinine"),
+        ("Uric acid", "Uric acid"),
+    ]
+
+    TEST_UNITS_CHOICES = [
+        ("mg/dL", "mg/dL"),  
+    ]
+
+    REF_VALUES_CHOICES = [
+        ("(74 - 109)", "(74 - 109)"),
+        ("(0.7 - 1.2)", "(0.7 - 1.2)"),
+        ("(3.4 - 7.0)", "(3.4 - 7.0)"),
+    ]
+
+    test_name = models.CharField(null=False, max_length=80, choices=BCH_CHOICES, verbose_name="Test name", default="")
     results = models.FloatField(null=True, blank=True)
-    test_units = models.CharField(null=False, max_length=200)
-    ref = models.CharField(null=False, max_length=200, verbose_name="ref. values")
+    test_units = models.CharField(null=False, max_length=200, choices=TEST_UNITS_CHOICES, verbose_name="Units", default="mg/dL")
+    ref = models.CharField(null=False, max_length=200, choices=REF_VALUES_CHOICES, verbose_name="Reference values", default="")
     test_date = models.DateField()
     patients_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
@@ -50,7 +84,7 @@ class Enzymes(models.Model):
     test_name = models.CharField(null=False, max_length=80)
     results = models.FloatField(null=True, blank=True)
     test_units = models.CharField(null=False, max_length=200)
-    ref = models.CharField(null=False, max_length=200, verbose_name="ref. values")
+    ref = models.CharField(null=False, max_length=200, verbose_name="Reference values")
     test_date = models.DateField()
     patients_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
