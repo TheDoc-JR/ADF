@@ -1,0 +1,46 @@
+{% extends 'records/main.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+.container {
+    padding-top: 50px;
+}
+
+#submit {
+    padding-top: 100px;
+    text-align: center;
+}
+
+input {max-width: 14em}
+
+#info {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#bd {
+    text-align: center;
+}
+
+.row * {
+    padding-top: 10px;
+}
+</style>
+    
+<div class="container">
+    <center>
+        <div class="alert alert-primary" role="alert" id="info">
+            <b>YOU'RE NOW ADDING ENZYMES RECORDS</b>
+        </div>
+        <div class="row">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% crispy enzymes_form %}
+            </form>
+        </div>
+    </center>
+</div>
+{% endblock %}

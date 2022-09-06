@@ -8,6 +8,7 @@ urlpatterns = [
     path('add_tests/', views.addTests, name="a_t"),
     path('add_cbc/', views.addCBC, name="a_cbc"),
     path('add_bch/', views.addBCH, name="a_bch"),
+    path('add_enzymes/', views.addEnzymes, name="a_enzymes"),
     path('find_tests/', views.ft_page, name="f_t"),
     
 ]

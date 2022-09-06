@@ -81,10 +81,26 @@ class BCH(models.Model):
 
 
 class Enzymes(models.Model):
-    test_name = models.CharField(null=False, max_length=80)
+    ENZYMES_CHOICES = [
+        ("AST", "AST"),
+        ("ALT", "ALT"),
+        ("Gamma-GT", "Gamma-GT"),
+    ]
+
+    TEST_UNITS_CHOICES = [
+        ("UI/L", "UI/L"),  
+    ]
+
+    REF_VALUES_CHOICES = [
+        ("(5-40)", "(5-40)"),
+        ("(5-41)", "(5-41)"),
+        ("(<60)", "(<60)"),
+    ]
+
+    test_name = models.CharField(null=False, max_length=80, choices=ENZYMES_CHOICES, verbose_name="Test name", default="")
     results = models.FloatField(null=True, blank=True)
-    test_units = models.CharField(null=False, max_length=200)
-    ref = models.CharField(null=False, max_length=200, verbose_name="Reference values")
+    test_units = models.CharField(null=False, max_length=200, choices=TEST_UNITS_CHOICES, verbose_name="Units", default="UI/L")
+    ref = models.CharField(null=False, max_length=200, choices=REF_VALUES_CHOICES, verbose_name="Reference values", default="")
     test_date = models.DateField()
     patients_ID = models.ForeignKey(Patient, on_delete=models.CASCADE)
 

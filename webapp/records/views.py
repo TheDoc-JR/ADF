@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm, CBCForm, TestForm, BCHForm
+from .forms import PatientForm, CBCForm, TestForm, BCHForm, EnzymesForm
 from django.contrib import messages
 
 def main_page(request):
@@ -33,6 +33,8 @@ def addTests(request):
                 return redirect('a_cbc')
             if test == "BCH":
                 return redirect('a_bch')
+            if test == "Enzymes":
+                return redirect('a_enzymes')
 
     ctx = {'t_form': t_form}
 
@@ -68,4 +70,16 @@ def addBCH(request):
 
     return render(request, 'records/add_bch.html', ctx)
 
+def addEnzymes(request):
+    enzymes_form = EnzymesForm
+    if request.method == "POST":
+        enzymes_form = EnzymesForm(request.POST)
+        if enzymes_form.is_valid():
+            enzymes_form.save()
+        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+        return redirect('home')
+
+    ctx = {'enzymes_form': enzymes_form}
+
+    return render(request, 'records/add_enzymes.html', ctx)
 

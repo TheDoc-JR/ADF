@@ -1,7 +1,7 @@
 from tkinter.tix import Select
 from django.forms import ModelForm, RadioSelect, DateInput, Select
 from django import forms
-from .models import Patient, CBC, BCH
+from .models import Enzymes, Patient, CBC, BCH
 from datetime import date, datetime
 from django.urls import reverse_lazy
 from crispy_forms.helper import FormHelper
@@ -68,6 +68,7 @@ class CBCForm(ModelForm):
             'test_date': DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
         } 
 
+
 class BCHForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
@@ -89,3 +90,26 @@ class BCHForm(ModelForm):
             'test_name': Select,
             'test_date': DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
         } 
+
+
+class EnzymesForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        helper = self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('home')
+        self.helper.add_input(Submit('submit', 'ADD RECORDS'))
+
+        # Moving field labels into placeholders
+        layout = helper.layout = Layout()
+        for field_name, field in self.fields.items():
+            layout.append(Field(field_name, placeholder=field.label))
+        helper.form_show_labels = False
+
+    class Meta:
+        model = Enzymes
+        fields = '__all__'
+        widgets = {
+            'test_name': Select,
+            'test_date': DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
+        }
