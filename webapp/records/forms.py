@@ -1,4 +1,5 @@
 from django.forms import ModelForm, RadioSelect, DateInput
+from django import forms
 from .models import Patient, CBC
 from datetime import date, datetime
 from django.urls import reverse_lazy
@@ -27,6 +28,22 @@ class PatientForm(ModelForm):
             'gender': RadioSelect,
             'bd': DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
         }
+
+class TestForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        helper = self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('home')
+        self.helper.add_input(Submit('submit', 'SELECT'))
+
+    TEST_CHOICES = (
+        ("CBC", "COMPLETE BLOOD COUNT"),
+        ("BCH", "BIOCHEMISTRY"),
+        ("Enzymes", "ENZYMES"),
+    )
+
+    test_sel = forms.ChoiceField(choices= TEST_CHOICES, required=True, widget=RadioSelect, label="")
 
 class CBCForm(ModelForm):
     class Meta:
