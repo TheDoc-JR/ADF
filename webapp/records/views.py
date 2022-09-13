@@ -20,7 +20,9 @@ def createPatient(request):
     return render(request, 'records/addp.html', ctx)
 
 def fp_page(request):
-    return render(request, 'records/findp.html')
+    pts = Patient.objects.all()
+    ctx = {"pts": pts}
+    return render(request, 'records/findp.html', ctx)
 
 def addTests(request):
     t_form = TestForm
