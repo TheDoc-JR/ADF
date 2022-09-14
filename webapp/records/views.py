@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import PatientForm, CBCForm, TestForm, BCHForm, EnzymesForm
 from django.contrib import messages
+from .filters import PatientFilter
 
 def main_page(request):
     return render(request, 'records/main.html')
@@ -21,7 +22,9 @@ def createPatient(request):
 
 def fp_page(request):
     pts = Patient.objects.all()
-    ctx = {"pts": pts}
+    pfilter = PatientFilter(request.GET, queryset=pts)
+    pts = pfilter.qs
+    ctx = {"pts": pts, "pfilter": pfilter}
     return render(request, 'records/findp.html', ctx)
 
 def addTests(request):
