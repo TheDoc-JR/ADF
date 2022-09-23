@@ -54,9 +54,9 @@ class CBC(models.Model):
     
 class BCH(models.Model):
     BCH_CHOICES = [
-        ("Glucose", "Glucose"),
-        ("Creatinine", "Creatinine"),
-        ("Uric acid", "Uric acid"),
+        ("GLUCOSE", "Glucose"),
+        ("CREATININE", "Creatinine"),
+        ("URIC ACID", "Uric acid"),
     ]
 
     TEST_UNITS_CHOICES = [
@@ -84,7 +84,7 @@ class Enzymes(models.Model):
     ENZYMES_CHOICES = [
         ("AST", "AST"),
         ("ALT", "ALT"),
-        ("Gamma-GT", "Gamma-GT"),
+        ("GAMMA-GT", "Gamma-GT"),
     ]
 
     TEST_UNITS_CHOICES = [

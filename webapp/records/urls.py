@@ -11,4 +11,5 @@ urlpatterns = [
     path('add_enzymes/', views.addEnzymes, name="a_enzymes"),
     path('find_tests/', views.ft_page, name="f_t"),
     
+    
 ]
