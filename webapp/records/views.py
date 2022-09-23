@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm, CBCForm, TestForm, BCHForm, EnzymesForm
+from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm
 from django.contrib import messages
 from .filters import PatientFilter
 
@@ -28,10 +28,10 @@ def fp_page(request):
     return render(request, 'records/findp.html', ctx)
 
 def addTests(request):
-    t_form = TestForm
+    t_form = AddTestForm
     if request.method == "POST":
-        t_form = TestForm(request.POST)
-        test = request.POST.get('test_sel')
+        t_form = AddTestForm(request.POST)
+        test = request.POST.get('addtest_sel')
         
         if t_form.is_valid():
             if test == "CBC":
@@ -59,7 +59,23 @@ def addCBC(request):
     return render(request, 'records/add_cbc.html', ctx)
 
 def ft_page(request):
-    return render(request, 'records/findt.html')
+    showt_form = AddTestForm
+    if request.method == "POST":
+        showt_form = AddTestForm(request.POST)
+        showtest = request.POST.get('showtest_sel')
+        
+        if showt_form.is_valid():
+            return redirect('home')
+            """if showtest == "CBC":
+                return redirect('a_cbc')
+            if showtest == "BCH":
+                return redirect('a_bch')
+            if showtest == "Enzymes":
+                return redirect('a_enzymes')"""
+
+    ctx = {'showt_form': showt_form}
+
+    return render(request, 'records/findt.html', ctx)
 
 
 def addBCH(request):

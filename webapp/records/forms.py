@@ -30,7 +30,7 @@ class PatientForm(ModelForm):
             'bd': DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
         }
 
-class TestForm(forms.Form):
+class AddTestForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -44,7 +44,23 @@ class TestForm(forms.Form):
         ("Enzymes", "ENZYMES"),
     )
 
-    test_sel = forms.ChoiceField(choices= TEST_CHOICES, required=True, widget=RadioSelect, label="")
+    addtest_sel = forms.ChoiceField(choices= TEST_CHOICES, required=True, widget=RadioSelect, label="")
+
+class ShowTestForm(forms.Form):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        helper = self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('home')
+        self.helper.add_input(Submit('submit', 'SELECT'))
+
+    TEST_CHOICES = (
+        ("CBC", "COMPLETE BLOOD COUNT"),
+        ("BCH", "BIOCHEMISTRY"),
+        ("Enzymes", "ENZYMES"),
+    )
+
+    showtest_sel = forms.ChoiceField(choices= TEST_CHOICES, required=True, widget=RadioSelect, label="")
 
 class CBCForm(ModelForm):
 

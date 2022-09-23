@@ -1,20 +1,50 @@
 {% extends 'records/main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <style>
     .container {
         padding-top: 50px;
     }
-
+    
+    #submit {
+        padding-top: 100px;
+        text-align: center;
+    }
+    
+    input {max-width: 12em}
+    
     #info {
         text-align: center;
         padding-top: 10px;
         padding-bottom: 10px;
     }
-</style>
-<div class="container">
-    <div class="alert alert-dark" role="alert" id="info">
-        <b>YOU'RE NOW FINDING A MEDICAL RECORD</b>
+
+    #bd {
+        text-align: center;
+    }
+    
+    #tests * {
+        padding-top: 8px;
+    }
+    </style>
+        
+    <div class="container">
+        <center>
+            <div class="alert alert-dark" role="alert" id="info">
+                <b>SELECT THE TEST YOU WANT TO SHOW</b>
+            </div>
+            <div class="row">
+                <center>
+                    <div class="alert alert-dark" role="alert" id="tests">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {% crispy showt_form %}   
+                        </form>
+                    </div>
+                <center>
+            </div>
+        </center>
     </div>
-</div>
 {% endblock %}
