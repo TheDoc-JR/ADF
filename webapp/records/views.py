@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import *
+<<<<<<< HEAD
 from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm
+=======
+from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm
+>>>>>>> 8c3d82ebe0146043da452524fe7e089e44801561
 from django.contrib import messages
 from .filters import PatientFilter
 
@@ -58,6 +62,28 @@ def addCBC(request):
 
     return render(request, 'records/add_cbc.html', ctx)
 
+<<<<<<< HEAD
+=======
+def ft_page(request):
+    showt_form = AddTestForm
+    if request.method == "POST":
+        showt_form = AddTestForm(request.POST)
+        showtest = request.POST.get('showtest_sel')
+        
+        if showt_form.is_valid():
+            return redirect('home')
+            """if showtest == "CBC":
+                return redirect('a_cbc')
+            if showtest == "BCH":
+                return redirect('a_bch')
+            if showtest == "Enzymes":
+                return redirect('a_enzymes')"""
+
+    ctx = {'showt_form': showt_form}
+
+    return render(request, 'records/findt.html', ctx)
+
+>>>>>>> 8c3d82ebe0146043da452524fe7e089e44801561
 
 def addBCH(request):
     bch_form = BCHForm
