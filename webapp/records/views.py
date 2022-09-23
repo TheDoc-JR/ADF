@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
-<<<<<<< HEAD
 from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm
-=======
-from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm
->>>>>>> 8c3d82ebe0146043da452524fe7e089e44801561
 from django.contrib import messages
 from .filters import PatientFilter
 
@@ -15,9 +11,13 @@ def createPatient(request):
     p_form = PatientForm
     if request.method == "POST":
         p_form = PatientForm(request.POST)
-        if p_form.is_valid():
+        try:
             p_form.save()
-        messages.success(request, ('PATIENT SUCCESFULLY ADDED'))
+            messages.success(request, ('PATIENT SUCCESFULLY ADDED'))
+        except OverflowError: 
+            messages.error(request, ('IT HAS BEEN AN ERROR ADDING THIS PATIENT'))
+            return redirect('home')
+        
         return redirect('home')
 
     ctx = {'p_form': p_form}
@@ -53,46 +53,31 @@ def addCBC(request):
     cbc_form = CBCForm
     if request.method == "POST":
         cbc_form = CBCForm(request.POST)
-        if cbc_form.is_valid():
+        try:
             cbc_form.save()
-        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+            messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+        except:
+            messages.error(request, ('IT HAS BEEN AN ERROR ADDING THIS RECORDS'))
+            return redirect('home')
         return redirect('home')
 
     ctx = {'cbc_form': cbc_form}
 
     return render(request, 'records/add_cbc.html', ctx)
 
-<<<<<<< HEAD
-=======
-def ft_page(request):
-    showt_form = AddTestForm
-    if request.method == "POST":
-        showt_form = AddTestForm(request.POST)
-        showtest = request.POST.get('showtest_sel')
-        
-        if showt_form.is_valid():
-            return redirect('home')
-            """if showtest == "CBC":
-                return redirect('a_cbc')
-            if showtest == "BCH":
-                return redirect('a_bch')
-            if showtest == "Enzymes":
-                return redirect('a_enzymes')"""
-
-    ctx = {'showt_form': showt_form}
-
-    return render(request, 'records/findt.html', ctx)
-
->>>>>>> 8c3d82ebe0146043da452524fe7e089e44801561
 
 def addBCH(request):
     bch_form = BCHForm
     if request.method == "POST":
         bch_form = BCHForm(request.POST)
-        if bch_form.is_valid():
+        try:
             bch_form.save()
-        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+            messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+        except:
+            messages.error(request, ('IT HAS BEEN AN ERROR ADDING THIS RECORDS'))
+            return redirect('home')
         return redirect('home')
+    
 
     ctx = {'bch_form': bch_form}
 
@@ -102,9 +87,12 @@ def addEnzymes(request):
     enzymes_form = EnzymesForm
     if request.method == "POST":
         enzymes_form = EnzymesForm(request.POST)
-        if enzymes_form.is_valid():
+        try:
             enzymes_form.save()
-        messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+            messages.success(request, ('RECORDS SUCCESFULLY ADDED'))
+        except:
+            messages.error(request, ('IT HAS BEEN AN ERROR ADDING THIS RECORDS'))
+            return redirect('home')
         return redirect('home')
 
     ctx = {'enzymes_form': enzymes_form}
@@ -115,6 +103,10 @@ def ft_page(request):
     cbc = CBC.objects.all()
     bch = BCH.objects.all()
     enzymes = Enzymes.objects.all()
+    """tfilter = TestsFilter(request.GET, queryset=enzymes)
+    cbc = tfilter.qs
+    bch = tfilter.qs
+    enzymes = tfilter.qs"""
     ctx = {"cbc": cbc, "bch": bch, "enzymes": enzymes}
     return render(request, 'records/findt.html', ctx)
 

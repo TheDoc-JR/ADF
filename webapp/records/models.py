@@ -19,7 +19,7 @@ class Patient(models.Model):
     )
 
     def __str__(self):
-        return (self.name + " " + self.surname) 
+        return (str(self.patient_ID)) 
 
 
 class CBC(models.Model):
@@ -50,6 +50,7 @@ class CBC(models.Model):
 
     def __str__(self):
         return ("COMPLETE BLOOD COUNT")
+ 
 
     
 class BCH(models.Model):
