@@ -1,12 +1,32 @@
 from tkinter.tix import Select
 from django.forms import ModelForm, RadioSelect, DateInput, Select
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.contrib.auth.models import User
 from .models import Enzymes, Patient, CBC, BCH
 from datetime import date, datetime
 from django.urls import reverse_lazy
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Field
 
+class CreateUserForm(UserCreationForm):
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        helper = self.helper = FormHelper(self)
+        self.helper.form_action = reverse_lazy('home')
+        self.helper.add_input(Submit('submit', 'Register'))
+
+        # Moving field labels into placeholders
+        layout = helper.layout = Layout()
+        for field_name, field in self.fields.items():
+            layout.append(Field(field_name, placeholder=field.label))
+        helper.form_show_labels = False
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        
 
 class PatientForm(ModelForm):
 

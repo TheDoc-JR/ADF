@@ -1,11 +1,29 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm
+from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm, CreateUserForm
 from django.contrib import messages
 from .filters import PatientFilter, CBCFilter, BCHFilter, EnzymesFilter
+from django.contrib.auth.forms import UserCreationForm
+
 
 def main_page(request):
     return render(request, 'records/main.html')
+
+def register_page(request):
+    regform = CreateUserForm
+
+    if request.method == "POST":
+        regform = CreateUserForm(request.POST)
+        if regform.is_valid():
+            regform.save()
+            return redirect(request, 'login_page')
+
+    ctx = {"regform": regform}
+    return render(request, 'records/register.html', ctx)
+
+def login_page(request):
+    ctx = {}
+    return render(request, 'records/login.html', ctx)
 
 def createPatient(request):
     p_form = PatientForm
