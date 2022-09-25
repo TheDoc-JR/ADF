@@ -54,12 +54,15 @@ class CBCForm(ModelForm):
         helper = self.helper = FormHelper(self)
         self.helper.form_action = reverse_lazy('home')
         self.helper.add_input(Submit('submit', 'ADD RECORDS'))
+        helper.form_class = 'form-horizontal'
+        helper.label_class = 'col-lg-5'
+        helper.field_class = 'col-lg-5'
 
         # Moving field labels into placeholders
         layout = helper.layout = Layout()
         for field_name, field in self.fields.items():
             layout.append(Field(field_name, placeholder=field.label))
-        helper.form_show_labels = False
+        helper.form_show_labels = True
 
     class Meta:
         model = CBC
@@ -77,12 +80,15 @@ class BCHForm(ModelForm):
         helper = self.helper = FormHelper(self)
         self.helper.form_action = reverse_lazy('home')
         self.helper.add_input(Submit('submit', 'ADD RECORDS'))
+        helper.form_class = 'form-horizontal'
+        helper.label_class = 'col-lg-5'
+        helper.field_class = 'col-lg-5'
 
         # Moving field labels into placeholders
         layout = helper.layout = Layout()
         for field_name, field in self.fields.items():
             layout.append(Field(field_name, placeholder=field.label))
-        helper.form_show_labels = False
+        helper.form_show_labels = True
 
     class Meta:
         model = BCH
@@ -100,12 +106,15 @@ class EnzymesForm(ModelForm):
         helper = self.helper = FormHelper(self)
         self.helper.form_action = reverse_lazy('home')
         self.helper.add_input(Submit('submit', 'ADD RECORDS'))
+        helper.form_class = 'form-horizontal'
+        helper.label_class = 'col-lg-5'
+        helper.field_class = 'col-lg-5'
 
         # Moving field labels into placeholders
         layout = helper.layout = Layout()
         for field_name, field in self.fields.items():
             layout.append(Field(field_name, placeholder=field.label))
-        helper.form_show_labels = False
+        helper.form_show_labels = True
 
     class Meta:
         model = Enzymes

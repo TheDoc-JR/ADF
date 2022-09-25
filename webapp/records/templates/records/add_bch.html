@@ -8,12 +8,10 @@
     padding-top: 50px;
 }
 
-#submit {
-    padding-top: 100px;
-    text-align: center;
+input {
+    max-width: 14em;
 }
 
-input {max-width: 12em}
 
 #info {
     text-align: center;
@@ -26,8 +24,9 @@ input {max-width: 12em}
 }
 
 .row * {
-    padding-top: 10px;
+    padding-top: 14px;
 }
+
 </style>
     
 <div class="container">
@@ -35,7 +34,7 @@ input {max-width: 12em}
         <div class="alert alert-primary" role="alert" id="info">
             <b>YOU'RE NOW ADDING BIOCHEMISTRY RECORDS</b>
         </div>
-        <div class="row">
+        <div class="alert alert-primary" role="alert" id="info">
             <form action="" method="POST">
                 {% csrf_token %}
                 {% crispy bch_form %}
