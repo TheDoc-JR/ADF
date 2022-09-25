@@ -10,17 +10,20 @@ class PatientFilter(django_filters.FilterSet):
         model = Patient
         fields = ['patient_ID', 'gender']
 
-class TestsFilter(django_filters.FilterSet):
+class CBCFilter(django_filters.FilterSet):
     
     class Meta:
         model = CBC
         fields = ['test_name', 'test_date', 'patients_ID']
         
-
+class BCHFilter(django_filters.FilterSet):
+    
     class Meta:
         model = BCH
         fields = ['test_name', 'test_date', 'patients_ID']
 
+class EnzymesFilter(django_filters.FilterSet):
+    
     class Meta:
         model = Enzymes
         fields = ['test_name', 'test_date', 'patients_ID']

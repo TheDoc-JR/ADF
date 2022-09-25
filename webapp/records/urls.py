@@ -10,6 +10,7 @@ urlpatterns = [
     path('add_bch/', views.addBCH, name="a_bch"),
     path('add_enzymes/', views.addEnzymes, name="a_enzymes"),
     path('find_tests/', views.ft_page, name="f_t"),
-    
-    
+    path('show_cbc/', views.show_cbc, name="show_cbc"),
+    path('show_bch/', views.show_bch, name="show_bch"),
+    path('show_enzymes/', views.show_enzymes, name="show_enzymes"),
 ]

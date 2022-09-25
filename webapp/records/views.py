@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm
+from .forms import PatientForm, CBCForm, AddTestForm, BCHForm, EnzymesForm, ShowTestForm
 from django.contrib import messages
-from .filters import PatientFilter
+from .filters import PatientFilter, CBCFilter, BCHFilter, EnzymesFilter
 
 def main_page(request):
     return render(request, 'records/main.html')
@@ -100,13 +100,41 @@ def addEnzymes(request):
     return render(request, 'records/add_enzymes.html', ctx)
 
 def ft_page(request):
-    cbc = CBC.objects.all()
-    bch = BCH.objects.all()
-    enzymes = Enzymes.objects.all()
-    """tfilter = TestsFilter(request.GET, queryset=enzymes)
-    cbc = tfilter.qs
-    bch = tfilter.qs
-    enzymes = tfilter.qs"""
-    ctx = {"cbc": cbc, "bch": bch, "enzymes": enzymes}
+    showt_form = ShowTestForm
+    if request.method == "POST":
+        showt_form = ShowTestForm(request.POST)
+        showtest = request.POST.get('showtest_sel')
+        
+        if showt_form.is_valid():
+            if showtest == "CBC":
+                return redirect('show_cbc')
+            if showtest == "BCH":
+                return redirect('show_bch')
+            if showtest == "Enzymes":
+                return redirect('show_enzymes')
+
+    ctx = {'showt_form': showt_form}
+
     return render(request, 'records/findt.html', ctx)
+
+def show_cbc(request):
+    cbc = CBC.objects.all()
+    cbc_filter = CBCFilter(request.GET, queryset=cbc)
+    cbc = cbc_filter.qs
+    ctx = {"cbc": cbc, "cbc_filter": cbc_filter}
+    return render(request, 'records/show_cbc.html', ctx)
+
+def show_bch(request):
+    bch = BCH.objects.all()
+    bch_filter = BCHFilter(request.GET, queryset=bch)
+    bch = bch_filter.qs
+    ctx = {"bch": bch, "bch_filter": bch_filter}
+    return render(request, 'records/show_bch.html', ctx)
+
+def show_enzymes(request):
+    enzymes = Enzymes.objects.all()
+    enzymes_filter = EnzymesFilter(request.GET, queryset=enzymes)
+    enzymes = enzymes_filter.qs
+    ctx = {"enzymes": enzymes, "enzymes_filter": enzymes_filter}
+    return render(request, 'records/show_enzymes.html', ctx)
 

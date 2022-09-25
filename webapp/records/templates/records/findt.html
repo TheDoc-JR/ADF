@@ -1,82 +1,50 @@
 {% extends 'records/main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 <style>
     .container {
         padding-top: 50px;
     }
-
-    input[type="text"], select[name="patients_ID"], select[name="test_name"]{
-        background-color : #2c3034; 
+    
+    #submit {
+        padding-top: 100px;
+        text-align: center;
+    }
+    
+    input {max-width: 12em}
+    
+    #info {
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
-    textarea:focus, input, select {
-        color: #ffffff;
+    #bd {
+        text-align: center;
     }
-</style>
-<div class="container">
-    <div class="row">
-        <div class="card bg-info mb-3 border-dark mb-3">
-            <div class="card-header">
-                <strong>TESTS</strong>
+    
+    #tests * {
+        padding-top: 8px;
+    }
+    </style>
+        
+    <div class="container">
+        <center>
+            <div class="alert alert-dark" role="alert" id="info">
+                <b>SELECT THE TEST YOU WANT TO SHOW DATA FROM</b>
             </div>
-            <div class="card-body">
-                <p class="card-text">
-                    <table class="table table-striped table-dark table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">PATIENT ID</th>
-                            <th scope="col">NAME</th>
-                            <th scope="col">LAST NAME</th>
-                            <th scope="col">TEST NAME</th>
-                            <th scope="col">RESULTS</th>
-                            <th scope="col">UNITS</th>
-                            <th scope="col">REF. VALUES</th>
-                            <th scope="col">TEST DATE</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for patient in cbc %}
-                                <tr>
-                                    <th scope="row">{{patient.patients_ID}}</th>
-                                    <td>{{patient.patients_ID.name}}</td>
-                                    <td>{{patient.patients_ID.surname}}</td>
-                                    <td>{{patient.test_name}}</td>
-                                    <td>{{patient.results}}</td>
-                                    <td>{{patient.test_units}}</td>
-                                    <td>{{patient.ref}}</td>
-                                    <td>{{patient.test_date}}</td>
-                                </tr>
-                            {% endfor %}
-                            {% for patient in bch %}
-                                <tr>
-                                    <th scope="row">{{patient.patients_ID}}</th>
-                                    <td>{{patient.patients_ID.name}}</td>
-                                    <td>{{patient.patients_ID.surname}}</td>
-                                    <td>{{patient.test_name}}</td>
-                                    <td>{{patient.results}}</td>
-                                    <td>{{patient.test_units}}</td>
-                                    <td>{{patient.ref}}</td>
-                                    <td>{{patient.test_date}}</td>
-                                </tr>
-                            {% endfor %}
-                            {% for patient in enzymes %}
-                                <tr>
-                                    <th scope="row">{{patient.patients_ID}}</th>
-                                    <td>{{patient.patients_ID.name}}</td>
-                                    <td>{{patient.patients_ID.surname}}</td>
-                                    <td>{{patient.test_name}}</td>
-                                    <td>{{patient.results}}</td>
-                                    <td>{{patient.test_units}}</td>
-                                    <td>{{patient.ref}}</td>
-                                    <td>{{patient.test_date}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody> 
-                    </table>
-                </p>
+            <div class="row">
+                <center>
+                    <div class="alert alert-dark" role="alert" id="tests">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {% crispy showt_form %}   
+                        </form>
+                    </div>
+                <center>
             </div>
-        </div>
+        </center>
     </div>
-</div>
 {% endblock %}
