@@ -48,7 +48,7 @@
                 </div>
             </div>
             <span class="nav-item" id="uname">{{request.user}}</span>
-            <span><a class="nav-item nav-link" href="{% url 'logout_user' %}" id="logout">Logout</span>
+            <span id="logout"><a class="nav-item nav-link" href="{% url 'logout_user' %}">Logout</a></span>
         </nav>
         {% block content %}
         <div class="container" id="main">

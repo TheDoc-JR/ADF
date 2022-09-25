@@ -7,6 +7,10 @@ from datetime import date, datetime
 class PatientFilter(django_filters.FilterSet):
     name = CharFilter(field_name='name', lookup_expr='icontains')
     surname = CharFilter(field_name='surname', lookup_expr='icontains')
+    dot = DateFilter(
+        field_name='bd',
+        widget = DateInput(attrs={'type': 'date', 'max': datetime.now().date()}),
+        )
 
     class Meta:
         model = Patient
