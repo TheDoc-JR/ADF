@@ -39,7 +39,7 @@ If data is entered the wrong way and the button is clicked, an error message app
 ![Captura de pantalla 2022-09-25 233404](https://user-images.githubusercontent.com/108229433/192169825-c775efd6-bfb5-4a70-89a7-c6d52a5bc19d.jpg)
 
 ## 2-Find patient
-When clicking the Search-patient button; a table appears with info of all patients in the database.
+When clicking the Find-patient button; a table appears with info of all patients in the database.
 
 ![Captura de pantalla 2022-09-26 001812](https://user-images.githubusercontent.com/108229433/192169826-55e4f214-5467-4c50-a0fb-936821f41116.jpg)
 
