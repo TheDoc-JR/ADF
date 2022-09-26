@@ -1,0 +1,54 @@
+{% extends 'records/register.html' %}
+
+
+{% block content %}
+<style>
+    #login {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    
+</style>
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h3 class="mb-5">Login</h3>
+              
+              <form method="POST" action="">
+                {% csrf_token %}
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="username" class="form-control form-control-lg" 
+                    name="username" placeholder="Username"/>
+                </div>
+    
+                <div class="form-outline mb-4">
+                    <input type="password" id="password" class="form-control form-control-lg" 
+                    name="password" placeholder="Password"/>
+                </div>
+                
+                <button class="btn btn-primary btn-lg btn-block" type="submit" id="submit">Login</button>
+
+                <div class="d-flex flex-row mb-4" id="login">
+                    <span>
+                    <b>Not registered yet?</b> <a href="{% url 'register_page' %}">Sign up</a>
+                    </span>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-dark" id="message">{{message}}</div>
+                    {% endfor %}
+                {% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

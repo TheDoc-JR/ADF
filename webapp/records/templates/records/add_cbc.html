@@ -2,19 +2,16 @@
 
 {% load crispy_forms_tags %}
 
-{% block  content %}
-
+{% block content %}
 <style>
 .container {
     padding-top: 50px;
 }
 
-#submit {
-    padding-top: 100px;
-    text-align: center;
+input {
+    max-width: 14em;
 }
 
-input {max-width: 12em}
 
 #info {
     text-align: center;
@@ -27,22 +24,22 @@ input {max-width: 12em}
 }
 
 .row * {
-    padding-top: 10px;
+    padding-top: 14px;
 }
 
 </style>
-
+    
 <div class="container">
     <center>
         <div class="alert alert-primary" role="alert" id="info">
-            <b>YOU'RE NOW ADDING A NEW PATIENT</b>
+            <b>YOU'RE NOW ADDING COMPLETE_BLOOD_COUNT RECORDS</b>
         </div>
-        <div class="row">
+        <div class="alert alert-primary" role="alert" id="info">
             <form action="" method="POST">
                 {% csrf_token %}
-                {% crispy p_form %}
+                {% crispy cbc_form %}
             </form>
         </div>
     </center>
 </div>
-{% endblock  %}
+{% endblock %}
