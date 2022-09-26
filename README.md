@@ -59,8 +59,8 @@ Or we can just find an specific patient by it's ID.
 
 ![Captura de pantalla 2022-09-26 002044](https://user-images.githubusercontent.com/108229433/192169831-30aeacee-9942-4460-9753-5228d8a59891.jpg)
 
-## 3-Add tests
-When clicking the Add-tests button; a form appears in order to select what type of test we want to add data in.
+## 3-Add records
+When clicking the Add-records button; a form appears in order to select what type of test we want to add data in.
 
 ![Captura de pantalla 2022-09-26 002108](https://user-images.githubusercontent.com/108229433/192169833-c386d568-7129-4dd0-95dc-9595379e2432.jpg)
 
@@ -76,8 +76,8 @@ After entering the data in the correct way and click the Add-tests button, if pr
 
 ![Captura de pantalla 2022-09-26 002421](https://user-images.githubusercontent.com/108229433/192169806-5b33d6ef-8b02-4218-9ebc-0b183db0329e.jpg)
 
-## 4-Search tests
-When clicking the Add-tests button; a form appears in order to select what type of test we want to show data from.
+## 4-Find records
+When clicking the Find-records button; a form appears in order to select what type of test we want to show data from.
 
 ![Captura de pantalla 2022-09-26 003309](https://user-images.githubusercontent.com/108229433/192169810-7a3f5b99-1df2-4f20-9105-03125047a028.jpg)
 
